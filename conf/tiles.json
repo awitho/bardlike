@@ -1,0 +1,1 @@
+[{"name":"Stone", "sx":0, "sy":0, "wall":true}, {"name":"Wood", "sx":1, "sy":0, "wall":false}, {"name":"Obsidian", "sx":0, "sy":1, "wall":"true"}, {"name":"Glass", "sx":1, "sy":1, "wall":false}]
