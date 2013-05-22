@@ -26,9 +26,9 @@ public class ClassSelectState extends BasicGameState {
 		classSprites = new SpriteSheet("./gfx/charcreation.png", 64, 64);
 		
 		for(int i = 0; i < classes.size(); i++) {
-			JsonObject sprite = classes.get(i).getAsJsonObject();
-			charSprite.add(classSprites.getSubImage(sprite.get("sx").getAsInt(), sprite.get("sy").getAsInt()));
-			charNames.add(sprite.get("name").getAsString());
+			JsonObject character = classes.get(i).getAsJsonObject();
+			charSprite.add(classSprites.getSubImage(character.get("sx").getAsInt(), character.get("sy").getAsInt()));
+			charNames.add(character.get("name").getAsString());
 		}
 	}
 
@@ -39,7 +39,7 @@ public class ClassSelectState extends BasicGameState {
 		int locY = container.getHeight() / 2 - 130;
 		for(int i = 0; i < charSprite.size(); i++) {
 			g.drawImage(charSprite.get(i), container.getWidth() / 2 + 70, locY);
-			g.drawString(charNames.get(i), container.getWidth() / 2 + 10, locY);
+			g.drawString(charNames.get(i), container.getWidth() / 2, locY);
 			locY += 64;
 		}
 	}
