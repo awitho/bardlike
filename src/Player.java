@@ -11,13 +11,16 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SpriteSheet;
 
+import com.google.gson.JsonObject;
+
 
 public class Player extends Entity {
 	private int playerX, playerY;
-	HashMap<String, Integer> godsFavor;
-	HashMap<String, Integer> stats;
+	private GameConfig playerInfo;
+	private HashMap<String, Integer> godsFavor;
+	private HashMap<String, Integer> stats;
 	
-	public Player(SpriteSheet ss, GameConfig data) {
+	public Player(SpriteSheet ss, JsonObject data) {
 		
 	}
 	

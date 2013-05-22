@@ -27,4 +27,8 @@ public class Main extends StateBasedGame {
 		this.addState(new MainGameState());
 		this.addState(new HelpMenuState());
 	}
+	
+	public void setPlayer(Player p) {
+		
+	}
 }

@@ -2,12 +2,14 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 
 public class MainGameState extends BasicGameState {
         private GameMap map;
+        private SpriteSheet playerSprites;
         private Player player;
         public TileDictionary tileDictionary;
         
@@ -53,5 +55,9 @@ public class MainGameState extends BasicGameState {
 	@Override
 	public int getID() {
 		return 4;
+	}
+	
+	public void setPlayer(Player p) {
+		player = p;
 	}
 }

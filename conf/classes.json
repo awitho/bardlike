@@ -5,7 +5,8 @@
         "sy": 0,
         "str": 1,
         "int": 1,
-        "dex": 1
+        "dex": 1,
+        "end": 1
     },
     {
         "name": "(M)age",
@@ -13,7 +14,8 @@
         "sy": 0,
         "str": 1,
         "int": 1,
-        "dex": 1
+        "dex": 1,
+        "end": 1
     },
     {
         "name": "(P)aladin",
@@ -21,7 +23,8 @@
         "sy": 1,
         "str": 1,
         "int": 1,
-        "dex": 1
+        "dex": 1,
+        "end": 1
     },
     {
         "name": "(W)arrior",
@@ -29,7 +32,8 @@
         "sy": 1,
         "str": 1,
         "int": 1,
-        "dex": 1
+        "dex": 1,
+        "end": 1
     },
     {
         "name": "(R)ogue",
@@ -37,6 +41,7 @@
         "sy": 2,
         "str": 1,
         "int": 1,
-        "dex": 1
+        "dex": 1,
+        "end": 1
     }
 ]

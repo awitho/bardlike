@@ -43,7 +43,7 @@ public class MainMenuState extends BasicGameState {
 		g.drawImage(titleImg, container.getWidth()/2 - titleImg.getWidth()/2, container.getHeight()/2 - titleImg.getHeight()/2);
                 
                 
-                g.fillRoundRect(10, container.getHeight() - (10 + 20), (int) Math.round((loaded/100.0)*(container.getWidth()-40)), 20, 5);
+        g.fillRoundRect(10, container.getHeight() - (10 + 20), (int) Math.round((loaded/100.0)*(container.getWidth()-40)), 20, 5);
                 
 		g.setFont(font);
 		g.setColor(Color.white);
