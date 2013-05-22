@@ -1,0 +1,42 @@
+ [
+    {
+        "name": "(B)ard",
+        "sx": 0,
+        "sy": 0,
+        "str": 1,
+        "int": 1,
+        "dex": 1
+    },
+    {
+        "name": "(M)age",
+        "sx": 1,
+        "sy": 0,
+        "str": 1,
+        "int": 1,
+        "dex": 1
+    },
+    {
+        "name": "(P)aladin",
+        "sx": 0,
+        "sy": 1,
+        "str": 1,
+        "int": 1,
+        "dex": 1
+    },
+    {
+        "name": "(W)arrior",
+        "sx": 1,
+        "sy": 1,
+        "str": 1,
+        "int": 1,
+        "dex": 1
+    },
+    {
+        "name": "(R)ogue",
+        "sx": 0,
+        "sy": 2,
+        "str": 1,
+        "int": 1,
+        "dex": 1
+    }
+]

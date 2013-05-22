@@ -8,7 +8,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class MainGameState extends BasicGameState {
         private GameMap map;
-        private Entity player;
+        private Player player;
         public TileDictionary tileDictionary;
         
         private int transX = 0;
@@ -52,6 +52,6 @@ public class MainGameState extends BasicGameState {
 
 	@Override
 	public int getID() {
-		return 2;
+		return 4;
 	}
 }

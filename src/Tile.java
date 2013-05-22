@@ -52,7 +52,7 @@ public class Tile {
 		g.drawImage(spr, x, y);
                 if (containedEnts != null) {
                     for (int i = 0; i < containedEnts.size(); i++) {
-                            containedEnts.get(i).render(g);
+                            containedEnts.get(i).draw(g);
                     }
                 }
 		if (playerSaw && !inLos) {

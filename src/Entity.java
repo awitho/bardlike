@@ -9,7 +9,7 @@ public class Entity {
 		
 	}
 	
-	public void render(Graphics g) {
+	public void draw(Graphics g) {
 		
 	}
 	

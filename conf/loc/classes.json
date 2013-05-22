@@ -1,0 +1,2 @@
+[{"name":"Bard","sx":0, "sy":0 "str":1, "int":1, "dex":1}, {"name":"Mage"sx":1, "sy":0 "str":1, "int":1, "dex":1}, {"name":"Paladin"sx":0, "sy":1 "str":1, "int":1, "dex":1},
+{"name":"Warrior"sx":1, "sy":1 "str":1, "int":1, "dex":1}, {"name":"Rogue"sx":0, "sy":2 "str":1, "int":1, "dex":1}]
