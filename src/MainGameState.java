@@ -52,7 +52,7 @@ public class MainGameState extends BasicGameState {
         	player.addControls(container);
         	
         	//If statements here for testing purposes, make a method for it later.
-        	///Make it so the map doesn't go out of screen bounds(A bit buggy atm).
+        	///Makes it so the map doesn't go out of screen bounds(A bit buggy atm).
         	if(transY > 0 && transX + 
         			map.getScaledWidth() <= container.getWidth()) {
         		transX = -container.getWidth();
