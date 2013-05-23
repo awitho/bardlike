@@ -33,14 +33,14 @@ public class Player extends Entity {
 	}
 	
 	public void addControls(GameContainer container) {
-		if(container.getInput().isKeyPressed(Input.KEY_W)) {
-			playerY-=MOVE_SPEED;
-		}else if(container.getInput().isKeyPressed(Input.KEY_S)){ 
-			playerY+=MOVE_SPEED;
-		}else if(container.getInput().isKeyPressed(Input.KEY_A)) {
-			playerX-=MOVE_SPEED;
-		}else if(container.getInput().isKeyPressed(Input.KEY_D)) {
-			playerX+=MOVE_SPEED;
+		if (container.getInput().isKeyPressed(Input.KEY_W)) {
+			playerY -= MOVE_SPEED;
+		} else if (container.getInput().isKeyPressed(Input.KEY_S)) { 
+			playerY += MOVE_SPEED;
+		} else if (container.getInput().isKeyPressed(Input.KEY_A)) {
+			playerX -= MOVE_SPEED;
+		} else if (container.getInput().isKeyPressed(Input.KEY_D)) {
+			playerX += MOVE_SPEED;
 		}
 	}
 	

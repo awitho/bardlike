@@ -12,14 +12,7 @@ public class GameMap {
 	public GameMap(int w, int h, TileDictionary tileDictionary) {
 		width = w;
 		height = h;
-		tiles = new ArrayList<>();
-		for(int x = 0; x < w; x++) {
-			ArrayList<Tile> tileY = new ArrayList<>();
-			for(int y = 0; y < h; y++) {
-				tileY.add(new Tile(tileDictionary, "Stone").setInLos(true));
-			}
-			tiles.add(tileY);
-		}
+		tiles = DungeonGenerator.generateDungeon(w, h, tileDictionary);
 	}
 	
 	public void draw(Graphics g) { // Make it so it only renders near player 3-5 blocks!
@@ -28,7 +21,8 @@ public class GameMap {
 			if(tileX.isEmpty()) { continue; }
 			for (int y = 0; y < tiles.get(x).size(); y++) {
 				Tile tile = tileX.get(y);
-				if (tile == null || (!tile.getInLos() && !tile.hasSeen()) ) { continue; }
+				if (tile == null) { continue; }
+			//	if (tile == null || (!tile.getInLos() && !tile.hasSeen()) ) { continue; }
 				tile.draw(g, x * tile.getWidth(), y * tile.getHeight());
 			}
 		}

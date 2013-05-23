@@ -1,6 +1,5 @@
 import org.newdawn.slick.Graphics;
 
-
 public class Entity {
 	public int id;
 	private int x, y;
@@ -28,6 +27,4 @@ public class Entity {
 	public void setPos(int x, int y){
 		
 	}
-	
-	
 }

@@ -3,6 +3,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import java.util.HashMap;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
 /**
@@ -26,12 +27,18 @@ public class TileDictionary {
                 imgs.put(tile.get("name").getAsString(), sprites.getSubImage(tile.get("sx").getAsInt(), tile.get("sy").getAsInt()).getScaledCopy(2));
                 walls.put(tile.get("name").getAsString(), tile.get("wall").getAsBoolean());
             }
-	} catch (Exception e) {
+			imgs.put("Overlay", new Image("gfx/tile_overlay.png"));
+			walls.put("Overlay", false);
+		} catch (Exception e) {
             Misc.showDialog(e);
-            return;
-	}
+			return;
+		}
     }
     
+	public int size() {
+		return imgs.size();
+	}
+	
     public boolean getTileIsWall(String name) {
         return walls.get(name);
     }
