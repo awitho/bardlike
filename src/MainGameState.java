@@ -31,6 +31,7 @@ public class MainGameState extends BasicGameState {
                 g.translate(transX, transY);
                 // Translate g to player!
 		map.draw(g);
+		player.draw(g);
 	}
 
 	@Override
@@ -49,7 +50,8 @@ public class MainGameState extends BasicGameState {
                 }
                 if (container.getInput().isKeyDown(Input.KEY_DOWN)) {
                     transY -= 10;
-                }
+               	}
+        		player.addControls(container);
 	}
 
 	@Override

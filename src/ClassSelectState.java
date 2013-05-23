@@ -6,6 +6,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
+import org.newdawn.slick.gui.MouseOverArea;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -19,6 +20,7 @@ public class ClassSelectState extends BasicGameState {
 	private JsonObject character;
 	private ArrayList<String> charNames;
 	private ArrayList<Image> charSprite;
+	private MouseOverArea mouseOver;
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame s)
@@ -39,7 +41,7 @@ public class ClassSelectState extends BasicGameState {
 	@Override
 	public void render(GameContainer container, StateBasedGame s, Graphics g)
 			throws SlickException {
-		g.drawString("Choose Your Character!... Too be implemented", container.getWidth()/2 - 100, 50);
+		g.drawString("Choose Your Character!", container.getWidth()/2 - 100, 50);
 		int locY = container.getHeight() / 2 - 130;
 		for(int i = 0; i < charSprite.size(); i++) {
 			g.drawImage(charSprite.get(i), container.getWidth() / 2 + 50, locY);
@@ -51,11 +53,29 @@ public class ClassSelectState extends BasicGameState {
 	@Override
 	public void update(GameContainer container, StateBasedGame s, int delta)
 			throws SlickException {
+		//add buttons eventually.
+		int chosen = 0;
+		Player player;
+		MainGameState main = (MainGameState) s.getState(4);
 		if(container.getInput().isKeyPressed(Input.KEY_B)) {
-			MainGameState main = (MainGameState) s.getState(4);
-			Player player = new Player(classSprites, character);
-			main.setPlayer(player);
+			chosen = 0;
+			s.enterState(4);
+		}else if(container.getInput().isKeyPressed(Input.KEY_M)) {
+			chosen = 1;
+			s.enterState(4);
+		}else if(container.getInput().isKeyPressed(Input.KEY_P)) {
+			chosen = 2;
+			s.enterState(4);
+		}else if(container.getInput().isKeyPressed(Input.KEY_W)) {
+			chosen = 3;
+			s.enterState(4);
+		}else if(container.getInput().isKeyPressed(Input.KEY_R)) {
+			chosen = 4;
+			s.enterState(4);
 		}
+		character = classes.get(chosen).getAsJsonObject();
+		player = new Player(classSprites, character);
+		main.setPlayer(player);
 	}
 
 	@Override
