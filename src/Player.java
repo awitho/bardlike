@@ -19,7 +19,7 @@ import com.google.gson.JsonObject;
 public class Player extends Entity {
 	private int MOVE_SPEED = 64;
 	private Image playerImage;
-	private int playerX, playerY;
+	private int playerX = 128, playerY = 128;
 	private HashMap<String, Integer> godsFavor;
 	private HashMap<String, Integer> stats;
 	

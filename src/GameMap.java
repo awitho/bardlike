@@ -5,10 +5,13 @@ import org.newdawn.slick.SpriteSheet;
 
 
 public class GameMap {
+	private int width, height;
 	private ArrayList<ArrayList<Tile>> tiles; // 2d array list of tiles.
 	private SpriteSheet sprites;
 	
 	public GameMap(int w, int h, TileDictionary tileDictionary) {
+		width = w;
+		height = h;
 		tiles = new ArrayList<>();
 		for(int x = 0; x < w; x++) {
 			ArrayList<Tile> tileY = new ArrayList<>();
@@ -29,6 +32,14 @@ public class GameMap {
 				tile.draw(g, x * tile.getWidth(), y * tile.getHeight());
 			}
 		}
+	}
+	
+	public int getScaledWidth() {
+		return width * 64;
+	}
+	
+	public int getScaledHeight() {
+		return height * 64;
 	}
 	
 	public void update() {
