@@ -17,7 +17,6 @@ import com.google.gson.JsonObject;
 public class ClassSelectState extends BasicGameState {
 	private SpriteSheet classSprites;
 	private JsonArray classes;
-	private JsonObject character;
 	private ArrayList<String> charNames;
 	private ArrayList<Image> charSprite;
 	private MouseOverArea mouseOver;
@@ -25,14 +24,14 @@ public class ClassSelectState extends BasicGameState {
 	@Override
 	public void init(GameContainer container, StateBasedGame s)
 			throws SlickException {
-		charSprite = new ArrayList<Image>();
-		charNames = new ArrayList<String>();
+		charSprite = new ArrayList<>();
+		charNames = new ArrayList<>();
 		classes = new GameConfig("classes.json").getArray();
 		classSprites = new SpriteSheet("./gfx/charcreation.png", 64, 64);
 		
 		
 		for(int i = 0; i < classes.size(); i++) {
-			character = classes.get(i).getAsJsonObject();
+			JsonObject character = classes.get(i).getAsJsonObject();
 			charSprite.add(classSprites.getSubImage(character.get("sx").getAsInt(), character.get("sy").getAsInt()));
 			charNames.add(character.get("name").getAsString());
 		}
@@ -51,31 +50,30 @@ public class ClassSelectState extends BasicGameState {
 	}
 
 	@Override
-	public void update(GameContainer container, StateBasedGame s, int delta)
-			throws SlickException {
+	public void update(GameContainer container, StateBasedGame s, int delta) throws SlickException {
 		//add buttons eventually.
-		int chosen = 0;
+		int chosen = -1;
 		Player player;
 		MainGameState main = (MainGameState) s.getState(4);
-		if(container.getInput().isKeyPressed(Input.KEY_B)) {
+		if (container.getInput().isKeyPressed(Input.KEY_B)) {
 			chosen = 0;
 			s.enterState(4);
-		}else if(container.getInput().isKeyPressed(Input.KEY_M)) {
+		} else if(container.getInput().isKeyPressed(Input.KEY_M)) {
 			chosen = 1;
 			s.enterState(4);
-		}else if(container.getInput().isKeyPressed(Input.KEY_P)) {
+		} else if(container.getInput().isKeyPressed(Input.KEY_P)) {
 			chosen = 2;
 			s.enterState(4);
-		}else if(container.getInput().isKeyPressed(Input.KEY_W)) {
+		} else if(container.getInput().isKeyPressed(Input.KEY_W)) {
 			chosen = 3;
 			s.enterState(4);
-		}else if(container.getInput().isKeyPressed(Input.KEY_R)) {
+		} else if(container.getInput().isKeyPressed(Input.KEY_R)) {
 			chosen = 4;
 			s.enterState(4);
 		}
-		character = classes.get(chosen).getAsJsonObject();
-		player = new Player(classSprites, character);
-		main.setPlayer(player);
+		if (chosen > -1) {
+			main.setPlayer(classSprites, classes.get(chosen).getAsJsonObject());	
+		}
 	}
 
 	@Override

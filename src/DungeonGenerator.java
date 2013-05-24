@@ -23,7 +23,8 @@ public class DungeonGenerator {
 		for(int x = 0; x < w; x++) {
 			ArrayList<Tile> tileY = new ArrayList<>();
 			for(int y = 0; y < h; y++) {
-				tileY.add(new Tile(tileDictionary, temp[(int) (Math.random() * temp.length - 1)]).setSeen(true).setInLos(Misc.randomBool()));
+				//tileY.add(new Tile(tileDictionary, "Wood", x, y).setSeen(true));
+				tileY.add(new Tile(tileDictionary, temp[(int) (Math.random() * temp.length - 1)], x, y).setSeen(true).setInLos(Misc.randomBool()));
 			}
 			tiles.add(tileY);
 		}

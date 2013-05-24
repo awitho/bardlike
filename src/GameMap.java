@@ -5,11 +5,13 @@ import org.newdawn.slick.SpriteSheet;
 
 
 public class GameMap {
+	private TileDictionary tileDictionary;
 	private int width, height;
 	private ArrayList<ArrayList<Tile>> tiles; // 2d array list of tiles.
 	private SpriteSheet sprites;
 	
 	public GameMap(int w, int h, TileDictionary tileDictionary) {
+		this.tileDictionary = tileDictionary;
 		width = w;
 		height = h;
 		tiles = DungeonGenerator.generateDungeon(w, h, tileDictionary);
@@ -28,6 +30,31 @@ public class GameMap {
 		}
 	}
 	
+	public void moveEnt(Tile tile, Entity ent, Direction dir) {
+		System.out.println("(" + ent + ") Moving from: " + tile + " to " + dir);
+		Tile newTile = null;
+		if (dir == Direction.LEFT) {
+			ArrayList<Tile> tileX = tiles.get(tile.getX() - 1);
+			if (tileX == null) { return; }
+			newTile = tileX.get(tile.getY());
+		} else if (dir == Direction.RIGHT) {
+			ArrayList<Tile> tileX = tiles.get(tile.getX() + 1);
+			if (tileX == null) { return; }
+			newTile = tileX.get(tile.getY());
+		} else if (dir == Direction.UP) {
+			newTile = tiles.get(tile.getX()).get(tile.getY() - 1);
+		} else if (dir == Direction.DOWN) {
+			newTile = tiles.get(tile.getX()).get(tile.getY() + 1);
+		}
+		if (newTile == null || tileDictionary.getTileIsWall(newTile.getName())) { Misc.showDialog("Non-valid position (or wall)!"); return; }
+		tile.removeEnt(ent);
+		newTile.addEnt(ent);
+	}
+	
+	public Tile getTile(int x, int y) {
+		return tiles.get(x).get(y);
+	}
+
 	public int getScaledWidth() {
 		return width * 64;
 	}

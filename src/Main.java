@@ -11,7 +11,7 @@ public class Main extends StateBasedGame {
 
 	public static void main(String[] args) throws SlickException {
 		AppGameContainer game = new AppGameContainer(new Main("bardLIKE"));
-		game.setDisplayMode(800, 600, false);
+		game.setDisplayMode(1024, 768, false);
 		
 		game.setVSync(true);
 		game.setTargetFrameRate(60);
@@ -21,14 +21,11 @@ public class Main extends StateBasedGame {
 		game.start(); 
 	}
 
+	@Override
 	public void initStatesList(GameContainer arg0) throws SlickException {
 		this.addState(new MainMenuState());
 		this.addState(new ClassSelectState());
 		this.addState(new MainGameState());
 		this.addState(new HelpMenuState());
-	}
-	
-	public void setPlayer(Player p) {
-		
 	}
 }

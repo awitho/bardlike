@@ -27,6 +27,14 @@ public class Misc {
 		return (start + percent*(end - start));
 	}
 	
+	public static int clamp(int value, int low, int high) {
+		if (value < low) 
+			return low;
+		if (value > high)
+			return high;
+		return value;
+	}
+	
 	/**
 	 * Returns a random boolean!
 	 * @return A random boolean.

@@ -1,5 +1,7 @@
+import com.google.gson.JsonObject;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
@@ -30,7 +32,7 @@ public class MainGameState extends BasicGameState {
 	public void render(GameContainer container, StateBasedGame s, Graphics g) throws SlickException {
 		g.translate(transX, transY);
 		map.draw(g);
-		player.draw(g);
+		//player.draw(g);
 	}
 
 	@Override
@@ -56,7 +58,18 @@ public class MainGameState extends BasicGameState {
 
 			transX = (player.getX() * -1) + (5*64);
 			transY = (player.getY() * -1) + (5*64);
-        	player.addControls(container);
+			if (container.getInput().isKeyPressed(Input.KEY_LEFT)) {
+				player.move(Direction.LEFT);
+			}
+			if (container.getInput().isKeyPressed(Input.KEY_RIGHT)) {
+				player.move(Direction.RIGHT);
+			}
+			if (container.getInput().isKeyPressed(Input.KEY_DOWN)) {
+				player.move(Direction.DOWN);
+			}
+			if (container.getInput().isKeyPressed(Input.KEY_UP)) {
+				player.move(Direction.UP);
+			}
         	/*
         	//If statements here for testing purposes, make a method for it later.
         	//Makes it so the map doesn't go out of screen bounds (A bit buggy atm).
@@ -90,7 +103,7 @@ public class MainGameState extends BasicGameState {
 		return 4;
 	}
 	
-	public void setPlayer(Player p) {
-		player = p;
+	public void setPlayer(SpriteSheet sprite, JsonObject data) {
+		player = new Player(sprite, data, map);
 	}
 }
