@@ -3,7 +3,12 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
-
+/**
+ * Main class for our game, creates a container and runs everything.
+ * @since 5/26/13
+ * @version 1
+ * @author alex
+ */
 public class Main extends StateBasedGame {
 	public Main(String name) {
 		super(name);

@@ -1,10 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
- *
+ * Enumeration for directions.
+ * @since 5/26/13
+ * @version 1
  * @author alex
  */
 public enum Direction {
