@@ -6,6 +6,8 @@ import org.newdawn.slick.SpriteSheet;
 
 /**
  * A class to handle all the data for tile types.
+ * @version 1
+ * @since 5/26/13
  * @author alex
  */
 public class TileDictionary {

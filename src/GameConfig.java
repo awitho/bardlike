@@ -5,11 +5,10 @@ import com.google.gson.JsonObject;
 import java.io.*;
 
 /**
- * Generic config file the game, basically just a wrapper.
- * 
- * @version 0.1
+ * Generic configuration file the game, basically just a wrapper.
+ * @version 1
  * @since 5/20/13
- * @author 13thompsona
+ * @author alex
  */
 public class GameConfig {
 	public final static String pathPrefix = "conf/"; // Since everything is going to be in the same directory, static this!

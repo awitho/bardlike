@@ -1,6 +1,12 @@
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
+/**
+ * A generic entity class, represents everything that's not a tile.
+ * @sicne 5/26/13
+ * @version 1
+ * @author Alex
+ */
 public class Entity {
 	public int id;
 	private int x, y;

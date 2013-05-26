@@ -3,6 +3,12 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
+/**
+ * A single tile for multiple entities to occupy at a single time.
+ * @since 5/26/13
+ * @version 1
+ * @author alex
+ */
 public class Tile {
 	private int ix, iy;
 	private String name;

@@ -9,7 +9,9 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 /**
- *
+ * The help menu of the game.
+ * @since 5/26/13
+ * @version 1
  * @author alex
  */
 public class HelpMenuState extends BasicGameState {

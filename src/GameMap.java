@@ -2,6 +2,12 @@ import java.util.ArrayList;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SpriteSheet;
 
+/**
+ * A class representing an entire dungeon level of the game.
+ * @since 5/26/13
+ * @version 1
+ * @author alex
+ */
 public class GameMap {
 	private TileDictionary tileDictionary;
 	private int width, height;

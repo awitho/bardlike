@@ -4,9 +4,8 @@ import com.google.gson.JsonObject;
 
 /**
  * The Player that you control.
- * 
  * @author Bobby Henley
- * @version 0.1
+ * @version 1
  */
 public class Player extends Entity {
 	private HashMap<String, Integer> godsFavor;

@@ -11,6 +11,12 @@ import org.newdawn.slick.state.StateBasedGame;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+/**
+ * Class selection screen for the game.
+ * @since 5/26/13
+ * @version 1
+ * @author Bobby Henley
+ */
 public class ClassSelectState extends BasicGameState {
 	private SpriteSheet classSprites;
 	private JsonArray classes;

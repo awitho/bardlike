@@ -10,9 +10,9 @@ import org.newdawn.slick.state.StateBasedGame;
 
 /**
  * The Main Menu for the game.
- * 
  * @author Bobby Henley
- * @version 0.1
+ * @since 5/26/13
+ * @version 1
  */
 public class MainMenuState extends BasicGameState {
 	private String menu;

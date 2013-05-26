@@ -1,7 +1,9 @@
 import java.util.ArrayList;
 
 /**
- *
+ * A class for randomly generating coherent dungeons.
+ * @since 5/26/13
+ * @version 1
  * @author alex
  */
 public class DungeonGenerator {
