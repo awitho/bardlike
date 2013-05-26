@@ -28,8 +28,6 @@ public class Entity {
 
 	public void draw(Graphics g, int x, int y) {
 		g.drawImage(img, x, y);
-		this.x = x;
-		this.y = y;
 	}
 
 	public void update() {
@@ -38,6 +36,8 @@ public class Entity {
 
 	public void setTile(Tile tile) {
 		curTile = tile;
+		x = tile.getX() * Misc.TargetSize;
+		y = tile.getY() * Misc.TargetSize;
 	}
 
 	public Tile getTile() {

@@ -28,10 +28,12 @@ public class TileDictionary {
 			}
 			imgs.put("Overlay", new Image("gfx/tile_overlay.png"));
 			walls.put("Overlay", false);
+			System.out.println(tiles);
 		} catch (Exception e) {
 			Misc.showDialog(e);
 			return;
 		}
+		System.out.println(imgs);
 	}
 
 	public int size() {

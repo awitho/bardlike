@@ -16,15 +16,15 @@ public class DungeonGenerator {
 	public static ArrayList<ArrayList<Tile>> generateDungeon(int w, int h, TileDictionary tileDictionary) {
 		ArrayList<ArrayList<Tile>> tiles = new ArrayList<>();
 		String[] temp = new String[tileDictionary.size()];
-		temp[0] = "Stone";
-		temp[1] = "Wood";
-		temp[2] = "Glass";
-		temp[3] = "Obsidian";
+		//temp[0] = "Stone";
+		temp[0] = "Wood";
+		temp[1] = "Glass";
+		//temp[3] = "Obsidian";
 		for(int x = 0; x < w; x++) {
 			ArrayList<Tile> tileY = new ArrayList<>();
 			for(int y = 0; y < h; y++) {
-				//tileY.add(new Tile(tileDictionary, "Wood", x, y).setSeen(true));
-				tileY.add(new Tile(tileDictionary, temp[(int) (Math.random() * temp.length - 1)], x, y).setSeen(true).setInLos(Misc.randomBool()));
+				tileY.add(new Tile(tileDictionary, "Wood", x, y).setSeen(true));
+				//tileY.add(new Tile(tileDictionary, temp[(int) (Math.random() * temp.length)], x, y).setSeen(true).setInLos(Misc.randomBool()));
 			}
 			tiles.add(tileY);
 		}	

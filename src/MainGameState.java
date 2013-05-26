@@ -45,8 +45,6 @@ public class MainGameState extends BasicGameState {
 			container.exit();
 		}
 
-		transX = (player.getX() * -1) + (5*64);
-		transY = (player.getY() * -1) + (5*64);
 		if (container.getInput().isKeyPressed(Input.KEY_LEFT)) {
 			player.move(Direction.LEFT);
 		}
@@ -60,6 +58,9 @@ public class MainGameState extends BasicGameState {
 			player.move(Direction.UP);
 		}
 
+		transX = (player.getX() * -1) + (5*64);
+		transY = (player.getY() * -1) + (5*64);
+		
 		/*
 		//If statements here for testing purposes, make a method for it later.
 		//Makes it so the map doesn't go out of screen bounds (A bit buggy atm).

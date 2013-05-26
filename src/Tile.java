@@ -13,7 +13,7 @@ public class Tile {
 	private int ix, iy;
 	private String name;
 	private boolean inLos, playerSaw, isWall;
-	private ArrayList<Entity> containedEnts;
+	private ArrayList<Entity> containedEnts = new ArrayList<>();;
 	private Image spr, overlay;
 
 	private static final Color overlayColor = new Color(0, 0, 0, 200);
@@ -26,7 +26,7 @@ public class Tile {
 		overlay = tileDictionary.getTileImageByName("Overlay");
 		isWall = tileDictionary.getTileIsWall(tile); // Ditto.
 		spr = tileDictionary.getTileImageByName(tile); // Grab a reference for the tile image from the tile dictionary, no need to make our own copy!
-		containedEnts = new ArrayList<>();
+		System.out.println(spr);
 	}
 
 	public int getWidth() {
