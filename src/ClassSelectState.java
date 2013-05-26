@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -9,10 +8,8 @@ import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.gui.MouseOverArea;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-
 
 public class ClassSelectState extends BasicGameState {
 	private SpriteSheet classSprites;
@@ -20,16 +17,15 @@ public class ClassSelectState extends BasicGameState {
 	private ArrayList<String> charNames;
 	private ArrayList<Image> charSprite;
 	private MouseOverArea mouseOver;
-	
+
 	@Override
-	public void init(GameContainer container, StateBasedGame s)
-			throws SlickException {
+	public void init(GameContainer container, StateBasedGame s) throws SlickException {
 		charSprite = new ArrayList<>();
 		charNames = new ArrayList<>();
 		classes = new GameConfig("classes.json").getArray();
 		classSprites = new SpriteSheet("./gfx/charcreation.png", 64, 64);
-		
-		
+
+
 		for(int i = 0; i < classes.size(); i++) {
 			JsonObject character = classes.get(i).getAsJsonObject();
 			charSprite.add(classSprites.getSubImage(character.get("sx").getAsInt(), character.get("sy").getAsInt()));
@@ -38,8 +34,7 @@ public class ClassSelectState extends BasicGameState {
 	}
 
 	@Override
-	public void render(GameContainer container, StateBasedGame s, Graphics g)
-			throws SlickException {
+	public void render(GameContainer container, StateBasedGame s, Graphics g) throws SlickException {
 		g.drawString("Choose Your Character!", container.getWidth()/2 - 100, 50);
 		int locY = container.getHeight() / 2 - 130;
 		for(int i = 0; i < charSprite.size(); i++) {

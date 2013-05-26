@@ -1,4 +1,3 @@
-
 import com.google.gson.JsonArray;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -9,11 +8,6 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  *
  * @author alex
@@ -21,7 +15,7 @@ import org.newdawn.slick.state.StateBasedGame;
 public class HelpMenuState extends BasicGameState {
 	private JsonArray help;
 	private Image backImg;
-	
+
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		help = new GameConfig("loc/help_en.json").getArray(); // String is getting stripped of all spaces, fix!
@@ -46,7 +40,7 @@ public class HelpMenuState extends BasicGameState {
 			s.enterState(1); // Jump to main menu!
 		}
 	}
-	
+
 	@Override
 	public int getID() {
 		return 3;

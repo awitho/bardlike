@@ -1,22 +1,20 @@
 import java.util.ArrayList;
-
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SpriteSheet;
-
 
 public class GameMap {
 	private TileDictionary tileDictionary;
 	private int width, height;
 	private ArrayList<ArrayList<Tile>> tiles; // 2d array list of tiles.
 	private SpriteSheet sprites;
-	
+
 	public GameMap(int w, int h, TileDictionary tileDictionary) {
 		this.tileDictionary = tileDictionary;
 		width = w;
 		height = h;
 		tiles = DungeonGenerator.generateDungeon(w, h, tileDictionary);
 	}
-	
+
 	public void draw(Graphics g) { // Make it so it only renders near player 3-5 blocks!
 		for (int x = 0; x < tiles.size(); x++) {
 			ArrayList<Tile> tileX = tiles.get(x);
@@ -29,7 +27,7 @@ public class GameMap {
 			}
 		}
 	}
-	
+
 	public void moveEnt(Tile tile, Entity ent, Direction dir) {
 		System.out.println("(" + ent + ") Moving from: " + tile + " to " + dir);
 		Tile newTile = null;
@@ -50,7 +48,7 @@ public class GameMap {
 		tile.removeEnt(ent);
 		newTile.addEnt(ent);
 	}
-	
+
 	public Tile getTile(int x, int y) {
 		return tiles.get(x).get(y);
 	}
@@ -58,11 +56,11 @@ public class GameMap {
 	public int getScaledWidth() {
 		return width * 64;
 	}
-	
+
 	public int getScaledHeight() {
 		return height * 64;
 	}
-	
+
 	public void update() {
 		
 	}
