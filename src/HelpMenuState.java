@@ -1,4 +1,3 @@
-
 import com.google.gson.JsonArray;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -9,23 +8,19 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
- *
+ * The help menu of the game.
+ * @since 5/26/13
+ * @version 1
  * @author alex
  */
 public class HelpMenuState extends BasicGameState {
 	private JsonArray help;
 	private Image backImg;
-	
+
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
-		help = new GameConfig("loc/help_en.json").getArray(); // String is getting stripped of all spaces, fix!
-		this.backImg = new Image("./gfx/mainback.png");
+		help = new GameConfig("loc/help_en.json").getArray();
 	}
 
 	@Override
@@ -47,6 +42,10 @@ public class HelpMenuState extends BasicGameState {
 		}
 	}
 	
+	public void setBackImg(Image img) {
+		this.backImg = img;
+	}
+
 	@Override
 	public int getID() {
 		return 3;

@@ -1,4 +1,3 @@
-
 import javax.swing.JOptionPane;
 
 /**
@@ -15,7 +14,7 @@ public class Misc {
 	public static void showDialog(Object obj) {
 		JOptionPane.showMessageDialog(null, obj.toString());
 	}
-	
+
 	/**
 	 * Linear interpolation.
 	 * @param start Starting value.
@@ -26,7 +25,7 @@ public class Misc {
 	public static float lerp(float start, float end, float percent) {
 		return (start + percent*(end - start));
 	}
-	
+
 	public static int clamp(int value, int low, int high) {
 		if (value < low) 
 			return low;
@@ -34,7 +33,7 @@ public class Misc {
 			return high;
 		return value;
 	}
-	
+
 	/**
 	 * Returns a random boolean!
 	 * @return A random boolean.
