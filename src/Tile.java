@@ -26,7 +26,6 @@ public class Tile {
 		overlay = tileDictionary.getTileImageByName("Overlay");
 		isWall = tileDictionary.getTileIsWall(tile); // Ditto.
 		spr = tileDictionary.getTileImageByName(tile); // Grab a reference for the tile image from the tile dictionary, no need to make our own copy!
-		System.out.println(spr);
 	}
 
 	public int getWidth() {
@@ -104,6 +103,6 @@ public class Tile {
 	}
 	
 	public String toString() {
-		return name + ": " + ix + ", " + iy;
+		return name + ": (" + ix + ", " + iy +")";
 	}
 }

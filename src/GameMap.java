@@ -21,7 +21,7 @@ public class GameMap {
 		tiles = DungeonGenerator.generateDungeon(w, h, tileDictionary);
 	}
 
-	public void draw(Graphics g) { // Make it so it only renders near player 3-5 blocks!
+	public void draw(Graphics g, Player ply, Camera cam) { // Make it so it only renders near player 3-5 blocks!
 		for (int x = 0; x < tiles.size(); x++) {
 			ArrayList<Tile> tileX = tiles.get(x);
 			if(tileX.isEmpty()) { continue; }
@@ -52,6 +52,8 @@ public class GameMap {
 				newTile = tiles.get(tile.getX()).get(tile.getY() + 1);
 			}
 		} catch (ArrayIndexOutOfBoundsException ex) {
+			return;
+		} catch (IndexOutOfBoundsException ex) {
 			return;
 		}
 		if (newTile == null || tileDictionary.getTileIsWall(newTile.getName())) { return; }

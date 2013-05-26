@@ -28,3 +28,4 @@ manifest.mf
 bin/
 build/
 nbproject/
+/dist/
