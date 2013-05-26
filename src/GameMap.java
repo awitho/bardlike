@@ -37,22 +37,27 @@ public class GameMap {
 	public void moveEnt(Tile tile, Entity ent, Direction dir) {
 		System.out.println("(" + ent + ") Moving from: " + tile + " to " + dir);
 		Tile newTile = null;
-		if (dir == Direction.LEFT) {
-			ArrayList<Tile> tileX = tiles.get(tile.getX() - 1);
-			if (tileX == null) { return; }
-			newTile = tileX.get(tile.getY());
-		} else if (dir == Direction.RIGHT) {
-			ArrayList<Tile> tileX = tiles.get(tile.getX() + 1);
-			if (tileX == null) { return; }
-			newTile = tileX.get(tile.getY());
-		} else if (dir == Direction.UP) {
-			newTile = tiles.get(tile.getX()).get(tile.getY() - 1);
-		} else if (dir == Direction.DOWN) {
-			newTile = tiles.get(tile.getX()).get(tile.getY() + 1);
+		try {
+			if (dir == Direction.LEFT) {
+				ArrayList<Tile> tileX = tiles.get(tile.getX() - 1);
+				if (tileX == null) { return; }
+				newTile = tileX.get(tile.getY());
+			} else if (dir == Direction.RIGHT) {
+				ArrayList<Tile> tileX = tiles.get(tile.getX() + 1);
+				if (tileX == null) { return; }
+				newTile = tileX.get(tile.getY());
+			} else if (dir == Direction.UP) {
+				newTile = tiles.get(tile.getX()).get(tile.getY() - 1);
+			} else if (dir == Direction.DOWN) {
+				newTile = tiles.get(tile.getX()).get(tile.getY() + 1);
+			}
+		} catch (ArrayIndexOutOfBoundsException ex) {
+			return;
 		}
-		if (newTile == null || tileDictionary.getTileIsWall(newTile.getName())) { Misc.showDialog("Non-valid position (or wall)!"); return; }
+		if (newTile == null || tileDictionary.getTileIsWall(newTile.getName())) { return; }
 		tile.removeEnt(ent);
 		newTile.addEnt(ent);
+		ent.setTile(newTile);
 	}
 
 	public Tile getTile(int x, int y) {

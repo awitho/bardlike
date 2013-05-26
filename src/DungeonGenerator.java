@@ -11,7 +11,6 @@ public class DungeonGenerator {
 	}
 
 	public static void generateHallway(int x1, int y1, int x2, int y2) {
-		
 	}
 
 	public static ArrayList<ArrayList<Tile>> generateDungeon(int w, int h, TileDictionary tileDictionary) {
@@ -28,7 +27,7 @@ public class DungeonGenerator {
 				tileY.add(new Tile(tileDictionary, temp[(int) (Math.random() * temp.length - 1)], x, y).setSeen(true).setInLos(Misc.randomBool()));
 			}
 			tiles.add(tileY);
-		}
+		}	
 		return tiles;
 	}
 }
