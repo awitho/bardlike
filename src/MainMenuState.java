@@ -27,7 +27,7 @@ public class MainMenuState extends BasicGameState {
 		try {
 			this.titleImg = new Image("./gfx/title.png");
 			this.backImg = new Image("./gfx/mainback.png").getScaledCopy(container.getWidth(), container.getHeight());
-				} catch (Exception e) {
+		} catch (Exception e) {
 			Misc.showDialog(e);
 			return;
 		}
@@ -57,6 +57,8 @@ public class MainMenuState extends BasicGameState {
 		if( container.getInput().isKeyPressed(Input.KEY_P)) {
 			s.enterState(2); // Jump to main game state.
 		} else if (container.getInput().isKeyPressed(Input.KEY_H)) {
+			HelpMenuState state = (HelpMenuState) s.getState(3);
+			state.setBackImg(backImg);
 			s.enterState(3);
 		} else if (container.getInput().isKeyPressed(Input.KEY_Q) || container.getInput().isKeyPressed(Input.KEY_ESCAPE)) {
 			container.exit();

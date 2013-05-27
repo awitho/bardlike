@@ -7,8 +7,10 @@ import javax.swing.JOptionPane;
  * @version 1
  */
 public class Misc {
+	public static final int TargetSize = 64;
+
 	/**
-	 * Popup dialog, replaces console println
+	 * Pop-up dialog, replaces console println
 	 * @param obj Any object to print to console.
 	 */
 	public static void showDialog(Object obj) {
@@ -26,6 +28,13 @@ public class Misc {
 		return (start + percent*(end - start));
 	}
 
+	/**
+	 * Clamps a value between an upper and lower value.
+	 * @param value Value to clamp.
+	 * @param low Lower value to clamp to.
+	 * @param high Higher value to clamp to.
+	 * @return Clamped value
+	 */
 	public static int clamp(int value, int low, int high) {
 		if (value < low) 
 			return low;

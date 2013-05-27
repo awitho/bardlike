@@ -31,11 +31,10 @@ public class ClassSelectState extends BasicGameState {
 		classes = new GameConfig("classes.json").getArray();
 		classSprites = new SpriteSheet("./gfx/charcreation.png", 64, 64);
 
-
 		for(int i = 0; i < classes.size(); i++) {
 			JsonObject character = classes.get(i).getAsJsonObject();
 			charSprite.add(classSprites.getSubImage(character.get("sx").getAsInt(), character.get("sy").getAsInt()));
-			charNames.add(character.get("name").getAsString());
+			charNames.add("(" + character.get("hotkey").getAsString() + ")" + character.get("name").getAsString().substring(1));
 		}
 	}
 

@@ -20,8 +20,7 @@ public class HelpMenuState extends BasicGameState {
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
-		help = new GameConfig("loc/help_en.json").getArray(); // String is getting stripped of all spaces, fix!
-		this.backImg = new Image("./gfx/mainback.png");
+		help = new GameConfig("loc/help_en.json").getArray();
 	}
 
 	@Override
@@ -41,6 +40,10 @@ public class HelpMenuState extends BasicGameState {
 		if(gc.getInput().isKeyPressed(Input.KEY_ESCAPE)) {
 			s.enterState(1); // Jump to main menu!
 		}
+	}
+	
+	public void setBackImg(Image img) {
+		this.backImg = img;
 	}
 
 	@Override

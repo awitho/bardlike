@@ -1,4 +1,5 @@
 import com.google.gson.JsonObject;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -17,6 +18,7 @@ public class MainGameState extends BasicGameState {
 	private GameMap map;
 	private SpriteSheet playerSprites;
 	private Player player;
+	private Camera cam;
 	public TileDictionary tileDictionary;
 
 	private int transX = 0;
@@ -34,9 +36,11 @@ public class MainGameState extends BasicGameState {
 
 	@Override
 	public void render(GameContainer container, StateBasedGame s, Graphics g) throws SlickException {
-		g.translate(transX, transY);
-		map.draw(g);
-		//player.draw(g);
+		//g.translate(transX, transY);
+		cam.translate(g, container);
+		g.setColor(Color.white);
+		g.drawRect(-1,-1, map.getScaledWidth() + 1, map.getScaledHeight() + 1);
+		map.draw(g, player, cam);
 	}
 
 	@Override
@@ -45,8 +49,6 @@ public class MainGameState extends BasicGameState {
 			container.exit();
 		}
 
-		transX = (player.getX() * -1) + (5*64);
-		transY = (player.getY() * -1) + (5*64);
 		if (container.getInput().isKeyPressed(Input.KEY_LEFT)) {
 			player.move(Direction.LEFT);
 		}
@@ -60,6 +62,9 @@ public class MainGameState extends BasicGameState {
 			player.move(Direction.UP);
 		}
 
+		//transX = (player.getX() * -1) + (5*64);
+		//transY = (player.getY() * -1) + (5*64);
+		
 		/*
 		//If statements here for testing purposes, make a method for it later.
 		//Makes it so the map doesn't go out of screen bounds (A bit buggy atm).
@@ -95,5 +100,6 @@ public class MainGameState extends BasicGameState {
 
 	public void setPlayer(SpriteSheet sprite, JsonObject data) {
 		player = new Player(sprite, data, map);
+		cam = new Camera(player, map);
 	}
 }

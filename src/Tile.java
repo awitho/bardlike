@@ -13,7 +13,7 @@ public class Tile {
 	private int ix, iy;
 	private String name;
 	private boolean inLos, playerSaw, isWall;
-	private ArrayList<Entity> containedEnts;
+	private ArrayList<Entity> containedEnts = new ArrayList<>();;
 	private Image spr, overlay;
 
 	private static final Color overlayColor = new Color(0, 0, 0, 200);
@@ -24,9 +24,8 @@ public class Tile {
 		ix = x;
 		iy = y;
 		overlay = tileDictionary.getTileImageByName("Overlay");
-		isWall = tileDictionary.getTileIsWall(tile); // Ditto. \/
+		isWall = tileDictionary.getTileIsWall(tile); // Ditto.
 		spr = tileDictionary.getTileImageByName(tile); // Grab a reference for the tile image from the tile dictionary, no need to make our own copy!
-		containedEnts = new ArrayList<>();
 	}
 
 	public int getWidth() {
@@ -57,12 +56,14 @@ public class Tile {
 
 	public void addEnt(Entity ent) {
 		System.out.println("Attempting to add ent: " + ent + " to " + this);
-		System.out.println(containedEnts.add(ent) + "");
+		containedEnts.add(ent);
+		System.out.println(containedEnts);
 	}
 
 	public void removeEnt(Entity ent) {
 		System.out.println("Attempting to remove ent: " + ent + " from " + this);
-		System.out.println(containedEnts.remove(ent) + "");
+		containedEnts.remove(ent);
+		System.out.println(containedEnts);
 	}
 
 	public int getX() {
@@ -90,7 +91,7 @@ public class Tile {
 		g.drawImage(spr, x, y);
 		if (containedEnts != null) {
 			for (int i = 0; i < containedEnts.size(); i++) {
-				containedEnts.get(i).draw(g);
+				containedEnts.get(i).draw(g, x, y);
 			}
 		}
 		if (playerSaw && !inLos) {
@@ -99,5 +100,9 @@ public class Tile {
 	}
 
 	public void update() {	
+	}
+	
+	public String toString() {
+		return name + ": (" + ix + ", " + iy +")";
 	}
 }

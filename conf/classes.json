@@ -1,47 +1,62 @@
  [
     {
-        "name": "(B)ard",
-        "sx": 0,
-        "sy": 0,
-        "str": 1,
-        "int": 1,
-        "dex": 1,
-        "end": 1
+        "name": "Bard",
+        "hotkey": "B",
+		"sx": 0,
+		"sy": 0,
+		"stats": {
+			"str": 1,
+			"int": 1,
+			"dex": 1,
+			"end": 1
+		}
     },
     {
-        "name": "(M)age",
+        "name": "Mage",
+        "hotkey": "M",
+		"sx": 1,
+		"sy": 0,
+		"stats": {
+			"str": 1,
+			"int": 1,
+			"dex": 1,
+			"end": 1
+		}
+    },
+    {
+        "name": "Paladin",
+        "hotkey": "P",
+		"sx": 0,
+		"sy": 1,
+		"stats": {
+			"str": 1,
+			"int": 1,
+			"dex": 1,
+			"end": 1
+		}
+    },
+    {
+        "name": "Warrior",
+        "hotkey": "W",
         "sx": 1,
-        "sy": 0,
-        "str": 1,
-        "int": 1,
-        "dex": 1,
-        "end": 1
-    },
-    {
-        "name": "(P)aladin",
-        "sx": 0,
         "sy": 1,
-        "str": 1,
-        "int": 1,
-        "dex": 1,
-        "end": 1
+        "stats": {
+			"str": 1,
+			"int": 1,
+			"dex": 1,
+			"end": 1
+		}
     },
     {
-        "name": "(W)arrior",
-        "sx": 1,
-        "sy": 1,
-        "str": 1,
-        "int": 1,
-        "dex": 1,
-        "end": 1
-    },
-    {
-        "name": "(R)ogue",
+        "name": "Rogue",
+        "hotkey": "R",
         "sx": 0,
         "sy": 2,
-        "str": 1,
-        "int": 1,
-        "dex": 1,
-        "end": 1
+		"stats": {
+			"str": 1,
+			"int": 1,
+			"dex": 1,
+			"end": 1
+		}
     }
 ]

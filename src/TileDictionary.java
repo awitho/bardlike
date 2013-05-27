@@ -23,8 +23,7 @@ public class TileDictionary {
 			JsonArray tiles = new GameConfig("tiles.json").getArray();
 			for (int i = 0; i < tiles.size(); i++) {
 				JsonObject tile = tiles.get(i).getAsJsonObject();
-				System.out.println(tile);
-				imgs.put(tile.get("name").getAsString(), sprites.getSubImage(tile.get("sx").getAsInt(), tile.get("sy").getAsInt()).getScaledCopy(2));
+				imgs.put(tile.get("name").getAsString(), sprites.getSubImage(tile.get("sx").getAsInt(), tile.get("sy").getAsInt()).getScaledCopy(Misc.TargetSize, Misc.TargetSize));
 				walls.put(tile.get("name").getAsString(), tile.get("wall").getAsBoolean());
 			}
 			imgs.put("Overlay", new Image("gfx/tile_overlay.png"));
