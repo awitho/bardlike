@@ -19,6 +19,7 @@ public class MainGameState extends BasicGameState {
 	private SpriteSheet playerSprites;
 	private Player player;
 	private Camera cam;
+	private Inventory inventory;
 	public TileDictionary tileDictionary;
 
 	private int transX = 0;
@@ -41,6 +42,7 @@ public class MainGameState extends BasicGameState {
 		g.setColor(Color.white);
 		g.drawRect(-1,-1, map.getScaledWidth() + 1, map.getScaledHeight() + 1);
 		map.draw(g, player, cam);
+		inventory.draw(g);
 	}
 
 	@Override
@@ -61,36 +63,25 @@ public class MainGameState extends BasicGameState {
 		if (container.getInput().isKeyPressed(Input.KEY_UP)) {
 			player.move(Direction.UP);
 		}
+		
+		if(container.getInput().isKeyPressed(Input.KEY_I)) {
+			inventory.setVisible(true);
+		}
+		
+		if(container.getInput().isKeyPressed(Input.KEY_C)) {
+			inventory.setVisible(false);
+		}
+		
+		if(inventory.isOpen()) {
+			player.isHeld(true);
+		}else {
+			player.isHeld(false);
+		}
+		
+		
 
 		//transX = (player.getX() * -1) + (5*64);
 		//transY = (player.getY() * -1) + (5*64);
-		
-		/*
-		//If statements here for testing purposes, make a method for it later.
-		//Makes it so the map doesn't go out of screen bounds (A bit buggy atm).
-		if(transY > 0 && transX + map.getScaledWidth() <= container.getWidth()) {
-			transX = -container.getWidth();
-			transY = 0;
-		} else if (transX + map.getScaledWidth() <= container.getWidth() && transY + map.getScaledHeight() <= container.getHeight()) {
-			transX = -container.getWidth();
-			transY = -container.getHeight();
-		} else if (transX > 0 && transY + map.getScaledWidth() <= container.getHeight()) {
-			transX = 0;
-			transY = -container.getHeight();
-		} else if (transY + map.getScaledHeight() <= container.getHeight()) {
-			transY = -container.getHeight();
-		} else if (transX + map.getScaledWidth() <= container.getWidth()) {
-			transX = -container.getWidth();
-		} else if(transX > 0) {
-			transX = 0;
-		} else if (transY > 0) {
-			transY = 0;
-		} else if (transX > 0 && transY > 0) {
-			transX = 0;
-			transY = 0;
-		}
-		*/
-		//System.out.println(transY);
 	}
 
 	@Override
@@ -100,6 +91,7 @@ public class MainGameState extends BasicGameState {
 
 	public void setPlayer(SpriteSheet sprite, JsonObject data) {
 		player = new Player(sprite, data, map);
+		inventory = new Inventory(player);
 		cam = new Camera(player, map);
 	}
 }

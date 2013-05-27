@@ -21,6 +21,32 @@ public class Camera {
 		x = -(ply.getX() - gc.getWidth()/2) - 32;
 		y = -(ply.getY() - gc.getHeight()/2) - 32;
 		g.translate(x, y);
+		
+		/*
+		//If statements here for testing purposes, make a method for it later.
+		//Makes it so the map doesn't go out of screen bounds (A bit buggy atm).
+		if(transY > 0 && transX + map.getScaledWidth() <= container.getWidth()) {
+			transX = -container.getWidth();
+			transY = 0;
+		} else if (transX + map.getScaledWidth() <= container.getWidth() && transY + map.getScaledHeight() <= container.getHeight()) {
+			transX = -container.getWidth();
+			transY = -container.getHeight();
+		} else if (transX > 0 && transY + map.getScaledWidth() <= container.getHeight()) {
+			transX = 0;
+			transY = -container.getHeight();
+		} else if (transY + map.getScaledHeight() <= container.getHeight()) {
+			transY = -container.getHeight();
+		} else if (transX + map.getScaledWidth() <= container.getWidth()) {
+			transX = -container.getWidth();
+		} else if(transX > 0) {
+			transX = 0;
+		} else if (transY > 0) {
+			transY = 0;
+		} else if (transX > 0 && transY > 0) {
+			transX = 0;
+			transY = 0;
+		}
+		*/
 	}
 	
 	public int getTileToDir(Direction dir) {

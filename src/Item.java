@@ -1,12 +1,14 @@
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SpriteSheet;
+/**
+ * A class that makes the Items for the game.
+ * 
+ * @author Bobby Henley
+ * @version 1
+ */
 
+import org.newdawn.slick.Image;
 
 public class Item extends Entity {
-	public Item(ItemDictionary itemDictionary, Image img, GameMap map, String name) {
-		super(itemDictionary.getSprites().getSubImage
-				(itemDictionary.getItem().get("sx").getAsInt(), 
-						itemDictionary.getItem().get("sy").getAsInt()), map);
+	public Item(ItemDictionary itemDictionary, GameMap map, String name) {
+		super(itemDictionary.getImage(name), map);
 	}
-
 }
