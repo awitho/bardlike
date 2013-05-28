@@ -53,18 +53,21 @@ public class MainMenuState extends BasicGameState {
 
 	@Override
 	public void update(GameContainer container, StateBasedGame s, int delta) throws SlickException {
-		if (loaded < 100) { loaded += 3; }
-		if( container.getInput().isKeyPressed(Input.KEY_P)) {
-			s.enterState(2); // Jump to main game state.
-		} else if (container.getInput().isKeyPressed(Input.KEY_H)) {
-			HelpMenuState state = (HelpMenuState) s.getState(3);
-			state.setBackImg(backImg);
-			s.enterState(3);
-		} else if (container.getInput().isKeyPressed(Input.KEY_Q) || container.getInput().isKeyPressed(Input.KEY_ESCAPE)) {
-			container.exit();
-		} else if (container.getInput().isKeyDown(Input.KEY_SPACE)) {
-			loaded = 0;
+		if(s.getCurrentState() == s.getState(1)) {
+			if (loaded < 100) { loaded += 3; }
+			if(container.getInput().isKeyPressed(Input.KEY_P)) {
+				s.enterState(2); // Jump to main game state.
+			} else if (container.getInput().isKeyPressed(Input.KEY_H)) {
+				HelpMenuState state = (HelpMenuState) s.getState(3);
+				state.setBackImg(backImg);
+				s.enterState(3);
+			} else if (container.getInput().isKeyPressed(Input.KEY_Q) || container.getInput().isKeyPressed(Input.KEY_ESCAPE)) {
+				container.exit();
+			} else if (container.getInput().isKeyDown(Input.KEY_SPACE)) {
+				loaded = 0;
+			}
 		}
+		container.getInput().clearKeyPressedRecord();
 	}
 
 	@Override

@@ -1,0 +1,14 @@
+[
+	{
+		"name":"Steel Sword",
+		"sx":1,
+		"sy":0,
+		"atk":20
+	},
+	{
+		"name":"Leather Helmet",
+		"sx":1,
+		"sy":11,
+		"def":20
+	}
+]
