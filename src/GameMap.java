@@ -13,12 +13,14 @@ public class GameMap {
 	private int width, height;
 	private ArrayList<ArrayList<Tile>> tiles; // 2d array list of tiles.
 	private SpriteSheet sprites;
+	private Item item;
 
 	public GameMap(int w, int h, TileDictionary tileDictionary) {
 		this.tileDictionary = tileDictionary;
 		width = w;
 		height = h;
 		tiles = DungeonGenerator.generateDungeon(w, h, tileDictionary);
+		//item = new Item(new ItemDictionary(), this, "Leather Helmet");
 	}
 
 	public void draw(Graphics g, Player ply, Camera cam) { // Make it so it only renders near player 3-5 blocks!

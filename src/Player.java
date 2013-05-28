@@ -13,6 +13,7 @@ public class Player extends Entity {
 	private HashMap<String, Integer> godsFavor = new HashMap<>();
 	private HashMap<String, Integer> stats = new HashMap<>();
 	private String plyClass = "";
+	private boolean held;
 
 	public Player(SpriteSheet ss, JsonObject data, GameMap map) {
 		super(ss.getSubImage(data.get("sx").getAsInt(), data.get("sy").getAsInt()), map);
@@ -23,8 +24,18 @@ public class Player extends Entity {
 	}
 
 	public void move(Direction dir) {
-		System.out.println("Attempting to move in dir: " + dir);
-		getMap().moveEnt(getTile(), this, dir);
+		if(!held) {
+			System.out.println("Attempting to move in dir: " + dir);
+			getMap().moveEnt(getTile(), this, dir);
+		}
+	}
+	
+	public void isHeld(boolean b) {
+		held = b;
+	}
+	
+	public HashMap getStats() {
+		return stats;
 	}
 	
 	public String toString() {

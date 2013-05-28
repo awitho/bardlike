@@ -20,8 +20,8 @@ public class Entity {
 		iid++;
 		this.img = img;
 		this.map = map;
-		x = 0;
-		y = 0;
+		x = 12;
+		y = 12;
 		curTile = map.getTile(x, y);
 		curTile.addEnt(this);
 	}
