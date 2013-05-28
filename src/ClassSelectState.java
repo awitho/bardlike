@@ -74,6 +74,7 @@ public class ClassSelectState extends BasicGameState {
 		if (chosen > -1) {
 			main.setPlayer(classSprites, classes.get(chosen).getAsJsonObject());	
 		}
+		container.getInput().clearKeyPressedRecord();
 	}
 
 	@Override

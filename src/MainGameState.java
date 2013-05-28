@@ -20,6 +20,7 @@ public class MainGameState extends BasicGameState {
 	private Player player;
 	private Camera cam;
 	private Inventory inventory;
+	private Input input;
 	public TileDictionary tileDictionary;
 
 	private int transX = 0;
@@ -47,10 +48,9 @@ public class MainGameState extends BasicGameState {
 
 	@Override
 	public void update(GameContainer container, StateBasedGame s, int delta) throws SlickException {
-		if (container.getInput().isKeyPressed(Input.KEY_ESCAPE)) {
+		if (container.getInput().isKeyPressed(Input.KEY_ESCAPE) && !inventory.isOpen()) {
 			container.exit();
 		}
-
 		if (container.getInput().isKeyPressed(Input.KEY_LEFT)) {
 			player.move(Direction.LEFT);
 		}
@@ -63,25 +63,18 @@ public class MainGameState extends BasicGameState {
 		if (container.getInput().isKeyPressed(Input.KEY_UP)) {
 			player.move(Direction.UP);
 		}
-		
 		if(container.getInput().isKeyPressed(Input.KEY_I)) {
 			inventory.setVisible(true);
 		}
-		
 		if(container.getInput().isKeyPressed(Input.KEY_C)) {
 			inventory.setVisible(false);
 		}
-		
 		if(inventory.isOpen()) {
 			player.isHeld(true);
 		}else {
 			player.isHeld(false);
 		}
-		
-		
-
-		//transX = (player.getX() * -1) + (5*64);
-		//transY = (player.getY() * -1) + (5*64);
+		container.getInput().clearKeyPressedRecord();
 	}
 
 	@Override
