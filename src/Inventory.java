@@ -48,10 +48,6 @@ public class Inventory implements Menu {
 					g.drawRect(i + ply.getX() - INV_OFFSET, (j + 80) + ply.getY() - INV_OFFSET, 32, 32);
 				}
 			}
-<<<<<<< HEAD
-			//g.drawString("Endurance: " + playerStats.get("end").toString(), (width/2 + 100) - INV_OFFSET, 50);
-=======
->>>>>>> 189b31bcfe7f7b485a847ba232a70946e7c83fe6
 			g.drawString("Inventory", 320/2 - 40 + ply.getX() - INV_OFFSET, 10 + ply.getY() - INV_OFFSET);
 			g.drawString("Stats", (width - 130) + ply.getX() - INV_OFFSET, 10 + ply.getY() - INV_OFFSET);
 			g.drawRect(ply.getX() - INV_OFFSET, ply.getY() - INV_OFFSET, width, height);
