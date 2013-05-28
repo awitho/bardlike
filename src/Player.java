@@ -34,6 +34,10 @@ public class Player extends Entity {
 		held = b;
 	}
 	
+	public HashMap getStats() {
+		return stats;
+	}
+	
 	public String toString() {
 		return plyClass + ": " + stats;
 	}
