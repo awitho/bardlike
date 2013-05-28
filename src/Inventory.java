@@ -37,7 +37,7 @@ public class Inventory implements Menu {
 	public void draw(Graphics g) {
 		int width = 550, height = 400;
 		if(visible) {
-			g.setColor(Color.black);
+			//g.setColor(Color.black);
 			g.fillRect(ply.getX() - INV_OFFSET, ply.getY() - INV_OFFSET, width, height);
 			for(int i = 0; i < 320; i+=32) {
 				for(int j = 0; j < height - 80; j+=32) {
