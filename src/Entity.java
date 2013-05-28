@@ -8,22 +8,25 @@ import org.newdawn.slick.Image;
  * @author Alex
  */
 public class Entity {
-	public int id;
+	private static int iid = 1;
+	private int id;
 	private int x, y;
 	private Image img;
 	private GameMap map;
 	private Tile curTile;
 
 	public Entity(Image img, GameMap map) {
+		id = iid;
+		iid++;
 		this.img = img;
 		this.map = map;
-		x = 0;
-		y = 0;
+		x = 12;
+		y = 12;
 		curTile = map.getTile(x, y);
 		curTile.addEnt(this);
 	}
 
-	public void draw(Graphics g) {
+	public void draw(Graphics g, int x, int y) {
 		g.drawImage(img, x, y);
 	}
 
@@ -33,6 +36,8 @@ public class Entity {
 
 	public void setTile(Tile tile) {
 		curTile = tile;
+		x = tile.getX() * Misc.TargetSize;
+		y = tile.getY() * Misc.TargetSize;
 	}
 
 	public Tile getTile() {
@@ -66,5 +71,9 @@ public class Entity {
 	public void setPos(int x, int y){
 		this.x = x;
 		this.y = y;
+	}
+	
+	public String toString() {
+		return "Entity: " + id + " (" + x + ", " + y + ")";
 	}
 }

@@ -1,6 +1,7 @@
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import java.util.HashMap;
+import java.util.Map;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
 
@@ -23,9 +24,12 @@ public class TileDictionary {
 			JsonArray tiles = new GameConfig("tiles.json").getArray();
 			for (int i = 0; i < tiles.size(); i++) {
 				JsonObject tile = tiles.get(i).getAsJsonObject();
-				System.out.println(tile);
-				imgs.put(tile.get("name").getAsString(), sprites.getSubImage(tile.get("sx").getAsInt(), tile.get("sy").getAsInt()).getScaledCopy(2));
-				walls.put(tile.get("name").getAsString(), tile.get("wall").getAsBoolean());
+				imgs.put(tile.get("name").getAsString(), sprites.getSubImage(tile.get("sx").getAsInt(), tile.get("sy").getAsInt()).getScaledCopy(Misc.TargetSize, Misc.TargetSize));
+				
+				Boolean isWall = tile.get("wall").getAsBoolean();
+				if (isWall) {
+					walls.put(tile.get("name").getAsString(), isWall);
+				}
 			}
 			imgs.put("Overlay", new Image("gfx/tile_overlay.png"));
 			walls.put("Overlay", false);
@@ -40,10 +44,21 @@ public class TileDictionary {
 	}
 
 	public boolean getTileIsWall(String name) {
-		return walls.get(name);
+		Boolean isWall = walls.get(name);
+		if (isWall != null) { return true; }
+		return false;
 	}
 
 	public Image getTileImageByName(String name) {
 		return imgs.get(name);
+	}
+
+	public String getRandomWall() {
+		for (Map.Entry<String, Boolean> ele : walls.entrySet()) {
+			if ((int) (Math.random() * 2) - 1 == 0) {
+				return ele.getKey();
+			}
+		}
+		return "";
 	}
 }

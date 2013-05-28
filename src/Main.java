@@ -16,7 +16,7 @@ public class Main extends StateBasedGame {
 
 	public static void main(String[] args) throws SlickException {
 		AppGameContainer game = new AppGameContainer(new Main("bardLIKE"));
-		game.setDisplayMode(1024, 768, false);
+		game.setDisplayMode(800, 600, false);
 
 		game.setVSync(true);
 		game.setTargetFrameRate(60);
