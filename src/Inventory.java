@@ -6,6 +6,7 @@
  */
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -13,22 +14,28 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 public class Inventory implements Menu {
-	private int INV_OFFSET = 200;
+	private int width = 550, height = 400;
+	private int INV_OFFSET_X = width/2 - 30, INV_OFFSET_Y = height/2 - 30;
 	private boolean visible;
 	private HashMap<String, Integer> playerStats;
 	private Player ply;
+	private GameConfig invMenu;
+	
 	
 	public Inventory(Player p) {
 		ply = p;
 		playerStats = p.getStats();
+		invMenu = new GameConfig("./loc/inventorytext.json");
+		
 	}
 
 	@Override
 	public void setVisible(boolean b) {
 		visible = b;
-		
 	}
 	
 	@Override
@@ -38,19 +45,23 @@ public class Inventory implements Menu {
 
 	@Override
 	public void draw(Graphics g) {
-		int width = 550, height = 400;
 		if(visible) {
 			g.setColor(Color.black);
-			g.fillRect(ply.getX() - INV_OFFSET, ply.getY() - INV_OFFSET, width, height);
+			g.fillRect(ply.getX() - INV_OFFSET_X, ply.getY() - INV_OFFSET_Y, width, height);
 			for(int i = 0; i < 320; i+=32) {
 				for(int j = 0; j < height - 80; j+=32) {
 					g.setColor(Color.white);
-					g.drawRect(i + ply.getX() - INV_OFFSET, (j + 80) + ply.getY() - INV_OFFSET, 32, 32);
+					g.drawRect(i + ply.getX() - INV_OFFSET_X, (j + 80) + ply.getY() - INV_OFFSET_Y, 32, 32);
 				}
 			}
-			g.drawString("Inventory", 320/2 - 40 + ply.getX() - INV_OFFSET, 10 + ply.getY() - INV_OFFSET);
-			g.drawString("Stats", (width - 130) + ply.getX() - INV_OFFSET, 10 + ply.getY() - INV_OFFSET);
-			g.drawRect(ply.getX() - INV_OFFSET, ply.getY() - INV_OFFSET, width, height);
+			
+			for (Entry<String, JsonElement> ele : invMenu.getObject().entrySet()) {
+				//g.drawString(ele.getValue().getAsString().matches("#(.*)"), 50, 50);
+			}
+			
+			g.drawString(invMenu.getValueAsString("#title"), 320/2 - 40 + ply.getX() - INV_OFFSET_X, 10 + ply.getY() - INV_OFFSET_Y);
+			g.drawString(invMenu.getValueAsString("#stat"), (width - 130) + ply.getX() - INV_OFFSET_X, 10 + ply.getY() - INV_OFFSET_Y);
+			g.drawRect(ply.getX() - INV_OFFSET_X, ply.getY() - INV_OFFSET_Y, width, height);
 		}
 	}
 }

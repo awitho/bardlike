@@ -13,7 +13,7 @@ public class DungeonGenerator {
 		for (int x1 = x; x1 < width; x1++) {
 			for (int y1 = y; y1 < height; y1++) {
 				if (x1 == 0 || y1 == 0) {
-					tileDictionary.getRandomWall()
+					tileDictionary.getRandomWall();
 				}
 			}
 		}
@@ -26,8 +26,8 @@ public class DungeonGenerator {
 		DungeonGenerator.tileDictionary = tileDictionary;
 
 		ArrayList<ArrayList<Tile>> tiles = new ArrayList<>();
-		generateRoom(tiles, 0, 0, 10, 10);
-		/*String[] temp = new String[tileDictionary.size()];
+		//generateRoom(tiles, 0, 0, 10, 10);
+		String[] temp = new String[tileDictionary.size()];
 		temp[0] = "Stone";
 		temp[1] = "Wood";
 		temp[2] = "Glass";
@@ -39,7 +39,7 @@ public class DungeonGenerator {
 				tileY.add(new Tile(tileDictionary, temp[(int) (Math.random() * temp.length - 1)], x, y).setSeen(true).setInLos(Misc.randomBool()));
 			}
 			tiles.add(tileY);
-		}*/
+		}
 		return tiles;
 	}
 }

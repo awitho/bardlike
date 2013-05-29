@@ -70,6 +70,11 @@ public class GameConfig {
 		}
 		return data.getAsJsonArray();
 	}
+	
+	public JsonObject getObject() {
+		if(aData != null) { return null; }
+		return data;
+	}
 
 	public JsonObject getSubObject(String key) {
 		if (aData != null) { return null; }

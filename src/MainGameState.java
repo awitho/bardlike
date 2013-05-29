@@ -72,13 +72,6 @@ public class MainGameState extends BasicGameState {
 			inventory.setVisible(false);
 		}
 		
-		if(container.getInput().isKeyPressed(Input.KEY_I)) {
-			inventory.setVisible(true);
-		}
-		if(container.getInput().isKeyPressed(Input.KEY_C)) {
-			inventory.setVisible(false);
-		}
-		
 		if(inventory.isOpen()) {
 			player.isHeld(true);
 		}else {
