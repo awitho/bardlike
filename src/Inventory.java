@@ -54,10 +54,10 @@ public class Inventory implements Menu {
 					g.drawRect(i + ply.getX() - INV_OFFSET_X, (j + 80) + ply.getY() - INV_OFFSET_Y, 32, 32);
 				}
 			}
-			
-			for (Entry<String, JsonElement> ele : invMenu.getObject().entrySet()) {
-				//g.drawString(ele.getValue().getAsString().matches("#(.*)"), 50, 50);
-			}
+			// "" + ply.getStat(
+			/*for (Entry<String, JsonElement> ele : invMenu.getObject().entrySet()) {
+				g.drawString(ele.getValue().getAsString().replace("%n", ele.getKey().split("#(.*)")[0]), 50, 50);
+			}*/
 			
 			g.drawString(invMenu.getValueAsString("#title"), 320/2 - 40 + ply.getX() - INV_OFFSET_X, 10 + ply.getY() - INV_OFFSET_Y);
 			g.drawString(invMenu.getValueAsString("#stat"), (width - 130) + ply.getX() - INV_OFFSET_X, 10 + ply.getY() - INV_OFFSET_Y);
