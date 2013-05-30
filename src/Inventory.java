@@ -57,7 +57,7 @@ public class Inventory implements Menu {
 			
 			for(int x = 0; x < 10; x+=32) {
 				for(int y = 0; y < 10; x+=32) {
-					g.drawImage(ply.getPlayerItems().get(x).getItemImage().getScaledCopy(32, 32), x + ply.getX() - INV_OFFSET_X, (y + 80) + ply.getY() - INV_OFFSET_Y);
+					g.drawImage(ply.getPlayerItems().get(x).getImage().getScaledCopy(32, 32), x + ply.getX() - INV_OFFSET_X, (y + 80) + ply.getY() - INV_OFFSET_Y);
 				}
 			}
 					
