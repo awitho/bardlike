@@ -25,10 +25,6 @@ public class MainGameState extends BasicGameState {
 
 	private int transX = 0;
 	private int transY = 0;
-		
-	public MainGameState() {
-		
-	}
 
 	@Override
 	public void init(GameContainer container, StateBasedGame s) throws SlickException {
@@ -40,8 +36,10 @@ public class MainGameState extends BasicGameState {
 	public void render(GameContainer container, StateBasedGame s, Graphics g) throws SlickException {
 		//g.translate(transX, transY);
 		cam.translate(g, container);
+
 		g.setColor(Color.white);
 		g.drawRect(-1,-1, map.getScaledWidth() + 1, map.getScaledHeight() + 1);
+
 		map.draw(g, player, cam);
 		inventory.draw(g);
 	}
@@ -72,9 +70,9 @@ public class MainGameState extends BasicGameState {
 			inventory.setVisible(false);
 		}
 		
-		if(inventory.isOpen()) {
+		if (inventory.isOpen()) {
 			player.isHeld(true);
-		}else {
+		} else {
 			player.isHeld(false);
 		}
 
