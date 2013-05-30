@@ -20,10 +20,10 @@ public class Entity {
 		iid++;
 		this.img = img;
 		this.map = map;
-		x = 12;
-		y = 12;
-		curTile = map.getTile(x, y);
-		curTile.addEnt(this);
+		//x = 12;
+		//y = 12;
+		//curTile = map.getTile(x, y);
+		//curTile.addEnt(this);
 	}
 
 	public void draw(Graphics g, int x, int y) {
@@ -42,6 +42,10 @@ public class Entity {
 
 	public Tile getTile() {
 		return curTile;
+	}
+	
+	public Image getImage() {
+		return img;
 	}
 
 	public GameMap getMap() {
@@ -73,6 +77,7 @@ public class Entity {
 		this.y = y;
 	}
 	
+	@Override
 	public String toString() {
 		return "Entity: " + id + " (" + x + ", " + y + ")";
 	}
