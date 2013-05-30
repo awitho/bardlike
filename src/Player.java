@@ -1,5 +1,9 @@
 import com.google.gson.JsonElement;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
 import com.google.gson.JsonObject;
 import java.util.Map;
@@ -13,14 +17,17 @@ public class Player extends Entity {
 	private HashMap<String, Integer> godsFavor = new HashMap<>();
 	private HashMap<String, Integer> stats = new HashMap<>();
 	private String plyClass = "";
+	private ArrayList<Item> heldItems;
 	private boolean held;
 
 	public Player(SpriteSheet ss, JsonObject data, GameMap map) {
 		super(ss.getSubImage(data.get("sx").getAsInt(), data.get("sy").getAsInt()), map);
+		heldItems = new ArrayList<Item>();
 		plyClass = data.get("name").getAsString();
 		for(Map.Entry<String, JsonElement> entry: data.get("stats").getAsJsonObject().entrySet()){
 				stats.put(entry.getKey(), entry.getValue().getAsInt());
 		}
+		addItem(new Item(new ItemDictionary(), this.getMap(), "Leather Helmet"));
 	}
 
 	public void move(Direction dir) {
@@ -32,6 +39,18 @@ public class Player extends Entity {
 	
 	public void isHeld(boolean b) {
 		held = b;
+	}
+	
+	public void addItem(Item i) {
+		heldItems.add(i);
+	}
+	
+	public void removeItem(Item i) {
+		heldItems.remove(i);
+	}
+	
+	public ArrayList<Item> getPlayerItems() {
+		return heldItems;
 	}
 	
 	public int getStat(String stat) {
