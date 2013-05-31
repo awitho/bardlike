@@ -1,14 +1,22 @@
 [
-	{
-		"name":"Steel Sword",
-		"sx":1,
-		"sy":0,
-		"atk":20
-	},
-	{
-		"name":"Leather Helmet",
-		"sx":1,
-		"sy":11,
-		"def":20
-	}
+    {
+        "name": "Steel Sword",
+        "type": "SWORD",
+        "sx": 1,
+        "sy": 0,
+        "stats": {
+            "atk": 20
+            
+        }
+    },
+    {
+        "name": "Leather Helmet",
+        "type": "HEADGEAR",
+        "sx": 1,
+        "sy": 11,
+        "stats": {
+            "def": 20
+            
+        }
+    }
 ]

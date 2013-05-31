@@ -17,23 +17,32 @@ public class Player extends Entity {
 	private HashMap<String, Integer> godsFavor = new HashMap<>();
 	private HashMap<String, Integer> stats = new HashMap<>();
 	private String plyClass = "";
-	private ArrayList<Item> heldItems;
+	private ArrayList<Item> inventoryItems;
 	private boolean held;
 
 	public Player(SpriteSheet ss, JsonObject data, GameMap map) {
 		super(ss.getSubImage(data.get("sx").getAsInt(), data.get("sy").getAsInt()), map);
-		heldItems = new ArrayList<Item>();
+		inventoryItems = new ArrayList<Item>();
 		plyClass = data.get("name").getAsString();
 		for(Map.Entry<String, JsonElement> entry: data.get("stats").getAsJsonObject().entrySet()){
 				stats.put(entry.getKey(), entry.getValue().getAsInt());
 		}
-		addItem(new Item(new ItemDictionary(), this.getMap(), "Leather Helmet"));
 	}
 
 	public void move(Direction dir) {
 		if(!held) {
 			System.out.println("Attempting to move in dir: " + dir);
-			getMap().moveEnt(getTile(), this, dir);
+			Tile tile = getMap().moveEnt(getTile(), this, dir);
+			
+			if(tile == null) { return; }
+			ArrayList<Entity> foundItems = tile.findType(Item.class);
+			
+			if(foundItems == null) { return; }
+			
+			for(int i = 0; i < foundItems.size(); i++) {
+				foundItems.get(i).setTile(null);
+				addItem((Item) foundItems.get(i));
+			}
 		}
 	}
 	
@@ -42,15 +51,15 @@ public class Player extends Entity {
 	}
 	
 	public void addItem(Item i) {
-		heldItems.add(i);
+		inventoryItems.add(i);
 	}
 	
 	public void removeItem(Item i) {
-		heldItems.remove(i);
+		inventoryItems.remove(i);
 	}
 	
 	public ArrayList<Item> getPlayerItems() {
-		return heldItems;
+		return inventoryItems;
 	}
 	
 	public int getStat(String stat) {

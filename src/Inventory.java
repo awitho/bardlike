@@ -55,12 +55,15 @@ public class Inventory implements Menu {
 				}
 			}
 			
-			for(int x = 0; x < 10; x+=32) {
-				for(int y = 0; y < 10; x+=32) {
-					g.drawImage(ply.getPlayerItems().get(x).getItemImage().getScaledCopy(32, 32), x + ply.getX() - INV_OFFSET_X, (y + 80) + ply.getY() - INV_OFFSET_Y);
+			int countX = 0;
+			int countY = 0;
+			for(int x = 0; x < ply.getPlayerItems().size(); x++) {
+				g.drawImage(ply.getPlayerItems().get(x).getItemImage().getScaledCopy(32, 32), countX + ply.getX() - INV_OFFSET_X, (countY + 80) + ply.getY() - INV_OFFSET_Y);
+				countX += 32;
+				if(countX >= 10*32) {
+					countY+=32;
 				}
 			}
-					
 			
 			// "" + ply.getStat(
 			/*for (Entry<String, JsonElement> ele : invMenu.getObject().entrySet()) {
