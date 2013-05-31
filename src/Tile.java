@@ -55,15 +55,13 @@ public class Tile {
 	}
 
 	public void addEnt(Entity ent) {
-		System.out.println("Attempting to add ent: " + ent + " to " + this);
+		System.out.println("Tile.addEnt: Attempting to add ent: " + ent + " to " + this);
 		containedEnts.add(ent);
-		System.out.println(containedEnts);
 	}
 
 	public void removeEnt(Entity ent) {
-		System.out.println("Attempting to remove ent: " + ent + " from " + this);
+		System.out.println("Tile.addEnt: Attempting to remove ent: " + ent + " from " + this);
 		containedEnts.remove(ent);
-		System.out.println(containedEnts);
 	}
 
 	public int getX() {
@@ -114,6 +112,6 @@ public class Tile {
 	}
 	
 	public String toString() {
-		return name + ": (" + ix + ", " + iy +")";
+		return "(Tile | name: " + name + ", x: " + ix + ", y: " + iy + ", containedEnts: " + containedEnts +")";
 	}
 }

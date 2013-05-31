@@ -36,7 +36,6 @@ public class MainGameState extends BasicGameState {
 
 	@Override
 	public void render(GameContainer container, StateBasedGame s, Graphics g) throws SlickException {
-		//g.translate(transX, transY);
 		cam.translate(g, container);
 
 		g.setColor(Color.white);
@@ -88,6 +87,7 @@ public class MainGameState extends BasicGameState {
 
 	public void setPlayer(SpriteSheet sprite, JsonObject data) {
 		player = new Player(sprite, data, map);
+		player.setTile(map.getTile(0, 0));
 		inventory = new Inventory(player);
 		cam = new Camera(player, map);
 	}

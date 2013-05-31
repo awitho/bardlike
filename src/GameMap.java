@@ -14,7 +14,7 @@ public class GameMap {
 	private ArrayList<ArrayList<Tile>> tiles; // 2d array list of tiles.
 	private SpriteSheet sprites;
 	private Item item;
-	private Player player;
+
 	public GameMap(int w, int h, TileDictionary tileDictionary) {
 		this.tileDictionary = tileDictionary;
 		width = w;
@@ -25,7 +25,6 @@ public class GameMap {
 	}
 
 	public void draw(Graphics g, Player ply, Camera cam) { // Make it so it only renders near player 3-5 blocks!
-		player = ply;
 		for (int x = 0; x < tiles.size(); x++) {
 			ArrayList<Tile> tileX = tiles.get(x);
 			if(tileX.isEmpty()) { continue; }
@@ -39,7 +38,8 @@ public class GameMap {
 	}
 
 	public Tile moveEnt(Tile tile, Entity ent, Direction dir) {
-		System.out.println("(" + ent + ") Moving from: " + tile + " to " + dir);
+		if (tile == null) { System.out.println("GameMap.moveEnt: Given tile is null!"); return null; }
+		System.out.println("GameMap.moveEnt: " + ent + " moving in direction:  " + dir);
 		Tile newTile = null;
 		try {
 			if (dir == Direction.LEFT) {
@@ -61,8 +61,6 @@ public class GameMap {
 			return null;
 		}
 		if (newTile == null || tileDictionary.getTileIsWall(newTile.getName())) { return null; }
-		tile.removeEnt(ent);
-		newTile.addEnt(ent);
 		ent.setTile(newTile);
 		return newTile;
 	}

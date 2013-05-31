@@ -22,7 +22,7 @@ public class Player extends Entity {
 
 	public Player(SpriteSheet ss, JsonObject data, GameMap map) {
 		super(ss.getSubImage(data.get("sx").getAsInt(), data.get("sy").getAsInt()), map);
-		inventoryItems = new ArrayList<Item>();
+		inventoryItems = new ArrayList<>();
 		plyClass = data.get("name").getAsString();
 		for(Map.Entry<String, JsonElement> entry: data.get("stats").getAsJsonObject().entrySet()){
 				stats.put(entry.getKey(), entry.getValue().getAsInt());
@@ -31,9 +31,11 @@ public class Player extends Entity {
 
 	public void move(Direction dir) {
 		if(!held) {
-			System.out.println("Attempting to move in dir: " + dir);
-			Tile tile = getMap().moveEnt(getTile(), this, dir);
-			
+			Tile curTile = getTile();
+			if (curTile == null) { System.out.println("Player.move: Player is not currently in map!"); return; };
+			System.out.println("Player.move: Attempting to move in dir: " + dir);
+			Tile tile = getMap().moveEnt(curTile, this, dir);
+
 			if(tile == null) { return; }
 			ArrayList<Entity> foundItems = tile.findType(Item.class);
 			
@@ -70,7 +72,8 @@ public class Player extends Entity {
 		return stats;
 	}
 	
+	@Override
 	public String toString() {
-		return plyClass + ": " + stats;
+		return "(Player | class: " + plyClass + ", stats: " + stats + ", tileX: " + getTile().getX() + ", tileY: " + getTile().getY() + ")";
 	}
 }

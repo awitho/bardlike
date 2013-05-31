@@ -25,7 +25,7 @@ public class Entity {
 
 	public void draw(Graphics g, int x, int y) {
 		if(!visible) { return; }
-			g.drawImage(img, x, y);
+		g.drawImage(img, x, y);
 	}
 
 	public void update() {
@@ -33,10 +33,11 @@ public class Entity {
 	}
 
 	public void setTile(Tile tile) {
-		visible = true;
-		curTile = tile;
-		if(curTile == null) { visible = false; return; }
-		x = tile.getX() * Misc.TargetSize;
+		if (tile == null) { curTile = tile; visible = false; return; } else { visible = true; } // Make sure entity is visible, now that we are on a tile!
+		if (getTile() != null) { getTile().removeEnt(this); } // Remove from old tile, if we had a last tile.
+		curTile = tile; // Set our current tile.
+		getTile().addEnt(this); // Add to new tile.
+		x = tile.getX() * Misc.TargetSize; // Translate from tile index, to actual world coords.
 		y = tile.getY() * Misc.TargetSize;
 	}
 
@@ -79,6 +80,6 @@ public class Entity {
 	
 	@Override
 	public String toString() {
-		return "Entity: " + id + " (" + x + ", " + y + ")";
+		return "(Entity | id: " + id + ", x: " + x + ", y: " + y + ")";
 	}
 }

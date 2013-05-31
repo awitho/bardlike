@@ -1,22 +1,13 @@
+import java.util.HashMap;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Graphics;
+
 /**
  * A class that handles the players inventory.
  * 
  * @author Bobby Henley
  * @version 1
  */
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map.Entry;
-
-import org.newdawn.slick.Color;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SpriteSheet;
-
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-
 public class Inventory implements Menu {
 	private int width = 550, height = 400;
 	private int INV_OFFSET_X = width/2 - 30, INV_OFFSET_Y = height/2 - 30;
@@ -24,13 +15,11 @@ public class Inventory implements Menu {
 	private HashMap<String, Integer> playerStats;
 	private Player ply;
 	private GameConfig invMenu;
-	
-	
+
 	public Inventory(Player p) {
 		ply = p;
 		playerStats = p.getStats();
-		invMenu = new GameConfig("./loc/inventorytext.json");
-		
+		invMenu = new GameConfig("./loc/inventorytext.json");		
 	}
 
 	@Override
