@@ -27,6 +27,7 @@ public class Player extends Entity {
 		for(Map.Entry<String, JsonElement> entry: data.get("stats").getAsJsonObject().entrySet()){
 				stats.put(entry.getKey(), entry.getValue().getAsInt());
 		}
+		addItem(new Item(new ItemDictionary(), getMap(), "Steel Sword"));
 	}
 
 	public void move(Direction dir) {
