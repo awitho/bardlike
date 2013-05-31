@@ -15,7 +15,15 @@ public class Camera {
 		this.map = map;
 		System.out.println(ply + " " + map);
 	}
-	
+
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
 	public void translate(Graphics g, GameContainer gc) {
 		if (ply == null || map == null) { return; }
 		x = -(ply.getX() - gc.getWidth()/2) - 32;

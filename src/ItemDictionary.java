@@ -1,20 +1,15 @@
+import java.util.HashMap;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SpriteSheet;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
 /**
  * A class to handle items.
  * 
  * @author Bobby Henley
  * @version 1
  */
-
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.SpriteSheet;
-
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-
 public class ItemDictionary {
 	private SpriteSheet itemSprites;
 	private HashMap<String, Image> itemImages;
@@ -28,9 +23,7 @@ public class ItemDictionary {
 			itemSprites = new SpriteSheet("./gfx/testitemsheet.png", 32, 32);
 			for(int i = 0; i < items.size(); i++) {
 				curItem = items.get(i).getAsJsonObject();
-				itemImages.put(curItem.get("name").getAsString(), 
-						itemSprites.getSubImage(curItem.get("sx").getAsInt(), 
-								curItem.get("sy").getAsInt()).getScaledCopy(Misc.TargetSize, Misc.TargetSize));
+				itemImages.put(curItem.get("name").getAsString(), itemSprites.getSubImage(curItem.get("sx").getAsInt(), curItem.get("sy").getAsInt()).getScaledCopy(Misc.TargetSize, Misc.TargetSize));
 			}
 		} catch (Exception e) {
 			Misc.showDialog(e);
@@ -39,8 +32,10 @@ public class ItemDictionary {
 	
 	public JsonObject getStats(String name) {
 		for(int i = 0; i < items.size(); i++) {
-			if(items.get(i).getAsJsonObject().get("name").getAsString().equalsIgnoreCase(name)) {
-				return items.get(i).getAsJsonObject();
+			JsonObject item =  items.get(i).getAsJsonObject();
+			System.out.println(item);
+			if(item.get("name").getAsString().equalsIgnoreCase(name)) {
+				return item.get("stats").getAsJsonObject();
 			}
 		}
 		return null;

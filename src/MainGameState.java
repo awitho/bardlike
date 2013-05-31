@@ -22,6 +22,7 @@ public class MainGameState extends BasicGameState {
 	private Inventory inventory;
 	private Input input;
 	public TileDictionary tileDictionary;
+	public ItemDictionary itemDictionary;
 
 	private int transX = 0;
 	private int transY = 0;
@@ -29,6 +30,7 @@ public class MainGameState extends BasicGameState {
 	@Override
 	public void init(GameContainer container, StateBasedGame s) throws SlickException {
 			tileDictionary = new TileDictionary();
+			itemDictionary = new ItemDictionary();
 			map = new GameMap(24, 24, tileDictionary);
 	}
 

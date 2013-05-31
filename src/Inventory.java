@@ -55,18 +55,21 @@ public class Inventory implements Menu {
 				}
 			}
 			
-			for(int x = 0; x < 10; x+=32) {
-				for(int y = 0; y < 10; x+=32) {
-					g.drawImage(ply.getPlayerItems().get(x).getImage().getScaledCopy(32, 32), x + ply.getX() - INV_OFFSET_X, (y + 80) + ply.getY() - INV_OFFSET_Y);
+			int countX = 0;
+			int countY = 0;
+			for(int x = 0; x < ply.getPlayerItems().size(); x++) {
+				g.drawImage(ply.getPlayerItems().get(x).getImage().getScaledCopy(32, 32), countX + ply.getX() - INV_OFFSET_X, (countY + 80) + ply.getY() - INV_OFFSET_Y); // This can't be called every frame with scaled copy, too resource intensive.
+				countX += 32;
+				if(countX >= 10*32) {
+					countY+=32;
 				}
 			}
-					
-			
+
 			// "" + ply.getStat(
 			/*for (Entry<String, JsonElement> ele : invMenu.getObject().entrySet()) {
 				g.drawString(ele.getValue().getAsString().replace("%n", ele.getKey().split("#(.*)")[0]), 50, 50);
 			}*/
-			
+
 			g.drawString(invMenu.getValueAsString("#title"), 320/2 - 40 + ply.getX() - INV_OFFSET_X, 10 + ply.getY() - INV_OFFSET_Y);
 			g.drawString(invMenu.getValueAsString("#stat"), (width - 130) + ply.getX() - INV_OFFSET_X, 10 + ply.getY() - INV_OFFSET_Y);
 			g.drawRect(ply.getX() - INV_OFFSET_X, ply.getY() - INV_OFFSET_Y, width, height);

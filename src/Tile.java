@@ -86,6 +86,17 @@ public class Tile {
 		}
 		return false;
 	}
+	
+	public ArrayList<Entity> findType(Class<?> cls) {
+		ArrayList<Entity> foundEnts = new ArrayList<Entity>();
+		for (int i = 0; i < containedEnts.size(); i++) {
+			if (cls == containedEnts.get(i).getClass()) {
+				foundEnts.add(containedEnts.get(i));
+			}
+		}
+		if(foundEnts.size() <= 0) {return null;}
+		return foundEnts;
+	}
 
 	public void draw(Graphics g, int x, int y) {
 		g.drawImage(spr, x, y);
