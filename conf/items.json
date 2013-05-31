@@ -1,4 +1,13 @@
 [
+	{
+		"name":"Steel Claymore",
+		"type": "SWORD",
+		"sx": 0,
+		"sy": 0,
+		"stats": {
+			"atk": 30
+		}
+	},
     {
         "name": "Steel Sword",
         "type": "SWORD",
