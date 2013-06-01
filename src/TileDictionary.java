@@ -61,4 +61,14 @@ public class TileDictionary {
 		}
 		return "";
 	}
+	
+	public String getRandomNonwall() {
+		for (Map.Entry<String, Image> ele : imgs.entrySet()) {
+			if (walls.get(ele.getKey()) != null || (int) (Math.random() * 2) - 1 == 0) {
+				continue;
+			}
+			return ele.getKey();
+		}
+		return "Wood";
+	}
 }

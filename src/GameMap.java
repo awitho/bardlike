@@ -68,6 +68,10 @@ public class GameMap {
 	public Tile getTile(int x, int y) {
 		return tiles.get(x).get(y);
 	}
+	
+	public ArrayList<ArrayList<Tile>> getTiles() {
+		return tiles;
+	}
 
 	public int getScaledWidth() {
 		return width * 64;
