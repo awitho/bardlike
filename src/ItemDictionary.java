@@ -1,7 +1,13 @@
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 /**
@@ -13,11 +19,13 @@ import com.google.gson.JsonObject;
 public class ItemDictionary {
 	private SpriteSheet itemSprites;
 	private HashMap<String, Image> itemImages;
+	private HashMap<Integer, HashMap<String, Image>> scaledImages;
 	private JsonArray items;
 	private JsonObject curItem;
 	
 	public ItemDictionary() {
 		itemImages = new HashMap<>();
+		scaledImages = new HashMap<>();
 		try {
 			items = new GameConfig("items.json").getArray();
 			itemSprites = new SpriteSheet("./gfx/testitemsheet.png", 32, 32);
@@ -28,6 +36,21 @@ public class ItemDictionary {
 		} catch (Exception e) {
 			Misc.showDialog(e);
 		}
+	}
+	
+	public void scaleImages(int i) {
+		for(Entry<String, Image> ele : itemImages.entrySet()) {
+			itemImages.get(ele.getKey()).getScaledCopy(i, i);
+		}
+		scaledImages.put(i, itemImages);
+	}
+	
+	public HashMap<String, Image> getScaledImages(int sized) {
+		return scaledImages.get(sized);
+	}
+	
+	public Image getScaledImageByName(int sized, String name) {
+		return scaledImages.get(sized).get(name);
 	}
 	
 	public JsonObject getStats(String name) {

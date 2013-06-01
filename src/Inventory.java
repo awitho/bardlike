@@ -15,11 +15,14 @@ public class Inventory implements Menu {
 	private HashMap<String, Integer> playerStats;
 	private Player ply;
 	private GameConfig invMenu;
+	private ItemDictionary itemDictionary;
 
-	public Inventory(Player p) {
+	public Inventory(Player p, ItemDictionary id) {
 		ply = p;
 		playerStats = p.getStats();
-		invMenu = new GameConfig("./loc/inventorytext.json");		
+		invMenu = new GameConfig("./loc/inventorytext.json");
+		itemDictionary = id;
+		id.scaleImages(32);
 	}
 
 	@Override
@@ -47,7 +50,7 @@ public class Inventory implements Menu {
 			int countX = 0;
 			int countY = 0;
 			for(int x = 0; x < ply.getPlayerItems().size(); x++) {
-				g.drawImage(ply.getPlayerItems().get(x).getImage().getScaledCopy(32, 32), countX + ply.getX() - INV_OFFSET_X, (countY + 80) + ply.getY() - INV_OFFSET_Y); // This can't be called every frame with scaled copy, too resource intensive.
+				g.drawImage(itemDictionary.getScaledImageByName(32, ply.getPlayerItems().get(x).getName()), countX + ply.getX() - INV_OFFSET_X, (countY + 80) + ply.getY() - INV_OFFSET_Y); // This can't be called every frame with scaled copy, too resource intensive.
 				countX += 32;
 				if(countX >= 10*32) {
 					countY+=32;

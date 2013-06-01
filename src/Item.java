@@ -21,6 +21,10 @@ public class Item extends Entity {
 		System.out.println(stats);
 	}
 	
+	public String getName() {
+		return name;
+	}
+	
 	@Override
 	public String toString() {
 		return "(Item | name: " + name + ", stats: " + stats + ", image: " + getImage() + ")";
