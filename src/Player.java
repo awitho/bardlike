@@ -18,7 +18,7 @@ public class Player extends Entity {
 	private HashMap<String, Integer> stats = new HashMap<>();
 	private String plyClass = "";
 	private ArrayList<Item> inventoryItems;
-	private boolean held;
+	private boolean frozen;
 
 	public Player(SpriteSheet ss, JsonObject data, GameMap map) {
 		super(ss.getSubImage(data.get("sx").getAsInt(), data.get("sy").getAsInt()), map);
@@ -27,11 +27,11 @@ public class Player extends Entity {
 		for(Map.Entry<String, JsonElement> entry: data.get("stats").getAsJsonObject().entrySet()){
 				stats.put(entry.getKey(), entry.getValue().getAsInt());
 		}
-		addItem(new Item(new ItemDictionary(), getMap(), "Steel Sword"));
+		//addItem(new Item(new ItemDictionary(), getMap(), "Leather Helmet"));
 	}
 
 	public void move(Direction dir) {
-		if(!held) {
+		if(!frozen) {
 			Tile curTile = getTile();
 			if (curTile == null) { System.out.println("Player.move: Player is not currently in map!"); return; };
 			System.out.println("Player.move: Attempting to move in dir: " + dir);
@@ -44,16 +44,22 @@ public class Player extends Entity {
 			
 			for(int i = 0; i < foundItems.size(); i++) {
 				foundItems.get(i).setTile(null);
+				this.getTile().removeEnt(foundItems.get(i));
 				addItem((Item) foundItems.get(i));
 			}
 		}
 	}
 	
-	public void isHeld(boolean b) {
-		held = b;
+	public void isFrozen(boolean b) {
+		frozen = b;
 	}
 	
 	public void addItem(Item i) {
+		if(inventoryItems.size() >= 100) {
+			Misc.showDialog("I'm alredy carrying too much!");
+			return;
+		}
+		System.out.println("Calling addItem from: " +this.getClass());
 		inventoryItems.add(i);
 	}
 	

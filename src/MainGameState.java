@@ -72,9 +72,9 @@ public class MainGameState extends BasicGameState {
 		}
 		
 		if (inventory.isOpen()) {
-			player.isHeld(true);
+			player.isFrozen(true);
 		} else {
-			player.isHeld(false);
+			player.isFrozen(false);
 		}
 
 		container.getInput().clearKeyPressedRecord();

@@ -22,7 +22,6 @@ public class Inventory implements Menu {
 		playerStats = p.getStats();
 		invMenu = new GameConfig("./loc/inventorytext.json");
 		itemDictionary = id;
-		id.scaleImages(32);
 	}
 
 	@Override
@@ -53,6 +52,7 @@ public class Inventory implements Menu {
 				g.drawImage(itemDictionary.getScaledImageByName(32, ply.getPlayerItems().get(x).getName()), countX + ply.getX() - INV_OFFSET_X, (countY + 80) + ply.getY() - INV_OFFSET_Y); // This can't be called every frame with scaled copy, too resource intensive.
 				countX += 32;
 				if(countX >= 10*32) {
+					countX = 0;
 					countY+=32;
 				}
 			}

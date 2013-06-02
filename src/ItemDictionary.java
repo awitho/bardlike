@@ -38,19 +38,21 @@ public class ItemDictionary {
 		}
 	}
 	
-	public void scaleImages(int i) {
+	/*public void scaleImages(int i) {
 		for(Entry<String, Image> ele : itemImages.entrySet()) {
 			itemImages.get(ele.getKey()).getScaledCopy(i, i);
+			System.out.println("Scaling");	
 		}
 		scaledImages.put(i, itemImages);
 	}
 	
 	public HashMap<String, Image> getScaledImages(int sized) {
 		return scaledImages.get(sized);
-	}
+	}*/
 	
 	public Image getScaledImageByName(int sized, String name) {
-		return scaledImages.get(sized).get(name);
+		//return scaledImages.get(sized).get(name).getScaledCopy(32, 322);
+		return itemImages.get(name).getScaledCopy(sized, sized);
 	}
 	
 	public JsonObject getStats(String name) {
