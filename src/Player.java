@@ -79,8 +79,8 @@ public class Player extends Entity {
 		return stats;
 	}
 	
-	@Override
+	/*@Override
 	public String toString() {
 		return "(Player | class: " + plyClass + ", stats: " + stats + ", tileX: " + getTile().getX() + ", tileY: " + getTile().getY() + ")";
-	}
+	}*/
 }

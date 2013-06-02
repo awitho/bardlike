@@ -87,7 +87,7 @@ public class MainGameState extends BasicGameState {
 
 	public void setPlayer(SpriteSheet sprite, JsonObject data) {
 		player = new Player(sprite, data, map);
-		inventory = new Inventory(player);
+		inventory = new Inventory(player, new ItemDictionary());
 		cam = new Camera(player, map);
 		DungeonGenerator.placePlayerInFeasibleLocation(map.getTiles(), player);
 	}

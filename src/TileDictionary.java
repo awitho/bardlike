@@ -59,7 +59,7 @@ public class TileDictionary {
 				return ele.getKey();
 			}
 		}
-		return "";
+		return "Stone";
 	}
 	
 	public String getRandomNonwall() {
