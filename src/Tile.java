@@ -53,6 +53,10 @@ public class Tile {
 	public boolean getInLos() {
 		return inLos;
 	}
+	
+	public boolean isWall() {
+		return isWall;
+	}
 
 	public void addEnt(Entity ent) {
 		System.out.println("Tile.addEnt: Attempting to add ent: " + ent + " to " + this);
