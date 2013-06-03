@@ -76,7 +76,7 @@ public class MainGameState extends BasicGameState {
 		} else {
 			player.isFrozen(false);
 		}
-
+		
 		container.getInput().clearKeyPressedRecord();
 	}
 

@@ -1,6 +1,12 @@
 import java.util.HashMap;
+import java.util.Map.Entry;
+
 import org.newdawn.slick.Color;
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
+
+import com.google.gson.JsonElement;
 
 /**
  * A class that handles the players inventory.
@@ -9,7 +15,7 @@ import org.newdawn.slick.Graphics;
  * @version 1
  */
 public class Inventory implements Menu {
-	private int width = 550, height = 400;
+	private int width = 550, height = 400, selectX, selectY = 80;
 	private int INV_OFFSET_X = width/2 - 30, INV_OFFSET_Y = height/2 - 30;
 	private boolean visible;
 	private HashMap<String, Integer> playerStats;
@@ -56,6 +62,7 @@ public class Inventory implements Menu {
 					countY+=32;
 				}
 			}
+			g.drawRect(selectX + ply.getX() - INV_OFFSET_X + 5, selectY + ply.getY() - INV_OFFSET_Y + 5, 20, 20);
 
 			// "" + ply.getStat(
 			/*for (Entry<String, JsonElement> ele : invMenu.getObject().entrySet()) {
@@ -66,5 +73,21 @@ public class Inventory implements Menu {
 			g.drawString(invMenu.getValueAsString("#stat"), (width - 130) + ply.getX() - INV_OFFSET_X, 10 + ply.getY() - INV_OFFSET_Y);
 			g.drawRect(ply.getX() - INV_OFFSET_X, ply.getY() - INV_OFFSET_Y, width, height);
 		}
+	}
+	
+	public void setSelectX(int x) {
+		
+	}
+	
+	public void setSelectY(int y) {
+		
+	}
+	
+	public int getSelectX() {
+		return selectX;
+	}
+	
+	public int getSelectY() {
+		return selectY;
 	}
 }
