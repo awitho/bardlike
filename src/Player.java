@@ -3,7 +3,9 @@ import com.google.gson.JsonElement;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SpriteSheet;
 import com.google.gson.JsonObject;
 import java.util.Map;
@@ -77,6 +79,21 @@ public class Player extends Entity {
 	
 	public HashMap getStats() {
 		return stats;
+	}
+	
+	public void getControls(GameContainer container) {
+		if (container.getInput().isKeyPressed(Input.KEY_LEFT)) {
+			this.move(Direction.LEFT);
+		}
+		if (container.getInput().isKeyPressed(Input.KEY_RIGHT)) {
+			this.move(Direction.RIGHT);
+		}
+		if (container.getInput().isKeyPressed(Input.KEY_DOWN)) {
+			this.move(Direction.DOWN);
+		}
+		if (container.getInput().isKeyPressed(Input.KEY_UP)) {
+			this.move(Direction.UP);
+		}
 	}
 	
 	/*@Override

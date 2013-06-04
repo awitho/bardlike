@@ -50,33 +50,8 @@ public class MainGameState extends BasicGameState {
 		if (container.getInput().isKeyPressed(Input.KEY_ESCAPE) && !inventory.isOpen()) {
 			container.exit();
 		}
-		if (container.getInput().isKeyPressed(Input.KEY_LEFT)) {
-			player.move(Direction.LEFT);
-		}
-		if (container.getInput().isKeyPressed(Input.KEY_RIGHT)) {
-			player.move(Direction.RIGHT);
-		}
-		if (container.getInput().isKeyPressed(Input.KEY_DOWN)) {
-			player.move(Direction.DOWN);
-		}
-		if (container.getInput().isKeyPressed(Input.KEY_UP)) {
-			player.move(Direction.UP);
-		}
-
-		if(container.getInput().isKeyPressed(Input.KEY_I)) {
-			inventory.setVisible(true);
-		}
-		
-		if(container.getInput().isKeyPressed(Input.KEY_C)) {
-			inventory.setVisible(false);
-		}
-		
-		if (inventory.isOpen()) {
-			player.isFrozen(true);
-		} else {
-			player.isFrozen(false);
-		}
-		
+		container.getInput().enableKeyRepeat();
+		player.getControls(container);
 		inventory.getControls(container);
 		
 		container.getInput().clearKeyPressedRecord();

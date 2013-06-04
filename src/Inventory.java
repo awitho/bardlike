@@ -75,28 +75,28 @@ public class Inventory implements Menu {
 		}
 	}
 	
-	//Doesn't full work, must fix
+	//started to make it so that the inventory has controls, using WASD for now.
 	public void getControls(GameContainer container) {
-		if(visible) {
-			container.getInput().clearKeyPressedRecord();
-			if(container.getInput().isKeyPressed(Input.KEY_UP)) {
-				System.out.println("Called");
-				if(selectY <= 80 + ply.getY()) { selectY = 80 + ply.getY(); }
+		if(!visible) {
+			if(container.getInput().isKeyPressed(Input.KEY_I)) {
+				this.setVisible(true);
+				ply.isFrozen(true);
+			}
+		}else {
+			if(container.getInput().isKeyPressed(Input.KEY_I)) {
+				this.setVisible(false);
+				ply.isFrozen(false);
+			}else if(container.getInput().isKeyPressed(Input.KEY_W)) {
+				if(selectY < 80 + 32) { selectY = 80 + 32; }
 				selectY-=32;
-			}
-			if(container.getInput().isKeyDown(Input.KEY_DOWN)) {
-				System.out.println("Called");
-				if(selectY >= (10 * 32)+ ply.getY()) { selectY = (10 * 32)+ ply.getY(); }
+			}else if(container.getInput().isKeyPressed(Input.KEY_S)) {
+				if(selectY > (8*32) + 80) { selectY = (8*32) + 80; }
 				selectY+=32;
-			}
-			if(container.getInput().isKeyDown(Input.KEY_LEFT)){
-				System.out.println("Called");
-				if(selectX <= 0+ ply.getX()) { selectX = 0+ ply.getX(); }
+			}else if(container.getInput().isKeyPressed(Input.KEY_A)) {
+				if(selectX < 32) { selectX = 32; }
 				selectX-=32;
-			}
-			if(container.getInput().isKeyDown(Input.KEY_RIGHT)) {
-				System.out.println("Called");
-				if(selectX >= (10 * 32)+ ply.getX()) { selectX = (10 * 32)+ ply.getX(); }
+			}else if(container.getInput().isKeyPressed(Input.KEY_D)) {
+				if(selectX > (8*32)) { selectX = (8*32); }
 				selectX+=32;
 			}
 		}
