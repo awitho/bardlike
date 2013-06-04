@@ -62,7 +62,7 @@ public class Inventory implements Menu {
 					countY+=32;
 				}
 			}
-			g.drawRect(selectX + ply.getX() - INV_OFFSET_X + 5, selectY + ply.getY() - INV_OFFSET_Y + 5, 20, 20);
+			g.drawRect(selectX + ply.getX() - INV_OFFSET_X + 4, selectY + ply.getY() - INV_OFFSET_Y + 4, 25, 25);
 
 			// "" + ply.getStat(
 			/*for (Entry<String, JsonElement> ele : invMenu.getObject().entrySet()) {
@@ -75,19 +75,30 @@ public class Inventory implements Menu {
 		}
 	}
 	
-	public void setSelectX(int x) {
-		
-	}
-	
-	public void setSelectY(int y) {
-		
-	}
-	
-	public int getSelectX() {
-		return selectX;
-	}
-	
-	public int getSelectY() {
-		return selectY;
+	//Doesn't full work, must fix
+	public void getControls(GameContainer container) {
+		if(visible) {
+			container.getInput().clearKeyPressedRecord();
+			if(container.getInput().isKeyPressed(Input.KEY_UP)) {
+				System.out.println("Called");
+				if(selectY <= 80 + ply.getY()) { selectY = 80 + ply.getY(); }
+				selectY-=32;
+			}
+			if(container.getInput().isKeyDown(Input.KEY_DOWN)) {
+				System.out.println("Called");
+				if(selectY >= (10 * 32)+ ply.getY()) { selectY = (10 * 32)+ ply.getY(); }
+				selectY+=32;
+			}
+			if(container.getInput().isKeyDown(Input.KEY_LEFT)){
+				System.out.println("Called");
+				if(selectX <= 0+ ply.getX()) { selectX = 0+ ply.getX(); }
+				selectX-=32;
+			}
+			if(container.getInput().isKeyDown(Input.KEY_RIGHT)) {
+				System.out.println("Called");
+				if(selectX >= (10 * 32)+ ply.getX()) { selectX = (10 * 32)+ ply.getX(); }
+				selectX+=32;
+			}
+		}
 	}
 }

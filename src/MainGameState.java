@@ -37,7 +37,7 @@ public class MainGameState extends BasicGameState {
 	@Override
 	public void render(GameContainer container, StateBasedGame s, Graphics g) throws SlickException {
 		cam.translate(g, container);
-
+		
 		g.setColor(Color.white);
 		g.drawRect(-1,-1, map.getScaledWidth() + 1, map.getScaledHeight() + 1);
 
@@ -76,6 +76,8 @@ public class MainGameState extends BasicGameState {
 		} else {
 			player.isFrozen(false);
 		}
+		
+		inventory.getControls(container);
 		
 		container.getInput().clearKeyPressedRecord();
 	}
