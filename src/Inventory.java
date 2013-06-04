@@ -17,6 +17,7 @@ import com.google.gson.JsonElement;
 public class Inventory implements Menu {
 	private int width = 550, height = 400, selectX, selectY = 80;
 	private int INV_OFFSET_X = width/2 - 30, INV_OFFSET_Y = height/2 - 30;
+	private int lastDelta;
 	private boolean visible;
 	private HashMap<String, Integer> playerStats;
 	private Player ply;
@@ -75,27 +76,27 @@ public class Inventory implements Menu {
 		}
 	}
 	
-	//started to make it so that the inventory has controls, using WASD for now.
-	public void getControls(GameContainer container) {
+	public void update(GameContainer container) {
 		if(!visible) {
 			if(container.getInput().isKeyPressed(Input.KEY_I)) {
 				this.setVisible(true);
 				ply.isFrozen(true);
 			}
 		}else {
+			System.out.println(container.getInput().isKeyRepeatEnabled());
 			if(container.getInput().isKeyPressed(Input.KEY_I)) {
 				this.setVisible(false);
 				ply.isFrozen(false);
-			}else if(container.getInput().isKeyPressed(Input.KEY_W)) {
+			}else if(container.getInput().isKeyDown(Input.KEY_UP)) {
 				if(selectY < 80 + 32) { selectY = 80 + 32; }
 				selectY-=32;
-			}else if(container.getInput().isKeyPressed(Input.KEY_S)) {
+			}else if(container.getInput().isKeyDown(Input.KEY_DOWN)) {
 				if(selectY > (8*32) + 80) { selectY = (8*32) + 80; }
 				selectY+=32;
-			}else if(container.getInput().isKeyPressed(Input.KEY_A)) {
+			}else if(container.getInput().isKeyDown(Input.KEY_LEFT)) {
 				if(selectX < 32) { selectX = 32; }
 				selectX-=32;
-			}else if(container.getInput().isKeyPressed(Input.KEY_D)) {
+			}else if(container.getInput().isKeyDown(Input.KEY_RIGHT)) {
 				if(selectX > (8*32)) { selectX = (8*32); }
 				selectX+=32;
 			}

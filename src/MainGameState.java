@@ -50,9 +50,9 @@ public class MainGameState extends BasicGameState {
 		if (container.getInput().isKeyPressed(Input.KEY_ESCAPE) && !inventory.isOpen()) {
 			container.exit();
 		}
-		container.getInput().enableKeyRepeat();
-		player.getControls(container);
-		inventory.getControls(container);
+
+		player.update(container);
+		inventory.update(container);
 		
 		container.getInput().clearKeyPressedRecord();
 	}
