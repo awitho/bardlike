@@ -24,4 +24,9 @@ public class PathfindingTile {
 		this.g = g;
 		this.h = h;
 	}
+	
+	@Override
+	public String toString() {
+		return "(PathfindingTile | x: " + x + ", y: " + y + ", f: " + g + ", h: " + h + ", parent: " + parent + ")";
+	}
 }

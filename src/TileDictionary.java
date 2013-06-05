@@ -33,6 +33,7 @@ public class TileDictionary {
 			}
 			imgs.put("Overlay", new Image("gfx/tile_overlay.png"));
 			imgs.put("Empty", new Image("gfx/tile_overlay.png"));
+			walls.put("Overlay", true);
 			walls.put("Empty", true);
 		} catch (Exception e) {
 			Misc.showDialog(e);
@@ -56,19 +57,15 @@ public class TileDictionary {
 
 	public String getRandomWall() {
 		for (Map.Entry<String, Boolean> ele : walls.entrySet()) {
-			if (!ele.getKey().equalsIgnoreCase("Empty") || (int) (Math.random() * 2) - 1 == 0) {
-				System.out.println(ele.getKey());
+			if (ele.getKey().equalsIgnoreCase("Empty") || ele.getKey().equalsIgnoreCase("Overlay") || (int) (Math.random() * 2) - 1 == 0) { continue; }
 				return ele.getKey();
-			}
 		}
 		return "Stone";
 	}
 	
 	public String getRandomNonwall() {
 		for (Map.Entry<String, Image> ele : imgs.entrySet()) {
-			if (walls.get(ele.getKey()) != null || ele.getKey() == "Overlay" || (int) (Math.random() * 2) - 1 == 0) {
-				continue;
-			}
+			if (walls.get(ele.getKey()) != null || (int) (Math.random() * 2) - 1 == 0) { continue; }
 			return ele.getKey();
 		}
 		return "Wood";
