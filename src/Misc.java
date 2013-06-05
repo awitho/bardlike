@@ -44,6 +44,25 @@ public class Misc {
 	}
 	
 	public static Vector getLocFromDir(int x, int y, Direction dir) {
+		switch(dir) {
+				case LEFT:
+					return new Vector(x - 1, y);
+				case RIGHT:
+					return new Vector(x + 1, y);
+				case UP:
+					return new Vector(x, y - 1);
+				case DOWN:
+					return new Vector(x, y + 1);
+				case LEFT_UP:
+					return new Vector(x - 1, y - 1);
+				case LEFT_DOWN:
+					return new Vector(x - 1, y + 1);
+				case RIGHT_DOWN:
+					return new Vector(x + 1, y - 1);
+				case RIGHT_UP:
+					return new Vector(x + 1, y + 1);
+		}
+					/*
 		if (dir == Direction.LEFT) {
 			return new Vector(x - 1, y);
 		} else if (dir == Direction.RIGHT) {
@@ -52,7 +71,10 @@ public class Misc {
 			return new Vector(x, y - 1);
 		} else if (dir == Direction.DOWN) {
 			return new Vector(x, y + 1);
-		}
+		} else if (dir == Direction.LEFT_UP) {
+			
+		} else if (dir == Direction)
+		*/
 		return null;
 	}
 
