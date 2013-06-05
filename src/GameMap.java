@@ -14,6 +14,7 @@ public class GameMap {
 	private ArrayList<ArrayList<Tile>> tiles; // 2d array list of tiles.
 	private SpriteSheet sprites;
 	private Item item;
+	private Item item2;
 
 	public GameMap(int w, int h, TileDictionary tileDictionary) {
 		this.tileDictionary = tileDictionary;
@@ -22,6 +23,8 @@ public class GameMap {
 		tiles = DungeonGenerator.generateDungeon(w, h, tileDictionary);
 		item = new Item(new ItemDictionary(), this, "Leather Helmet");
 		item.setTile(tiles.get(1).get(1));
+		item2 = new Item(new ItemDictionary(), this, "Steel Sword");
+		item2.setTile(tiles.get(5).get(5));
 	}
 
 	public void draw(Graphics g, Player ply, Camera cam) { // Make it so it only renders near player 3-5 blocks!
