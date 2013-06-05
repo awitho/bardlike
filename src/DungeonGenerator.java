@@ -28,7 +28,7 @@ public class DungeonGenerator {
 		}
 	}
 
-	public static void generateHallway(ArrayList<ArrayList<Tile>> tiles, int x1, int y1, int x2, int y2) {
+	/*public static void generateHallway(ArrayList<ArrayList<Tile>> tiles, int x1, int y1, int x2, int y2) {
 			ArrayList<PathfindingTile> openList = new ArrayList<>();
 			ArrayList<PathfindingTile> closedList = new ArrayList<>();
             PathfindingTile start = new PathfindingTile(null, x1, y1, 0, 0, 0);
@@ -42,7 +42,7 @@ public class DungeonGenerator {
 					openList.add(new PathfindingTile(curLookingTile, vec.getX(), vec.getY(), 0, 0, 0));
 				}
             }
-	}
+	}*/
 	
 	public static void placePlayerInFeasibleLocation(ArrayList<ArrayList<Tile>> tiles, Player ply) {
 		for (int x = 0; x < tiles.size(); x++) {
@@ -52,6 +52,12 @@ public class DungeonGenerator {
 				ply.setTile(tiles.get(x).get(y));
 				return;
 			}
+		}
+	}
+	
+	public void placeItems(ArrayList<Item> items, int x, int y) {
+		for(int i = 0; i < items.size(); i++) {
+			items.get(i).setPos(x, y);
 		}
 	}
 
