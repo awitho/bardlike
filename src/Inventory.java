@@ -5,6 +5,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.geom.Rectangle;
 
 import com.google.gson.JsonElement;
 
@@ -17,6 +18,9 @@ import com.google.gson.JsonElement;
 public class Inventory implements Menu {
 	private int width = 550, height = 400, selectX, selectY = 80;
 	private int INV_OFFSET_X = width/2 - 30, INV_OFFSET_Y = height/2 - 30;
+	private int lastDelta;
+	private long curTime = 0;
+	private Rectangle selectionReticle;
 	private boolean visible;
 	private HashMap<String, Integer> playerStats;
 	private Player ply;
@@ -28,6 +32,7 @@ public class Inventory implements Menu {
 		playerStats = p.getStats();
 		invMenu = new GameConfig("./loc/inventorytext.json");
 		itemDictionary = id;
+		selectionReticle = new Rectangle(selectX, selectY, 25, 25);
 	}
 
 	@Override
@@ -55,14 +60,24 @@ public class Inventory implements Menu {
 			int countX = 0;
 			int countY = 0;
 			for(int x = 0; x < ply.getPlayerItems().size(); x++) {
-				g.drawImage(itemDictionary.getScaledImageByName(32, ply.getPlayerItems().get(x).getName()), countX + ply.getX() - INV_OFFSET_X, (countY + 80) + ply.getY() - INV_OFFSET_Y); // This can't be called every frame with scaled copy, too resource intensive.
+				g.drawImage(itemDictionary.getScaledImageByName(32, ply.getPlayerItems().get(x).getName()), countX + ply.getX() - INV_OFFSET_X, (countY + 80) + ply.getY() - INV_OFFSET_Y);
 				countX += 32;
 				if(countX >= 10*32) {
 					countX = 0;
 					countY+=32;
 				}
+				
+				//temporay,will think of better way and doesn't work for more then 1 item
+				if(selectX+selectY - 80 == x) {
+					g.drawString(ply.getPlayerItems().get(x).getName(), selectX, selectY);
+				}else {
+					g.drawString("add item here", selectX, selectY);
+				}
 			}
-			g.drawRect(selectX + ply.getX() - INV_OFFSET_X + 4, selectY + ply.getY() - INV_OFFSET_Y + 4, 25, 25);
+			
+			g.draw(selectionReticle);
+			selectionReticle.setX(selectX + ply.getX() - INV_OFFSET_X + 4);
+			selectionReticle.setY(selectY + ply.getY() - INV_OFFSET_Y + 4);
 
 			// "" + ply.getStat(
 			/*for (Entry<String, JsonElement> ele : invMenu.getObject().entrySet()) {
@@ -75,29 +90,33 @@ public class Inventory implements Menu {
 		}
 	}
 	
-	//started to make it so that the inventory has controls, using WASD for now.
-	public void getControls(GameContainer container) {
-		if(!visible) {
-			if(container.getInput().isKeyPressed(Input.KEY_I)) {
+	public void update(GameContainer container) {
+		if (!visible) {
+			if (container.getInput().isKeyPressed(Input.KEY_I)) {
 				this.setVisible(true);
 				ply.isFrozen(true);
 			}
-		}else {
-			if(container.getInput().isKeyPressed(Input.KEY_I)) {
+		} else {
+			if (container.getTime() - curTime <= 150) { return; }
+			if (container.getInput().isKeyPressed(Input.KEY_I)) {
 				this.setVisible(false);
 				ply.isFrozen(false);
-			}else if(container.getInput().isKeyPressed(Input.KEY_W)) {
+			} else if (container.getInput().isKeyDown(Input.KEY_UP)) {
 				if(selectY < 80 + 32) { selectY = 80 + 32; }
 				selectY-=32;
-			}else if(container.getInput().isKeyPressed(Input.KEY_S)) {
+				curTime = container.getTime();
+			} else if (container.getInput().isKeyDown(Input.KEY_DOWN)) {
 				if(selectY > (8*32) + 80) { selectY = (8*32) + 80; }
 				selectY+=32;
-			}else if(container.getInput().isKeyPressed(Input.KEY_A)) {
+				curTime = container.getTime();
+			} else if (container.getInput().isKeyDown(Input.KEY_LEFT)) {
 				if(selectX < 32) { selectX = 32; }
 				selectX-=32;
-			}else if(container.getInput().isKeyPressed(Input.KEY_D)) {
+				curTime = container.getTime();
+			} else if (container.getInput().isKeyDown(Input.KEY_RIGHT)) {
 				if(selectX > (8*32)) { selectX = (8*32); }
 				selectX+=32;
+				curTime = container.getTime();
 			}
 		}
 	}

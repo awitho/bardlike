@@ -81,7 +81,7 @@ public class Player extends Entity {
 		return stats;
 	}
 	
-	public void getControls(GameContainer container) {
+	public void update(GameContainer container) {
 		if (container.getInput().isKeyPressed(Input.KEY_LEFT)) {
 			this.move(Direction.LEFT);
 		}
