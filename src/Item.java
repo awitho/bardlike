@@ -10,6 +10,7 @@ import java.util.Map;
  */
 public class Item extends Entity {
 	private String name;
+        private ItemType type;
 	private HashMap<String, Integer> stats = new HashMap<>();
 	
 	public Item(ItemDictionary itemDictionary, GameMap map, String name) {

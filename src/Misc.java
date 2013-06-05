@@ -42,6 +42,19 @@ public class Misc {
 			return high;
 		return value;
 	}
+	
+	public static Vector getLocFromDir(int x, int y, Direction dir) {
+		if (dir == Direction.LEFT) {
+			return new Vector(x - 1, y);
+		} else if (dir == Direction.RIGHT) {
+			return new Vector(x + 1, y);
+		} else if (dir == Direction.UP) {
+			return new Vector(x, y - 1);
+		} else if (dir == Direction.DOWN) {
+			return new Vector(x, y + 1);
+		}
+		return null;
+	}
 
 	/**
 	 * Returns a random boolean!

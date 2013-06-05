@@ -57,22 +57,18 @@ public class ClassSelectState extends BasicGameState {
 		MainGameState main = (MainGameState) s.getState(4);
 		if (container.getInput().isKeyPressed(Input.KEY_B)) {
 			chosen = 0;
-			s.enterState(4);
 		} else if(container.getInput().isKeyPressed(Input.KEY_M)) {
 			chosen = 1;
-			s.enterState(4);
 		} else if(container.getInput().isKeyPressed(Input.KEY_P)) {
 			chosen = 2;
-			s.enterState(4);
 		} else if(container.getInput().isKeyPressed(Input.KEY_W)) {
 			chosen = 3;
-			s.enterState(4);
 		} else if(container.getInput().isKeyPressed(Input.KEY_R)) {
 			chosen = 4;
-			s.enterState(4);
 		}
 		if (chosen > -1) {
-			main.setPlayer(classSprites, classes.get(chosen).getAsJsonObject());	
+			main.setPlayer(classSprites, classes.get(chosen).getAsJsonObject());
+			s.enterState(4);
 		}
 		container.getInput().clearKeyPressedRecord();
 	}
@@ -81,5 +77,4 @@ public class ClassSelectState extends BasicGameState {
 	public int getID() {
 		return 2;
 	}
-
 }

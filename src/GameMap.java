@@ -11,7 +11,7 @@ import org.newdawn.slick.SpriteSheet;
 public class GameMap {
 	private TileDictionary tileDictionary;
 	private int width, height;
-	private ArrayList<ArrayList<Tile>> tiles; // 2d array list of tiles.
+	private ArrayList<ArrayList<Tile>> tiles = new ArrayList<>(); // 2d array list of tiles.
 	private SpriteSheet sprites;
 	private Item item;
 
@@ -19,9 +19,7 @@ public class GameMap {
 		this.tileDictionary = tileDictionary;
 		width = w;
 		height = h;
-		tiles = DungeonGenerator.generateDungeon(w, h, tileDictionary);
-		item = new Item(new ItemDictionary(), this, "Leather Helmet");
-		item.setTile(tiles.get(1).get(1));
+		//tiles = DungeonGenerator.generateDungeon(w, h, tileDictionary);
 	}
 
 	public void draw(Graphics g, Player ply, Camera cam) { // Make it so it only renders near player 3-5 blocks!
@@ -35,6 +33,10 @@ public class GameMap {
 				tile.draw(g, x * tile.getWidth(), y * tile.getHeight());
 			}
 		}
+	}
+	
+	public void setTiles(ArrayList<ArrayList<Tile>> tiles) {
+		this.tiles = tiles;
 	}
 
 	public Tile moveEnt(Tile tile, Entity ent, Direction dir) {

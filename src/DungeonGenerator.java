@@ -9,6 +9,10 @@ import java.util.ArrayList;
 public class DungeonGenerator {
 	private static TileDictionary tileDictionary;
 	
+	public static void initTileDictionary(TileDictionary tileDictionary) {
+		DungeonGenerator.tileDictionary = tileDictionary;
+	}
+	
 	public static void generateRoom(ArrayList<ArrayList<Tile>> tiles, int x, int y, int width, int height) {
 		//if (height > tiles.size()) { return; }
 		for (int x1 = x; x1 < width; x1++) {
@@ -24,7 +28,20 @@ public class DungeonGenerator {
 		}
 	}
 
-	public static void generateHallway(int x1, int y1, int x2, int y2) {
+	public static void generateHallway(ArrayList<ArrayList<Tile>> tiles, int x1, int y1, int x2, int y2) {
+			ArrayList<PathfindingTile> openList = new ArrayList<>();
+			ArrayList<PathfindingTile> closedList = new ArrayList<>();
+            PathfindingTile start = new PathfindingTile(null, x1, y1, 0, 0, 0);
+			openList.add(start);
+			PathfindingTile curLookingTile = start;
+            while (true) {
+                for (Direction dir : Direction.values()) { // Search in all fours! awuuawduio
+					Vector vec = Misc.getLocFromDir(curLookingTile.x, curLookingTile.y, dir);
+					if (vec.getX() < 0 || vec.getX() > tiles.size() || vec.getY() < 0 || vec.getY() > tiles.get(0).size() || tiles.get(vec.getX()).get(vec.getY()).isWall()) { continue; }
+					//calculate f, g & h here.
+					openList.add(new PathfindingTile(curLookingTile, vec.getX(), vec.getY(), 0, 0, 0));
+				}
+            }
 	}
 	
 	public static void placePlayerInFeasibleLocation(ArrayList<ArrayList<Tile>> tiles, Player ply) {
@@ -38,9 +55,10 @@ public class DungeonGenerator {
 		}
 	}
 
-	public static ArrayList<ArrayList<Tile>> generateDungeon(int w, int h, TileDictionary tileDictionary) {
-		DungeonGenerator.tileDictionary = tileDictionary;
-
+	public static GameMap generateDungeon(int w, int h, TileDictionary tileDictionary) {
+		DungeonGenerator.initTileDictionary(tileDictionary);
+		GameMap empty = new GameMap(w, h, tileDictionary);
+		
 		ArrayList<ArrayList<Tile>> tiles = new ArrayList<>();
 		generateRoom(tiles, 0, 0, 10, 10);
 		/*String[] temp = new String[tileDictionary.size()];
@@ -56,6 +74,7 @@ public class DungeonGenerator {
 			}
 			tiles.add(tileY);
 		}*/
-		return tiles;
+		empty.setTiles(tiles);
+		return empty;
 	}
 }
