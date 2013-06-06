@@ -16,11 +16,10 @@ public class Entity {
 	private GameMap map;
 	private Tile curTile;
 
-	public Entity(Image img, GameMap map) {
+	public Entity(Image img) {
 		id = iid;
 		iid++;
 		this.img = img;
-		this.map = map;
 	}
 
 	public void draw(Graphics g, int x, int y) {

@@ -60,23 +60,18 @@ public class Inventory implements Menu {
 			int countX = 0;
 			int countY = 0;
 			for(int x = 0; x < ply.getPlayerItems().size(); x++) {
-				for(int y = 0; y < ply.getPlayerItems().size(); y++) {
-					g.drawImage(itemDictionary.getScaledImageByName(32, ply.getPlayerItems().get(x).getName()), countX + ply.getX() - INV_OFFSET_X, (countY + 80) + ply.getY() - INV_OFFSET_Y);
-	
-					if(countX >= 10*32) {
-						countX = 0;
-						countY+=32;
-					}
-					selectX = x*32;
-					selectY = (x*32) - 80;
-					
-					//temporay,will think of better way and doesn't work for more then 1 item
-					/*if( == x) {
-						g.drawString(ply.getPlayerItems().get(x).getName(), selectX, selectY);
-					}else {
-						g.drawString("add item here", selectX, selectY);
-					}*/
+				g.drawImage(itemDictionary.getScaledImageByName(32, ply.getPlayerItems().get(x).getName()), countX + ply.getX() - INV_OFFSET_X, (countY + 80) + ply.getY() - INV_OFFSET_Y);
+				countX+=32;
+				if(countX >= 10*32) {
+					countX = 0;
+					countY+=32;
 				}
+				
+					//selectX = x*32;
+					//selectY = (x*32) - 80;
+					if(selectX == countX-32 && (selectY-80) == countY) {
+						g.drawString(ply.getPlayerItems().get(x).getName(), selectX + ply.getX() - INV_OFFSET_X + 10, selectY + ply.getY() - INV_OFFSET_Y -32);
+					}
 			}
 			
 			g.draw(selectionReticle);

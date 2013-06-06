@@ -31,7 +31,7 @@ public class MainGameState extends BasicGameState {
 	public void init(GameContainer container, StateBasedGame s) throws SlickException {
 		tileDictionary = new TileDictionary();
 		itemDictionary = new ItemDictionary();
-		map = DungeonGenerator.generateDungeon(24, 24, tileDictionary);
+		map = DungeonGenerator.generateDungeon(24, 24, tileDictionary, itemDictionary);
 	}
 
 	@Override

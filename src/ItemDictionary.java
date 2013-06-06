@@ -20,6 +20,7 @@ public class ItemDictionary {
 	private SpriteSheet itemSprites;
 	private HashMap<String, Image> itemImages;
 	private HashMap<Integer, HashMap<String, Image>> scaledImages;
+	//private GameMap gameMap;
 	private JsonArray items;
 	private JsonObject curItem;
 	
@@ -68,5 +69,17 @@ public class ItemDictionary {
 	
 	public Image getImage(String name) {
 		return itemImages.get(name);
+	}
+	
+	public int size() {
+		return items.size();
+	}
+	
+	public Item getRandomItem() {
+		for (int i = 0; i < items.size(); i++) {
+			if (items.get(i) == null || (int) (Math.random() * items.size()) - 1 == 0) { continue; }
+			return new Item(this, items.get(i).getAsJsonObject().get("name").getAsString());
+		}
+		return null;
 	}
 }

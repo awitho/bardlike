@@ -8,9 +8,15 @@ import java.util.ArrayList;
  */
 public class DungeonGenerator {
 	private static TileDictionary tileDictionary;
+	private static ItemDictionary itemDictionary;
+	private GameMap map;
 	
 	public static void initTileDictionary(TileDictionary tileDictionary) {
 		DungeonGenerator.tileDictionary = tileDictionary;
+	}
+	
+	public static void initItemDictionary(ItemDictionary itemDictionary) {
+		DungeonGenerator.itemDictionary = itemDictionary;
 	}
 	
 	public static void generateRoom(Tile[][] tiles, int x, int y, int width, int height) {
@@ -107,13 +113,27 @@ public class DungeonGenerator {
 		}
 	}
 	
+	public static void placeItems(Tile[][] tiles, int w, int h) {
+		for (int x = 0; x < w; x++) {
+			for (int y = 0; y < h; y++) {
+				//calculate random shit and if equals other random shit place random item
+				if((int) (Math.random() * 100) + 1 <= 10) {
+					Item item = itemDictionary.getRandomItem();
+					if (item == null) { continue; }
+					item.setTile(tiles[x][y]);
+				}
+			}
+		}
+	}
+	
 	public static void placeTile(Tile[][] tiles, Tile tile) {
 			if (tile.getX() >= tiles.length || tile.getY() >= tiles[0].length) { return; }
 			tiles[tile.getX()][tile.getY()] = tile;
 	}
 
-	public static GameMap generateDungeon(int w, int h, TileDictionary tileDictionary) {
+	public static GameMap generateDungeon(int w, int h, TileDictionary tileDictionary, ItemDictionary itemDictionary) {
 		DungeonGenerator.initTileDictionary(tileDictionary);
+		DungeonGenerator.initItemDictionary(itemDictionary);
 		GameMap empty = new GameMap(w, h, tileDictionary);
 		
 		Tile[][] tiles = new Tile[w][h];
@@ -124,8 +144,9 @@ public class DungeonGenerator {
 		}
 		
 		generateRoom(tiles, 0, 0, 10, 10);
+		placeItems(tiles, w, h);
 		System.out.println(tiles);
-		generateHallway(tiles, 0, 11, 5, 0);
+		//generateHallway(tiles, 0, 11, 5, 0);
 		/*String[] temp = new String[tileDictionary.size()];
 		temp[0] = "Stone";
 		temp[1] = "Wood";
