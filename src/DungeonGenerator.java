@@ -117,9 +117,10 @@ public class DungeonGenerator {
 		for (int x = 0; x < w; x++) {
 			for (int y = 0; y < h; y++) {
 				//calculate random shit and if equals other random shit place random item
-				if((int) (Math.random() * 100) + 1 <= 10) {
+				if((int) (Math.random() * 100) + 1 <= 3) {
 					Item item = itemDictionary.getRandomItem();
 					if (item == null) { continue; }
+					if (tiles[x][y].getName().equalsIgnoreCase("Empty") || tiles[x][y].getName().equalsIgnoreCase("Wall")) { continue; }
 					item.setTile(tiles[x][y]);
 				}
 			}

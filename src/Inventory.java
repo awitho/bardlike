@@ -57,7 +57,13 @@ public class Inventory implements Menu {
 				}
 			}
 			
-			int countX = 0;
+			for(int x = 0; x < ply.getPlayerItems().size() / 10; x++) {
+				for(int y = 0; y < ply.getPlayerItems().size() / 10; y++) {
+					g.drawImage(itemDictionary.getScaledImageByName(32, ply.getPlayerItems().get(x).getName()), x + ply.getX() - INV_OFFSET_X, (y + 80) + ply.getY() - INV_OFFSET_Y);
+				}
+			}
+			
+			/*int countX = 0;
 			int countY = 0;
 			for(int x = 0; x < ply.getPlayerItems().size(); x++) {
 				g.drawImage(itemDictionary.getScaledImageByName(32, ply.getPlayerItems().get(x).getName()), countX + ply.getX() - INV_OFFSET_X, (countY + 80) + ply.getY() - INV_OFFSET_Y);
@@ -69,10 +75,14 @@ public class Inventory implements Menu {
 				
 					//selectX = x*32;
 					//selectY = (x*32) - 80;
-					if(selectX == countX-32 && (selectY-80) == countY) {
+					int tempX = countX -32;
+					int tempY = selectY-80;
+					System.out.println("Counts : (" +tempX+", "+countY+")");
+					System.out.println("Reticle : (" +selectX+", "+selectY+")");
+					if(selectX == countX - 32 && (selectY-80)== countY) {
 						g.drawString(ply.getPlayerItems().get(x).getName(), selectX + ply.getX() - INV_OFFSET_X + 10, selectY + ply.getY() - INV_OFFSET_Y -32);
 					}
-			}
+			}*/
 			
 			g.draw(selectionReticle);
 			selectionReticle.setX(selectX + ply.getX() - INV_OFFSET_X + 4);
