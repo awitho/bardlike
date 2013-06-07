@@ -1,5 +1,14 @@
 [
 	{
+		"name":"Crystal Staff",
+		"type": "STAFF",
+		"sx": 1,
+		"sy": 9,
+		"stats": {
+			"atk": 30
+		}
+	},
+	{
 		"name":"Steel Claymore",
 		"type": "SWORD",
 		"sx": 0,
