@@ -5,8 +5,8 @@ import org.newdawn.slick.Image;
  * @author Alex
  */
 public class Mob extends Entity {
-	public Mob(Image img, GameMap map) {
-		super(img, map);
+	public Mob(Image img) {
+		super(img);
 	}
 	
 	@Override

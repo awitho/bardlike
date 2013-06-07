@@ -87,7 +87,7 @@ public class GameMap {
 		return tiles;
 	}*/
 	
-		public Tile moveEnt(Tile tile, Entity ent, Direction dir) {
+	public Tile moveEnt(Tile tile, Entity ent, Direction dir) {
 		if (tile == null) { System.out.println("GameMap.moveEnt: Given tile is null!"); return null; }
 		System.out.println("GameMap.moveEnt: " + ent + " moving in direction:  " + dir);
 		Tile newTile = null;

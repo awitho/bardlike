@@ -13,8 +13,8 @@ public class Item extends Entity {
         private ItemType type;
 	private HashMap<String, Integer> stats = new HashMap<>();
 	
-	public Item(ItemDictionary itemDictionary, GameMap map, String name) {
-		super(itemDictionary.getImage(name), map);
+	public Item(ItemDictionary itemDictionary, String name) {
+		super(itemDictionary.getImage(name));
 		this.name = name;
 		for (Map.Entry<String, JsonElement> ele : itemDictionary.getStats(name).entrySet()) {
 			stats.put(ele.getKey(), ele.getValue().getAsInt());

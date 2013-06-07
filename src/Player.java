@@ -18,12 +18,14 @@ import java.util.Map;
 public class Player extends Entity {
 	private HashMap<String, Integer> godsFavor = new HashMap<>();
 	private HashMap<String, Integer> stats = new HashMap<>();
+	private GameMap curMap;
 	private String plyClass = "";
 	private ArrayList<Item> inventoryItems;
 	private boolean frozen;
 
 	public Player(SpriteSheet ss, JsonObject data, GameMap map) {
-		super(ss.getSubImage(data.get("sx").getAsInt(), data.get("sy").getAsInt()), map);
+		super(ss.getSubImage(data.get("sx").getAsInt(), data.get("sy").getAsInt()));
+		curMap = map;
 		inventoryItems = new ArrayList<>();
 		plyClass = data.get("name").getAsString();
 		for(Map.Entry<String, JsonElement> entry: data.get("stats").getAsJsonObject().entrySet()){
@@ -64,7 +66,7 @@ public class Player extends Entity {
 		System.out.println("Calling addItem from: " +this.getClass());
 		inventoryItems.add(i);
 	}
-	
+
 	public void removeItem(Item i) {
 		inventoryItems.remove(i);
 	}
@@ -79,6 +81,10 @@ public class Player extends Entity {
 	
 	public HashMap getStats() {
 		return stats;
+	}
+	
+	public GameMap getMap() {
+		return curMap;
 	}
 	
 	public void update(GameContainer container) {

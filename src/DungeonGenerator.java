@@ -8,9 +8,15 @@ import java.util.ArrayList;
  */
 public class DungeonGenerator {
 	private static TileDictionary tileDictionary;
+	private static ItemDictionary itemDictionary;
+	private GameMap map;
 	
 	public static void initTileDictionary(TileDictionary tileDictionary) {
 		DungeonGenerator.tileDictionary = tileDictionary;
+	}
+	
+	public static void initItemDictionary(ItemDictionary itemDictionary) {
+		DungeonGenerator.itemDictionary = itemDictionary;
 	}
 	
 	public static void generateRoom(Tile[][] tiles, int x, int y, int width, int height) {
@@ -123,14 +129,29 @@ public class DungeonGenerator {
 		}
 	}
 	
+	public static void placeItems(Tile[][] tiles, int w, int h) {
+		for (int x = 0; x < w; x++) {
+			for (int y = 0; y < h; y++) {
+				//calculate random shit and if equals other random shit place random item
+				if((int) (Math.random() * 100) + 1 <= 3) {
+					Item item = itemDictionary.getRandomItem();
+					if (item == null) { continue; }
+					if (tiles[x][y].getName().equalsIgnoreCase("Empty") || tiles[x][y].getName().equalsIgnoreCase("Wall")) { continue; }
+					item.setTile(tiles[x][y]);
+				}
+			}
+		}
+	}
+	
 	public static void placeTile(Tile[][] tiles, Tile tile) {
 			if (tile.getX() >= tiles.length || tile.getY() >= tiles[0].length) { return; }
 			System.out.println("DungeonGenerator.placeTile: Placing tile at " + tile.getX() + ", " + tile.getY());
 			tiles[tile.getX()][tile.getY()] = tile;
 	}
 
-	public static GameMap generateDungeon(int w, int h, TileDictionary tileDictionary) {
+	public static GameMap generateDungeon(int w, int h, TileDictionary tileDictionary, ItemDictionary itemDictionary) {
 		DungeonGenerator.initTileDictionary(tileDictionary);
+		DungeonGenerator.initItemDictionary(itemDictionary);
 		GameMap empty = new GameMap(w, h, tileDictionary);
 		
 		Tile[][] tiles = new Tile[w][h];
@@ -144,7 +165,10 @@ public class DungeonGenerator {
 		
 		generateRoom(tiles, 0, 0, 10, 10);
 		generateRoom(tiles, 11, 1, 5, 5);
+		
 		generateHallway(tiles, 0, 10, 13, 0);
+		
+		placeItems(tiles, w, h);
 		
 		empty.setTiles(tiles);
 		return empty;
