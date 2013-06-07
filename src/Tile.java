@@ -59,6 +59,7 @@ public class Tile {
 	}
 
 	public void addEnt(Entity ent) {
+		if (getName().equalsIgnoreCase("Empty"))  { return; }
 		System.out.println("Tile.addEnt: Attempting to add ent: " + ent + " to " + this);
 		containedEnts.add(ent);
 	}

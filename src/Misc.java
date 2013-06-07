@@ -53,14 +53,6 @@ public class Misc {
 					return new Vector(x, y - 1);
 				case DOWN:
 					return new Vector(x, y + 1);
-				case LEFT_UP:
-					return new Vector(x - 1, y - 1);
-				case LEFT_DOWN:
-					return new Vector(x - 1, y + 1);
-				case RIGHT_DOWN:
-					return new Vector(x + 1, y - 1);
-				case RIGHT_UP:
-					return new Vector(x + 1, y + 1);
 		}
 					/*
 		if (dir == Direction.LEFT) {
