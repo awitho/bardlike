@@ -19,7 +19,6 @@ public class Item extends Entity {
 		for (Map.Entry<String, JsonElement> ele : itemDictionary.getStats(name).entrySet()) {
 			stats.put(ele.getKey(), ele.getValue().getAsInt());
 		}
-		System.out.println(stats);
 	}
 	
 	public String getName() {

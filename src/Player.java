@@ -100,6 +100,9 @@ public class Player extends Entity {
 		if (container.getInput().isKeyPressed(Input.KEY_UP)) {
 			this.move(Direction.UP);
 		}
+		if (container.getInput().isKeyPressed(Input.KEY_SPACE)) {
+			DungeonGenerator.placePlayerInFeasibleLocation(getMap().getTiles(), this);
+		}
 	}
 	
 	/*@Override

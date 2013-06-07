@@ -1,13 +1,8 @@
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 /**
@@ -59,7 +54,7 @@ public class ItemDictionary {
 	public JsonObject getStats(String name) {
 		for(int i = 0; i < items.size(); i++) {
 			JsonObject item =  items.get(i).getAsJsonObject();
-			System.out.println(item);
+			//System.out.println(item);
 			if(item.get("name").getAsString().equalsIgnoreCase(name)) {
 				return item.get("stats").getAsJsonObject();
 			}

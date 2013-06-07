@@ -13,7 +13,7 @@ public class Camera {
 	public Camera(Player ply, GameMap map) {
 		this.ply = ply;
 		this.map = map;
-		System.out.println(ply + " " + map);
+		//System.out.println(ply + " " + map);
 	}
 
 	public int getX() {
@@ -28,6 +28,8 @@ public class Camera {
 		if (ply == null || map == null) { return; }
 		x = -(ply.getX() - gc.getWidth()/2) - 32;
 		y = -(ply.getY() - gc.getHeight()/2) - 32;
+		x = Misc.clamp(x, -(map.getTiles().length*64) + gc.getScreenWidth(), 0);
+		y = Misc.clamp(y, -(map.getTiles()[0].length*64) + gc.getScreenHeight(), 0);
 		g.translate(x, y);
 		
 		/*

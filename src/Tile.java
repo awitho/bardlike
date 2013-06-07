@@ -12,7 +12,7 @@ import org.newdawn.slick.Image;
 public class Tile {
 	private int ix, iy;
 	private String name;
-	private boolean inLos, playerSaw, isWall;
+	private boolean inLos, playerSaw, isWall, isEmpty;
 	private ArrayList<Entity> containedEnts = new ArrayList<>();;
 	private Image spr, overlay;
 
@@ -26,6 +26,7 @@ public class Tile {
 		overlay = tileDictionary.getTileImageByName("Overlay");
 		isWall = tileDictionary.getTileIsWall(tile); // Ditto.
 		spr = tileDictionary.getTileImageByName(tile); // Grab a reference for the tile image from the tile dictionary, no need to make our own copy!
+		isEmpty = !tile.equalsIgnoreCase("Empty");
 	}
 
 	public int getWidth() {
@@ -79,6 +80,10 @@ public class Tile {
 
 	public String getName() {
 		return name;
+	}
+	
+	public boolean isReal() {
+		return isEmpty;
 	}
 
 	public boolean containsEnt(Entity ent) {

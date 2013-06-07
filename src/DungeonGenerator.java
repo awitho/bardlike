@@ -47,24 +47,23 @@ public class DungeonGenerator {
 				innerloop: // Loop label.
 				for (Direction dir : Direction.values()) { // Find adj tiles to starting point.
 					Vector vec = Misc.getLocFromDir(curLookingTile.x, curLookingTile.y, dir);
-					System.out.print("Dir: " + dir + ", x: " + vec.getX() + ", y: " + vec.getY() + "| ");
+					
+					if (vec.getX() == x2 && vec.getY() == y2) { closedList.add(new PathfindingTile(curLookingTile, x2, y2, 0, 0, 0)); break outerloop; }
 					
 					for (int i = 0; i < closedList.size(); i++) {
 						if (vec.getX() == closedList.get(i).x && vec.getY() == closedList.get(i).y) {
-							System.out.println("Tile was already on closed list, skipping!");
 							continue innerloop;
 						}
 					}
 					
 					for (int i = 0; i < openList.size(); i++) {
 						if (vec.getX() == openList.get(i).x && vec.getY() == openList.get(i).y) {
-							System.out.println("Tile was already on open list, skipping?"); // Since we are only doing straight adjacents, skipping is find, since g is never needed to be recalculated.
 							continue innerloop; // Possibly, might want to remove?
 						}
 					}
 					
 					try {
-						if (vec.getX() < 0 || vec.getX() > tiles.length || vec.getY() < 0 || vec.getY() > tiles[0].length || (tiles[vec.getX()][vec.getY()].isWall() && !tiles[vec.getX()][vec.getY()].getName().equalsIgnoreCase("Empty"))) { System.out.println("Tile was invalid! skipping!"); continue; }
+						if (vec.getX() < 0 || vec.getX() > tiles.length || vec.getY() < 0 || vec.getY() > tiles[0].length || (tiles[vec.getX()][vec.getY()].isWall() && tiles[vec.getX()][vec.getY()].isReal())) { continue; }
 					} catch (IndexOutOfBoundsException ex) { }
 					
 					//calculate f, g & h here.
@@ -80,14 +79,12 @@ public class DungeonGenerator {
 					}
 					
 					//double h = 10 * (Math.abs(vec.getX() - x2) + Math.abs(vec.getY() - y2)); // Manhattan Huerisitic
-					
-					System.out.println("g: "+  g + ", h: " + h);
+
 					openList.add(new PathfindingTile(curLookingTile, vec.getX(), vec.getY(), g + h, g, h));
 					added++;
-					if (vec.getX() == x2 && vec.getY() == y2) { closedList.add(new PathfindingTile(curLookingTile, x2, y2, 0, 0, 0)); System.out.println("Got to last tile!"); break outerloop; }
 				}
-				if (added == 0) { System.out.println("Target unreachable!"); return; }
-				if (openList.isEmpty()) { System.out.println("openList emptied, no possible path!"); return; }
+				if (added == 0) { return; }
+				if (openList.isEmpty()) { return; }
 				
 				openList.remove(curLookingTile); // Add starting tile to closed list.
 				closedList.add(curLookingTile);
@@ -102,31 +99,39 @@ public class DungeonGenerator {
 				curLookingTile = openList.get(lowest); // Set new tile to starting point, remove from open, add to closed.
 				closedList.add(curLookingTile);
 				openList.remove(lowest);
-				
-			//	System.out.println("O: " + openList);
-			//	System.out.println("C: " + closedList);
             }
-			System.out.println("O: " + openList);
-			System.out.println("C: " + closedList);
 			
 			PathfindingTile tile = closedList.get(closedList.size() - 1);
 			while (true) {
-	//			tiles.get(tile.x).add(tile.y, new Tile(tileDictionary, "Wood", tile.x, tile.y));
 				DungeonGenerator.placeTile(tiles, new Tile(tileDictionary, "Wood", tile.x, tile.y));
+				for (Direction dir : Direction.values()) {
+					Vector vec = Misc.getLocFromDir(tile.x, tile.y, dir);
+					try {
+						Tile wall = tiles[vec.getX()][vec.getY()]; // Location of tobe wall, get tile there!
+						if (wall.isReal() || tile.parent == null && (vec.getX() == tile.parent.x && vec.getY() == tile.parent.y)) { continue; }
+					} catch (ArrayIndexOutOfBoundsException ex) { continue; }
+					DungeonGenerator.placeTile(tiles, new Tile(tileDictionary, "Stone", vec.getX(), vec.getY()));
+				}
 				if (tile.parent == null) { break; }
 				tile = tile.parent;
 			}
 	}
 	
 	public static void placePlayerInFeasibleLocation(Tile[][] tiles, Player ply) {
+		boolean placed = false;
 		for (int x = 0; x < tiles.length; x++) {
+			if ((int) (Math.random() * 100) + 1 <= 90) { continue; }
+			System.out.println("x loop");
 			for (int y = 0; y < tiles[0].length; y++) {
-				if (tiles[x][y] == null || tiles[x][y].getName().equalsIgnoreCase("") || tiles[x][y].isWall() || (int) (Math.random() * 20) - 1 <= 10) { continue; }
-				System.out.println("Placing player at: (" + x + ", " + y + ")");
+				if (tiles[x][y] == null || tiles[x][y].getName().equalsIgnoreCase("") || tiles[x][y].isWall() || (int) (Math.random() * 100) + 1 <= 80) { continue; }
+				System.out.println("y loop");
+			//	System.out.println("Placing player at: (" + x + ", " + y + ")");
+				placed = true;
 				ply.setTile(tiles[x][y]);
 				return;
 			}
 		}
+		if (!placed) { placePlayerInFeasibleLocation(tiles, ply); }
 	}
 	
 	public static void placeItems(Tile[][] tiles, int w, int h) {
@@ -135,8 +140,7 @@ public class DungeonGenerator {
 				//calculate random shit and if equals other random shit place random item
 				if((int) (Math.random() * 100) + 1 <= 10) {
 					Item item = itemDictionary.getRandomItem();
-					if (item == null) { continue; }
-					if (tiles[x][y].getName().equalsIgnoreCase("Empty") || tiles[x][y].isWall()) { continue; }
+					if (item == null || tiles[x][y].isReal() || tiles[x][y].isWall()) { continue; }
 					item.setTile(tiles[x][y]);
 				}
 			}
@@ -145,7 +149,7 @@ public class DungeonGenerator {
 	
 	public static void placeTile(Tile[][] tiles, Tile tile) {
 			if (tile.getX() >= tiles.length || tile.getY() >= tiles[0].length) { return; }
-			System.out.println("DungeonGenerator.placeTile: Placing tile at " + tile.getX() + ", " + tile.getY());
+			// System.out.println("DungeonGenerator.placeTile: Placing tile at " + tile.getX() + ", " + tile.getY());
 			tiles[tile.getX()][tile.getY()] = tile;
 	}
 
@@ -161,12 +165,14 @@ public class DungeonGenerator {
 			}
 		}
 		
-		ArrayList<ArrayList<Tile>> rooms = new ArrayList<>();
+		//Fill map
+		generateRoom(tiles, 0, 0, tiles.length, tiles.length);
 		
+		//Debug layout
 		generateRoom(tiles, 0, 0, 10, 10);
 		generateRoom(tiles, 11, 1, 5, 5);
-		
-		generateHallway(tiles, 0, 10, 13, 0);
+		generateRoom(tiles, 10, 7, 3, 5);
+		generateHallway(tiles, 1, 9, 13, 1);
 		
 		placeItems(tiles, w, h);
 		
