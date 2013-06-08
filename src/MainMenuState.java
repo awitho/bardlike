@@ -23,7 +23,7 @@ public class MainMenuState extends BasicGameState {
 
 	@Override
 	public void init(GameContainer container, StateBasedGame s) {
-		this.menu = "What Do? (P)lay Game (Q)uit";
+		this.menu = "What Do? [ (P)lay | (H)elp | (Esc)ape ]";
 		try {
 			this.titleImg = new Image("./gfx/title.png");
 			this.backImg = new Image("./gfx/mainback.png").getScaledCopy(container.getWidth(), container.getHeight());
@@ -43,7 +43,7 @@ public class MainMenuState extends BasicGameState {
 		g.drawImage(titleImg, container.getWidth()/2 - titleImg.getWidth()/2, container.getHeight()/2 - titleImg.getHeight()/2);
 
 		// Loading bar
-		g.fillRoundRect(10, container.getHeight() - (10 + 20), (int) Math.round((loaded/100.0)*(container.getWidth()-40)), 20, 5);
+		//g.fillRoundRect(10, container.getHeight() - (10 + 20), (int) Math.round((loaded/100.0)*(container.getWidth()-40)), 20, 5);
 
 		// Main menu text
 		g.setFont(font);

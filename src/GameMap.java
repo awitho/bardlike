@@ -10,14 +10,13 @@ import org.newdawn.slick.SpriteSheet;
  */
 public class GameMap {
 	private TileDictionary tileDictionary;
+	private ItemDictionary itemDictionary;
 	private int width, height;
 	private Tile[][] tiles;
-	private SpriteSheet sprites;
-	private Item item;
-	private Item item2;
 
-	public GameMap(int w, int h, TileDictionary tileDictionary) {
+	public GameMap(int w, int h, TileDictionary tileDictionary, ItemDictionary itemDictionary) {
 		this.tileDictionary = tileDictionary;
+		this.itemDictionary = itemDictionary;
 		width = w;
 		height = h;
 	}
@@ -74,6 +73,10 @@ public class GameMap {
 
 	public int getScaledHeight() {
 		return height * 64;
+	}
+	
+	public void regen() {
+		tiles = DungeonGenerator.generateDungeon(24, 24, tileDictionary, itemDictionary).getTiles().clone();
 	}
 
 	public void update() {

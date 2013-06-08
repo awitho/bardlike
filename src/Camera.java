@@ -28,8 +28,6 @@ public class Camera {
 		if (ply == null || map == null) { return; }
 		x = -(ply.getX() - gc.getWidth()/2) - 32;
 		y = -(ply.getY() - gc.getHeight()/2) - 32;
-		x = Misc.clamp(x, -(map.getTiles().length*64) + gc.getScreenWidth(), 0);
-		y = Misc.clamp(y, -(map.getTiles()[0].length*64) + gc.getScreenHeight(), 0);
 		g.translate(x, y);
 		
 		/*
@@ -61,9 +59,9 @@ public class Camera {
 	
 	public int getTileToDir(Direction dir) {
 		if (dir == Direction.LEFT || dir == Direction.RIGHT) {
-			return x/Misc.TargetSize;
+			return x/Misc.TARGET_SIZE;
 		} else {
-			return y/Misc.TargetSize;
+			return y/Misc.TARGET_SIZE;
 		}
 	}
 }

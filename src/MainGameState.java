@@ -33,15 +33,20 @@ public class MainGameState extends BasicGameState {
 		itemDictionary = new ItemDictionary();
 		map = DungeonGenerator.generateDungeon(24, 24, tileDictionary, itemDictionary);
 	}
-
+	
 	@Override
 	public void render(GameContainer container, StateBasedGame s, Graphics g) throws SlickException {
 		cam.translate(g, container);
-		
+
 		g.setColor(Color.white);
 		g.drawRect(-1, -1, map.getScaledWidth() + 1, map.getScaledHeight() + 1);
 
 		map.draw(g, player, cam);
+		
+		//Overlay
+		//g.translate(0, 0);
+		g.setFont(MainMenuState.font);
+		g.drawString("Ply x: " + player.getTile().getX() + ", y: " + player.getTile().getY(), -cam.getX(), -cam.getY() + 20);
 		inventory.draw(g);
 	}
 
@@ -53,7 +58,7 @@ public class MainGameState extends BasicGameState {
 
 		player.update(container);
 		inventory.update(container);
-		
+
 		container.getInput().clearKeyPressedRecord();
 	}
 

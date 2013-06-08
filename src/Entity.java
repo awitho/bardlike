@@ -32,12 +32,12 @@ public class Entity {
 	}
 
 	public void setTile(Tile tile) {
+		if (curTile != null) { getTile().removeEnt(this); } // Remove from old tile, if we had a last tile.
 		if (tile == null) { curTile = tile; visible = false; return; } else { visible = true; } // Make sure entity is visible, now that we are on a tile!
-		if (getTile() != null) { getTile().removeEnt(this); } // Remove from old tile, if we had a last tile.
 		curTile = tile; // Set our current tile.
 		getTile().addEnt(this); // Add to new tile.
-		x = tile.getX() * Misc.TargetSize; // Translate from tile index, to actual world coords.
-		y = tile.getY() * Misc.TargetSize;
+		x = tile.getX() * Misc.TARGET_SIZE; // Translate from tile index, to actual world coords.
+		y = tile.getY() * Misc.TARGET_SIZE;
 	}
 
 	public Tile getTile() {
@@ -75,6 +75,10 @@ public class Entity {
 	public void setPos(int x, int y){
 		this.x = x;
 		this.y = y;
+	}
+	
+	public boolean getVisible() {
+		return visible;
 	}
 	
 	@Override

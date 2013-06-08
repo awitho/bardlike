@@ -27,7 +27,7 @@ public class ItemDictionary {
 			itemSprites = new SpriteSheet("./gfx/testitemsheet.png", 32, 32);
 			for(int i = 0; i < items.size(); i++) {
 				curItem = items.get(i).getAsJsonObject();
-				itemImages.put(curItem.get("name").getAsString(), itemSprites.getSubImage(curItem.get("sx").getAsInt(), curItem.get("sy").getAsInt()).getScaledCopy(Misc.TargetSize, Misc.TargetSize));
+				itemImages.put(curItem.get("name").getAsString(), itemSprites.getSubImage(curItem.get("sx").getAsInt(), curItem.get("sy").getAsInt()).getScaledCopy(Misc.TARGET_SIZE, Misc.TARGET_SIZE));
 			}
 		} catch (Exception e) {
 			Misc.showDialog(e);

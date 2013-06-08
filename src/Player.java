@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SpriteSheet;
 import com.google.gson.JsonObject;
 import java.util.Map;
+import org.newdawn.slick.Graphics;
 
 /**
  * The Player that you control.
@@ -45,10 +45,8 @@ public class Player extends Entity {
 			ArrayList<Entity> foundItems = tile.findType(Item.class);
 			
 			if(foundItems == null) { return; }
-			
+
 			for(int i = 0; i < foundItems.size(); i++) {
-				foundItems.get(i).setTile(null);
-				this.getTile().removeEnt(foundItems.get(i));
 				addItem((Item) foundItems.get(i));
 			}
 		}
@@ -59,11 +57,12 @@ public class Player extends Entity {
 	}
 	
 	public void addItem(Item i) {
-		if(inventoryItems.size() >= 100) {
+		if(inventoryItems.size() > 100) {
 			Misc.showDialog("I'm alredy carrying too much!");
 			return;
 		}
 		System.out.println("Calling addItem from: " +this.getClass());
+		i.setTile(null);
 		inventoryItems.add(i);
 	}
 
@@ -103,6 +102,15 @@ public class Player extends Entity {
 		if (container.getInput().isKeyPressed(Input.KEY_SPACE)) {
 			DungeonGenerator.placePlayerInFeasibleLocation(getMap().getTiles(), this);
 		}
+		if (container.getInput().isKeyPressed(Input.KEY_R)) {
+			getMap().regen();
+			DungeonGenerator.placePlayerInFeasibleLocation(getMap().getTiles(), this);
+		}
+	}
+	
+	public void draw(Graphics g, int x, int y) {
+		if (!getVisible()) { return; }
+		g.drawImage(getImage(), x, y);
 	}
 	
 	/*@Override

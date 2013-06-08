@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class DungeonGenerator {
 	private static TileDictionary tileDictionary;
 	private static ItemDictionary itemDictionary;
-	private GameMap map;
+	private static GameMap map;
 	
 	public static void initTileDictionary(TileDictionary tileDictionary) {
 		DungeonGenerator.tileDictionary = tileDictionary;
@@ -121,17 +121,19 @@ public class DungeonGenerator {
 		boolean placed = false;
 		for (int x = 0; x < tiles.length; x++) {
 			if ((int) (Math.random() * 100) + 1 <= 90) { continue; }
-			System.out.println("x loop");
 			for (int y = 0; y < tiles[0].length; y++) {
 				if (tiles[x][y] == null || tiles[x][y].getName().equalsIgnoreCase("") || tiles[x][y].isWall() || (int) (Math.random() * 100) + 1 <= 80) { continue; }
-				System.out.println("y loop");
 			//	System.out.println("Placing player at: (" + x + ", " + y + ")");
 				placed = true;
 				ply.setTile(tiles[x][y]);
 				return;
 			}
 		}
-		if (!placed) { placePlayerInFeasibleLocation(tiles, ply); }
+		try {
+			if (!placed) { placePlayerInFeasibleLocation(tiles, ply); }
+		} catch (StackOverflowError ex) {
+			return;
+		}
 	}
 	
 	public static void placeItems(Tile[][] tiles, int w, int h) {
@@ -148,7 +150,7 @@ public class DungeonGenerator {
 	}
 	
 	public static void placeTile(Tile[][] tiles, Tile tile) {
-			if (tile.getX() >= tiles.length || tile.getY() >= tiles[0].length) { return; }
+			if (tile.getX() < 0 || tile.getY() < 0 || tile.getName().trim().equalsIgnoreCase("") || tile.getX() >= tiles.length || tile.getY() >= tiles[0].length) { return; }
 			// System.out.println("DungeonGenerator.placeTile: Placing tile at " + tile.getX() + ", " + tile.getY());
 			tiles[tile.getX()][tile.getY()] = tile;
 	}
@@ -156,7 +158,7 @@ public class DungeonGenerator {
 	public static GameMap generateDungeon(int w, int h, TileDictionary tileDictionary, ItemDictionary itemDictionary) {
 		DungeonGenerator.initTileDictionary(tileDictionary);
 		DungeonGenerator.initItemDictionary(itemDictionary);
-		GameMap empty = new GameMap(w, h, tileDictionary);
+		GameMap empty = new GameMap(w, h, tileDictionary, itemDictionary);
 		
 		Tile[][] tiles = new Tile[w][h];
 		for (int x = 0; x < w; x++) {
@@ -165,14 +167,26 @@ public class DungeonGenerator {
 			}
 		}
 		
+		ArrayList<Room> rooms = new ArrayList<>();
+		
+		for (int x = 0; x < tiles.length; x++) {
+			for (int y = 0; y < tiles.length; y++) {
+				if ((int) (Math.random() * 100) + 1 >= 98) {
+					int width = (int) (Math.random() * 7) + 3;
+					int height = (int) (Math.random() * 5) + 3;
+					generateRoom(tiles, Misc.clamp((int) (Math.random() * tiles.length - width) + 1, 0, 10000), Misc.clamp((int) (Math.random() * tiles.length - width) + 1, 0, 10000), width, height);
+				}
+			}
+		}
+		
 		//Fill map
-		generateRoom(tiles, 0, 0, tiles.length, tiles.length);
+		//generateRoom(tiles, 0, 0, tiles.length, tiles.length);
 		
 		//Debug layout
-		generateRoom(tiles, 0, 0, 10, 10);
-		generateRoom(tiles, 11, 1, 5, 5);
-		generateRoom(tiles, 10, 7, 3, 5);
-		generateHallway(tiles, 1, 9, 13, 1);
+		//generateRoom(tiles, 0, 0, 10, 10);
+		//generateRoom(tiles, 11, 1, 5, 5);
+		//generateRoom(tiles, 10, 7, 3, 5);
+		//generateHallway(tiles, 1, 9, 13, 1);
 		
 		placeItems(tiles, w, h);
 		
