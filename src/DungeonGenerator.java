@@ -142,7 +142,7 @@ public class DungeonGenerator {
 				//calculate random shit and if equals other random shit place random item
 				if((int) (Math.random() * 100) + 1 <= 10) {
 					Item item = itemDictionary.getRandomItem();
-					if (item == null || tiles[x][y].isReal() || tiles[x][y].isWall()) { continue; }
+					if (item == null || !tiles[x][y].isReal() || tiles[x][y].isWall()) { continue; }
 					item.setTile(tiles[x][y]);
 				}
 			}

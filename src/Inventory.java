@@ -58,10 +58,13 @@ public class Inventory implements Menu {
 			}
 			
 			//puts items on top of each other.
-			for(int x = 0; x < ply.getPlayerItems().size(); x++) {
+			int count = 0;
+			for(int x = 0; x < ply.getPlayerItems().size(); x++) {	
 				for(int y = 0; y < ply.getPlayerItems().size(); y++) {
-					g.drawImage(itemDictionary.getScaledImageByName(32, ply.getPlayerItems().get(x).getName()), x + ply.getX() - INV_OFFSET_X, (y + 80) + ply.getY() - INV_OFFSET_Y);
+					g.drawImage(itemDictionary.getScaledImageByName(32, ply.getPlayerItems().get(count).getName()), (x*32) + ply.getX() - INV_OFFSET_X, ((y*32) + 80) + ply.getY() - INV_OFFSET_Y);
+					
 				}
+				count++;
 			}
 				
 			
