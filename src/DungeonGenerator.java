@@ -19,18 +19,24 @@ public class DungeonGenerator {
 		DungeonGenerator.itemDictionary = itemDictionary;
 	}
 	
-	public static void generateRoom(Tile[][] tiles, int x, int y, int width, int height) {
+	public static Room generateRoom(Tile[][] tiles, int x, int y, int width, int height) {
 		//if (height > tiles.size()) { return; }
-		if (x + width > tiles.length || y + height > tiles[0].length) { return; }
+		if (x + width > tiles.length || y + height > tiles[0].length) { return null; }
+		Tile[][] room = new Tile[width][height];
 		for (int x1 = x; x1 < (x + width); x1++) {
 			for (int y1 = y; y1 < (y + height); y1++) {
+				Tile tile;
 				if (x1 == x || y1 == y || x1 == (x + width) - 1 || y1 == (y + height) - 1) {
-					DungeonGenerator.placeTile(tiles, new Tile(tileDictionary, tileDictionary.getRandomWall(), x1, y1));
+					tile = new Tile(tileDictionary, tileDictionary.getRandomWall(), x1, y1);
+					//DungeonGenerator.placeTile(tiles, new Tile(tileDictionary, tileDictionary.getRandomWall(), x1, y1));
 				} else {
-					DungeonGenerator.placeTile(tiles, new Tile(tileDictionary, tileDictionary.getRandomNonwall(), x1, y1));
+					tile = new Tile(tileDictionary, tileDictionary.getRandomNonwall(), x1, y1);
+					//DungeonGenerator.placeTile(tiles, new Tile(tileDictionary, tileDictionary.getRandomNonwall(), x1, y1));
 				}
+				room[x1][y1] = tile;
 			}
 		}
+		return new Room(room);
 	}
 
 	public static void generateHallway(Tile[][] tiles, int x1, int y1, int x2, int y2) {
@@ -174,7 +180,7 @@ public class DungeonGenerator {
 				if ((int) (Math.random() * 100) + 1 >= 98) {
 					int width = (int) (Math.random() * 7) + 3;
 					int height = (int) (Math.random() * 5) + 3;
-					generateRoom(tiles, Misc.clamp((int) (Math.random() * tiles.length - width) + 1, 0, 10000), Misc.clamp((int) (Math.random() * tiles.length - width) + 1, 0, 10000), width, height);
+					rooms.add(generateRoom(tiles, Misc.clamp((int) (Math.random() * tiles.length - width) + 1, 0, 10000), Misc.clamp((int) (Math.random() * tiles.length - width) + 1, 0, 10000), width, height));
 				}
 			}
 		}
