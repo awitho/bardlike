@@ -9,16 +9,22 @@ import java.util.Map;
  * @version 1
  */
 public class Item extends Entity {
+	private String id;
 	private String name;
-        private ItemType type;
+    private ItemType type;
 	private HashMap<String, Integer> stats = new HashMap<>();
 	
 	public Item(ItemDictionary itemDictionary, String name) {
 		super(itemDictionary.getImage(name));
-		this.name = name;
+		this.id = name;
+		this.name = NameGenerator.generateName(itemDictionary.getType(name));
 		for (Map.Entry<String, JsonElement> ele : itemDictionary.getStats(name).entrySet()) {
 			stats.put(ele.getKey(), ele.getValue().getAsInt());
 		}
+	}
+	
+	public String getID() {
+		return id;
 	}
 	
 	public String getName() {

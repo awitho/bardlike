@@ -1,13 +1,10 @@
 import java.util.HashMap;
-import java.util.Map.Entry;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Rectangle;
-
-import com.google.gson.JsonElement;
 
 /**
  * A class that handles the players inventory.
@@ -16,7 +13,7 @@ import com.google.gson.JsonElement;
  * @version 1
  */
 public class Inventory implements Menu {
-	private int width = 550, height = 400, selectX, selectY = 80;
+	private int width = 550, height = 400, reticleX, reticleY = 80;
 	private int INV_OFFSET_X = width/2 - 30, INV_OFFSET_Y = height/2 - 30;
 	private int lastDelta;
 	private long curTime = 0;
@@ -32,7 +29,7 @@ public class Inventory implements Menu {
 		playerStats = p.getStats();
 		invMenu = new GameConfig("./loc/inventorytext.json");
 		itemDictionary = id;
-		selectionReticle = new Rectangle(selectX, selectY, 25, 25);
+		selectionReticle = new Rectangle(reticleX, reticleY, 25, 25);
 	}
 
 	@Override
@@ -59,39 +56,24 @@ public class Inventory implements Menu {
 			
 			//puts items on top of each other.
 			int count = 0;
-			for(int x = 0; x < ply.getPlayerItems().size(); x++) {	
-				for(int y = 0; y < ply.getPlayerItems().size(); y++) {
-					g.drawImage(itemDictionary.getScaledImageByName(32, ply.getPlayerItems().get(count).getName()), (x*32) + ply.getX() - INV_OFFSET_X, ((y*32) + 80) + ply.getY() - INV_OFFSET_Y);
-					
-				}
-				count++;
-			}
-				
-			
-			/*int countX = 0;
-			int countY = 0;
-			for(int x = 0; x < ply.getPlayerItems().size(); x++) {
-				g.drawImage(itemDictionary.getScaledImageByName(32, ply.getPlayerItems().get(x).getName()), countX + ply.getX() - INV_OFFSET_X, (countY + 80) + ply.getY() - INV_OFFSET_Y);
-				countX+=32;
-				if(countX >= 10*32) {
-					countX = 0;
-					countY+=32;
-				}
-				
-					//selectX = x*32;
-					//selectY = (x*32) - 80;
-					int tempX = countX -32;
-					int tempY = selectY-80;
-					System.out.println("Counts : (" +tempX+", "+countY+")");
-					System.out.println("Reticle : (" +selectX+", "+selectY+")");
-					if(selectX == countX - 32 && (selectY-80)== countY) {
-						g.drawString(ply.getPlayerItems().get(x).getName(), selectX + ply.getX() - INV_OFFSET_X + 10, selectY + ply.getY() - INV_OFFSET_Y -32);
+			for(int x = 0; x < Misc.MAX_INVENTORY / 10; x++) {	
+				for(int y = 0; y < Misc.MAX_INVENTORY / 10; y++) {
+					try{
+						ply.getPlayerItems().get(count);
+					} catch (IndexOutOfBoundsException ex) {
+						break;
 					}
-			}*/
+					g.drawImage(itemDictionary.getScaledImageByName(32, ply.getPlayerItems().get(count).getID()), (y*32) + ply.getX() - INV_OFFSET_X, ((x*32) + 80) + ply.getY() - INV_OFFSET_Y);
+					if(reticleX == (y*32) && (reticleY-80) == (x*32)) {			
+						g.drawString(ply.getPlayerItems().get(count).getName(), 20 + ply.getX() - INV_OFFSET_X + 10, 50 + ply.getY() - INV_OFFSET_Y);
+					}
+					count++;
+				}
+			}
 			
 			g.draw(selectionReticle);
-			selectionReticle.setX(selectX + ply.getX() - INV_OFFSET_X + 4);
-			selectionReticle.setY(selectY + ply.getY() - INV_OFFSET_Y + 4);
+			selectionReticle.setX(reticleX + ply.getX() - INV_OFFSET_X + 4);
+			selectionReticle.setY(reticleY + ply.getY() - INV_OFFSET_Y + 4);
 
 			// "" + ply.getStat(
 			/*for (Entry<String, JsonElement> ele : invMenu.getObject().entrySet()) {
@@ -116,20 +98,20 @@ public class Inventory implements Menu {
 				this.setVisible(false);
 				ply.isFrozen(false);
 			} else if (container.getInput().isKeyDown(Input.KEY_UP)) {
-				if(selectY < 80 + 32) { selectY = 80 + 32; }
-				selectY-=32;
+				if(reticleY < 80 + 32) { reticleY = 80 + 32; }
+				reticleY-=32;
 				curTime = container.getTime();
 			} else if (container.getInput().isKeyDown(Input.KEY_DOWN)) {
-				if(selectY > (8*32) + 80) { selectY = (8*32) + 80; }
-				selectY+=32;
+				if(reticleY > (8*32) + 80) { reticleY = (8*32) + 80; }
+				reticleY+=32;
 				curTime = container.getTime();
 			} else if (container.getInput().isKeyDown(Input.KEY_LEFT)) {
-				if(selectX < 32) { selectX = 32; }
-				selectX-=32;
+				if(reticleX < 32) { reticleX = 32; }
+				reticleX-=32;
 				curTime = container.getTime();
 			} else if (container.getInput().isKeyDown(Input.KEY_RIGHT)) {
-				if(selectX > (8*32)) { selectX = (8*32); }
-				selectX+=32;
+				if(reticleX > (8*32)) { reticleX = (8*32); }
+				reticleX+=32;
 				curTime = container.getTime();
 			}
 		}

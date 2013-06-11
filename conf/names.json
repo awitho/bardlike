@@ -1,0 +1,81 @@
+
+{
+	"SWORD": {
+		"prefix": [
+			"Huge",
+			"Awesome",
+			"Great",
+			""
+		],
+		"midname": [
+			"Deastro",
+			"Ragnarok",
+			"Hywelbane",
+			"Glamdring",
+			"Narsil",
+			"Orcrist",
+			"Ringil",
+			"Sting",
+			"Anglachel",
+			"Anguirel",
+			"Gurthang",
+			"Herugrim",
+			"Aranruth",
+			"Guthwine",
+			"Barrow-blade",
+			"Sword",
+			"Lightsaber",
+			"Hrunting"
+		],
+		"suffix": [
+			"the destroyer",
+			"the mutilator",
+			"the gut-wrencher",
+			"the bone cruncher",
+			"the defiler",
+			"teh 1337 sauce",
+			"of cakes",
+			"of doom",
+			"of Gryffindor",
+			"of evil",
+			""
+		]
+	},
+	"STAFF": {
+		"prefix":[
+			"Magic",
+			"Crystalized",
+			"Universal",
+			"Fiery",
+			"Explosive",
+			"Elongated",
+			""
+		],
+		"midname":[
+			"Wood",
+			"Staff",
+			"Rod"
+		],
+		"suffix":[
+			"of the morning",
+			"of Basket-Weaving",
+			"the reviler",
+			""
+		]
+	},
+	"HEADGEAR": {
+		"prefix":[
+			"Head",
+			""
+		],
+		
+		"midname":[
+			"Protector"
+		],
+
+		"suffix":[
+			"of love",
+			""
+		]
+	}
+}

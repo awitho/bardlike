@@ -14,6 +14,7 @@ import com.google.gson.JsonObject;
 public class ItemDictionary {
 	private SpriteSheet itemSprites;
 	private HashMap<String, Image> itemImages;
+	private HashMap<String, ItemType> itemTypes;
 	private HashMap<Integer, HashMap<String, Image>> scaledImages;
 	//private GameMap gameMap;
 	private JsonArray items;
@@ -22,16 +23,23 @@ public class ItemDictionary {
 	public ItemDictionary() {
 		itemImages = new HashMap<>();
 		scaledImages = new HashMap<>();
+		itemTypes = new HashMap<>();
 		try {
 			items = new GameConfig("items.json").getArray();
 			itemSprites = new SpriteSheet("./gfx/testitemsheet.png", 32, 32);
 			for(int i = 0; i < items.size(); i++) {
 				curItem = items.get(i).getAsJsonObject();
+				itemTypes.put(curItem.get("name").getAsString(), ItemType.valueOf(curItem.get("type").getAsString()));
 				itemImages.put(curItem.get("name").getAsString(), itemSprites.getSubImage(curItem.get("sx").getAsInt(), curItem.get("sy").getAsInt()).getScaledCopy(Misc.TARGET_SIZE, Misc.TARGET_SIZE));
 			}
 		} catch (Exception e) {
 			Misc.showDialog(e);
 		}
+		NameGenerator.setNames(new GameConfig("names.json").getObject());
+	}
+	
+	public ItemType getType(String name) {
+		return itemTypes.get(name);
 	}
 	
 	/*public void scaleImages(int i) {
