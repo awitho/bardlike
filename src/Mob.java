@@ -6,10 +6,12 @@ import org.newdawn.slick.Image;
  */
 public class Mob extends Entity {
 	private int health;
+	private String name;
 	
-	public Mob(MobDictionary mobDictionary) {
-		super(mobDictionary.getMobImage());
+	public Mob(MobDictionary mobDictionary, String name) {
+		super(mobDictionary.getMobImage(name));
 		this.health = mobDictionary.getHealth();
+		this.name = name;
 	}
 	
 	@Override

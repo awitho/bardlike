@@ -16,6 +16,7 @@ public class Inventory implements Menu {
 	private int width = 550, height = 400, reticleX, reticleY = 80;
 	private int INV_OFFSET_X = width/2 - 30, INV_OFFSET_Y = height/2 - 30;
 	private int lastDelta;
+	private Item selected;
 	private long curTime = 0;
 	private Rectangle selectionReticle;
 	private boolean visible;
@@ -64,7 +65,8 @@ public class Inventory implements Menu {
 						break;
 					}
 					g.drawImage(itemDictionary.getScaledImageByName(32, ply.getPlayerItems().get(count).getID()), (y*32) + ply.getX() - INV_OFFSET_X, ((x*32) + 80) + ply.getY() - INV_OFFSET_Y);
-					if(reticleX == (y*32) && (reticleY-80) == (x*32)) {			
+					if(reticleX == (y*32) && (reticleY-80) == (x*32)) {		
+						selected = ply.getPlayerItems().get(count);
 						g.drawString(ply.getPlayerItems().get(count).getName(), 20 + ply.getX() - INV_OFFSET_X + 10, 50 + ply.getY() - INV_OFFSET_Y);
 					}
 					count++;
@@ -97,7 +99,10 @@ public class Inventory implements Menu {
 			if (container.getInput().isKeyPressed(Input.KEY_I)) {
 				this.setVisible(false);
 				ply.isFrozen(false);
-			} else if (container.getInput().isKeyDown(Input.KEY_UP)) {
+			}else if(container.getInput().isKeyPressed(Input.KEY_D)) {
+				ply.removeItem(selected);
+			
+			}else if (container.getInput().isKeyDown(Input.KEY_UP)) {
 				if(reticleY < 80 + 32) { reticleY = 80 + 32; }
 				reticleY-=32;
 				curTime = container.getTime();
