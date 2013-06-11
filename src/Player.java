@@ -21,12 +21,14 @@ public class Player extends Entity {
 	private GameMap curMap;
 	private String plyClass = "";
 	private ArrayList<Item> inventoryItems;
+	private ArrayList<Item> equippedItems;
 	private boolean frozen;
 
 	public Player(SpriteSheet ss, JsonObject data, GameMap map) {
 		super(ss.getSubImage(data.get("sx").getAsInt(), data.get("sy").getAsInt()));
 		curMap = map;
 		inventoryItems = new ArrayList<>();
+		equippedItems = new ArrayList<>();
 		plyClass = data.get("name").getAsString();
 		for(Map.Entry<String, JsonElement> entry: data.get("stats").getAsJsonObject().entrySet()){
 				stats.put(entry.getKey(), entry.getValue().getAsInt());
@@ -70,8 +72,21 @@ public class Player extends Entity {
 		inventoryItems.remove(i);
 	}
 	
+	public void equipItem(Item i) {
+		equippedItems.add(i);
+	}
+	
+	public void unequipItem(Item i) {
+		equippedItems.remove(i);
+		inventoryItems.add(i);
+	}
+	
 	public ArrayList<Item> getPlayerItems() {
 		return inventoryItems;
+	}
+	
+	public ArrayList<Item> getEquippedItems() {
+		return equippedItems;
 	}
 	
 	public int getStat(String stat) {

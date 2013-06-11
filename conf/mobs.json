@@ -1,0 +1,28 @@
+ [
+    {
+        "name": "Slime",
+        "health": 10,
+		"sx": 0,
+		"sy": 0,
+		"stats": {
+			"str": 1,
+			"int": 1,
+			"dex": 1,
+			"end": 1,
+            "agi": 1
+		}
+    },
+    {
+        "name": "Mimic",
+        "health": 20,
+		"sx": 1,
+		"sy": 0,
+		"stats": {
+			"str": 1,
+			"int": 1,
+			"dex": 1,
+			"end": 1,
+            "agi": 1
+		}
+    }
+]

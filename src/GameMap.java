@@ -11,12 +11,14 @@ import org.newdawn.slick.SpriteSheet;
 public class GameMap {
 	private TileDictionary tileDictionary;
 	private ItemDictionary itemDictionary;
+	private MobDictionary mobDictionary;
 	private int width, height;
 	private Tile[][] tiles;
 
-	public GameMap(int w, int h, TileDictionary tileDictionary, ItemDictionary itemDictionary) {
+	public GameMap(int w, int h, TileDictionary tileDictionary, ItemDictionary itemDictionary, MobDictionary mobDictionary) {
 		this.tileDictionary = tileDictionary;
 		this.itemDictionary = itemDictionary;
+		this.mobDictionary = mobDictionary;
 		width = w;
 		height = h;
 	}
@@ -49,7 +51,7 @@ public class GameMap {
 		} catch (ArrayIndexOutOfBoundsException ex) {
 			return null;
 		}
-		if (newTile == null || tileDictionary.getTileIsWall(newTile.getName())) { return null; }
+		//if (newTile == null || tileDictionary.getTileIsWall(newTile.getName())) { return null; }
 		ent.setTile(newTile);
 		return newTile;
 	}
@@ -76,7 +78,7 @@ public class GameMap {
 	}
 	
 	public void regen() {
-		tiles = DungeonGenerator.generateDungeon(24, 24, tileDictionary, itemDictionary).getTiles().clone();
+		tiles = DungeonGenerator.generateDungeon(24, 24, tileDictionary, itemDictionary, mobDictionary).getTiles().clone();
 	}
 
 	public void update() {
