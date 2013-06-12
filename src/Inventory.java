@@ -15,9 +15,8 @@ import org.newdawn.slick.geom.Rectangle;
 public class Inventory implements Menu {
 	private int width = 550, height = 400, reticleX, reticleY = 80, equipLoc = 0;;
 	private int INV_OFFSET_X = width/2 - 85, INV_OFFSET_Y = height/2 - 30;
-	private int INV_ITEMBOX_WIDTH = 320;
+	private int INV_WIDTH = 320;
 	private int EQUIP_OFFSET = 96;
-	private String equipNames;
 	private int lastDelta;
 	private Item selected;
 	private long curTime = 0;
@@ -26,6 +25,7 @@ public class Inventory implements Menu {
 	private HashMap<String, Integer> playerStats;
 	private Player ply;
 	private GameConfig invMenu;
+	private InventoryTile[][] inventoryTiles;
 
 	public Inventory(Player p) {
 		ply = p;
@@ -33,7 +33,12 @@ public class Inventory implements Menu {
 		invMenu = new GameConfig("./loc/inventorytext.json");
 		selectionReticle = new Rectangle(reticleX, reticleY, 25, 25);
 		ItemDictionary.scaleImages(32); // We need thumbnails at 32x32 here, so tell ItemDictionary to prepare them for us!
-		equipNames = "Head\nTorso\nWeapon\nCloak\nHands\nLegs\nFeet\nWaist\nPauld";
+		inventoryTiles = new InventoryTile[11][10];
+		for(int i = 0; i < 11; i++) {
+			for(int j = 0; j < 10; j++) {
+				inventoryTiles[i][j] = new InventoryTile(i, j);
+			}
+		}
 	}
 
 	@Override
@@ -51,6 +56,18 @@ public class Inventory implements Menu {
 		if(visible) {
 			drawBase(g);
 			drawItems(g);
+			for(int x = 0; x < inventoryTiles.length; x++) {
+				for(int y = 0; y < inventoryTiles[0].length; y++) {
+					InventoryTile tile = inventoryTiles[x][y];
+					if(tile != null) {
+						if(x == 0) {
+							tile.draw(g, ((x * 32) - 64) + ply.getX() - INV_OFFSET_X, ((y * 32) + 80) + ply.getY() - INV_OFFSET_Y);
+						}else {
+							tile.draw(g, (x * 32) + (ply.getX() - INV_OFFSET_X), ((y * 32) + 80) + ply.getY() - INV_OFFSET_Y);
+						}
+					}
+				}
+			}
 			// "" + ply.getStat(
 			/*for (Entry<String, JsonElement> ele : invMenu.getObject().entrySet()) {
 				g.drawString(ele.getValue().getAsString().replace("%n", ele.getKey().split("#(.*)")[0]), 50, 50);
@@ -62,18 +79,10 @@ public class Inventory implements Menu {
 		g.setColor(Color.black);
 		g.fillRect(ply.getX() - INV_OFFSET_X - EQUIP_OFFSET, ply.getY() - INV_OFFSET_Y, EQUIP_OFFSET, height);
 		g.fillRect(ply.getX() - INV_OFFSET_X, ply.getY() - INV_OFFSET_Y, width, height);
-		for(int i = 0; i < INV_ITEMBOX_WIDTH; i+=32) {
-			for(int j = 0; j < height - 80; j+=32) {
-				g.setColor(Color.white);
-				g.drawRect(i + ply.getX() - INV_OFFSET_X, (j + 80) + ply.getY() - INV_OFFSET_Y, 32, 32);
-			}
-		}	
 		
-		for(int y = 0; y < (9*32); y+=32) {
-			g.drawRect(ply.getX() - INV_OFFSET_X - EQUIP_OFFSET + 32, (y + 80) + ply.getY() - INV_OFFSET_Y, 32, 32);
-		}
+		g.setColor(Color.white);
 		
-		g.drawString(invMenu.getValueAsString("#title"), INV_ITEMBOX_WIDTH/2 - 40 + ply.getX() - INV_OFFSET_X, 10 + ply.getY() - INV_OFFSET_Y);
+		g.drawString(invMenu.getValueAsString("#title"), INV_WIDTH/2 - 40 + ply.getX() - INV_OFFSET_X, 10 + ply.getY() - INV_OFFSET_Y);
 		g.drawString(invMenu.getValueAsString("#stat"), (width - 130) + ply.getX() - INV_OFFSET_X, 10 + ply.getY() - INV_OFFSET_Y);
 		g.drawString("Equip", ply.getX() - INV_OFFSET_X - EQUIP_OFFSET + 30, 10 + ply.getY() - INV_OFFSET_Y);
 		g.drawRect(ply.getX() - INV_OFFSET_X, ply.getY() - INV_OFFSET_Y, width, height);
@@ -104,9 +113,10 @@ public class Inventory implements Menu {
 			}
 		}
 		
-		g.draw(selectionReticle);
+		/*g.draw(selectionReticle);
 		selectionReticle.setX(reticleX + ply.getX() - INV_OFFSET_X + 4);
 		selectionReticle.setY(reticleY + ply.getY() - INV_OFFSET_Y + 4);
+		*/
 	}	
 	
 	public void update(GameContainer container) {
@@ -129,26 +139,16 @@ public class Inventory implements Menu {
 				ply.equipItem(selected);
 				selected = null;
 			}else if (container.getInput().isKeyDown(Input.KEY_UP)) {
-				if(reticleY < 80 + 32) { reticleY = 80 + 32; }
-				reticleY-=32;
+				
 				curTime = container.getTime();
 			} else if (container.getInput().isKeyDown(Input.KEY_DOWN)) {
-				if(reticleY > (8*32) + 80) { reticleY = (8*32) + 80; }
-				if((reticleX < 0) && (reticleY > (7*32) + 80)) { reticleY = (7*32) + 80; }
-				reticleY+=32;
+				
 				curTime = container.getTime();
 			} else if (container.getInput().isKeyDown(Input.KEY_LEFT)) {
-				if(reticleX < 32) { reticleX = -32; }
-				if(reticleX == -32 && reticleY == (9*32) + 80) {
-					reticleX = -32;
-					reticleY = (8*32) + 80;
-				}
-				reticleX-=32;
+				
 				curTime = container.getTime();
 			} else if (container.getInput().isKeyDown(Input.KEY_RIGHT)) {
-				if(reticleX > (8*32)) { reticleX = (8*32); }
-				if(reticleX < 0) { reticleX = -32; }
-				reticleX+=32;
+				
 				curTime = container.getTime();
 			}
 		}

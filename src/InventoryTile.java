@@ -23,7 +23,7 @@ public class InventoryTile {
 		}
 		g.drawRect(x, y, 32, 32); // farts.
 		if (containedItem != null) {
-			g.drawImage(getImage(), 0, 0);
+			g.drawImage(containedItem.getImage(), 0, 0);
 		}
 	}
 	
