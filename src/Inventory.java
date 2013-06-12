@@ -13,7 +13,7 @@ import org.newdawn.slick.geom.Rectangle;
  * @version 1
  */
 public class Inventory implements Menu {
-	private int width = 550, height = 400, reticleX, reticleY = 80;
+	private int width = 550, height = 400, reticleX, reticleY = 80, equipLoc = 0;;
 	private int INV_OFFSET_X = width/2 - 85, INV_OFFSET_Y = height/2 - 30;
 	private int INV_ITEMBOX_WIDTH = 320;
 	private int EQUIP_OFFSET = 96;
@@ -33,7 +33,6 @@ public class Inventory implements Menu {
 		playerStats = p.getStats();
 		invMenu = new GameConfig("./loc/inventorytext.json");
 		itemDictionary = id;
-		selectionReticle = new Rectangle(reticleX, reticleY, 25, 25);
 		equipNames = "Head\nTorso\nWeapon\nCloak\nHands\nLegs\nFeet\nWaist\nPauld";
 	}
 
@@ -97,19 +96,18 @@ public class Inventory implements Menu {
 				}
 				count++;
 			}
-			
-			int countY = 0;
+		
 			for(int i = 0; i < ply.getEquippedItems().size(); i++) {
-				g.drawImage(ply.getEquippedItems().get(i).getImage().getScaledCopy(32, 32), ply.getX() - INV_OFFSET_X - EQUIP_OFFSET + 32, countY + ply.getX() - INV_OFFSET_Y - 16);
-				countY+=32;
+				if(ply.getEquippedItems().get(i) == null) { continue; }
+				System.out.println(ply.getEquipLoc());
+				g.drawImage(ply.getEquippedItems().get(i).getImage().getScaledCopy(32, 32), ply.getX() - INV_OFFSET_X - EQUIP_OFFSET + 32, (ply.getEquipLoc()+80) + ply.getY() - INV_OFFSET_Y);
 			}
 		}
 		
 		g.draw(selectionReticle);
 		selectionReticle.setX(reticleX + ply.getX() - INV_OFFSET_X + 4);
 		selectionReticle.setY(reticleY + ply.getY() - INV_OFFSET_Y + 4);
-	}
-	
+	}	
 	
 	public void update(GameContainer container) {
 		if (!visible) {
@@ -118,6 +116,7 @@ public class Inventory implements Menu {
 				ply.isFrozen(true);
 			}
 		} else {
+			System.out.println("reticle: (" +reticleX+", "+reticleY+")");
 			if (container.getTime() - curTime <= 150) { return; }
 			if (container.getInput().isKeyPressed(Input.KEY_I)) {
 				this.setVisible(false);
@@ -128,6 +127,7 @@ public class Inventory implements Menu {
 				System.out.println("Equipping");
 				ply.removeItem(selected);
 				ply.equipItem(selected);
+				selected = null;
 			}else if (container.getInput().isKeyDown(Input.KEY_UP)) {
 				if(reticleY < 80 + 32) { reticleY = 80 + 32; }
 				reticleY-=32;
@@ -139,7 +139,7 @@ public class Inventory implements Menu {
 				curTime = container.getTime();
 			} else if (container.getInput().isKeyDown(Input.KEY_LEFT)) {
 				if(reticleX < 32) { reticleX = -32; }
-				if(reticleX > -64 && reticleY >= (8*32) + 80) {
+				if(reticleX == -32 && reticleY == (9*32) + 80) {
 					reticleX = -32;
 					reticleY = (8*32) + 80;
 				}

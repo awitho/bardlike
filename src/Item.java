@@ -9,6 +9,7 @@ import java.util.Map;
  * @version 1
  */
 public class Item extends Entity {
+	private ItemDictionary itemDictionary;
 	private String id;
 	private String name;
     private ItemType type;
@@ -16,6 +17,7 @@ public class Item extends Entity {
 	
 	public Item(ItemDictionary itemDictionary, String name) {
 		super(itemDictionary.getImage(name));
+		this.itemDictionary = itemDictionary;
 		this.id = name;
 		this.name = NameGenerator.generateName(itemDictionary.getType(name));
 		for (Map.Entry<String, JsonElement> ele : itemDictionary.getStats(name).entrySet()) {
@@ -29,6 +31,10 @@ public class Item extends Entity {
 	
 	public String getName() {
 		return name;
+	}
+	
+	public ItemDictionary getDict() {
+		return itemDictionary;
 	}
 	
 	@Override

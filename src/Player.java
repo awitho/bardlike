@@ -22,6 +22,7 @@ public class Player extends Entity {
 	private String plyClass = "";
 	private ArrayList<Item> inventoryItems;
 	private ArrayList<Item> equippedItems;
+	private int equipLoc;
 	private boolean frozen;
 
 	public Player(SpriteSheet ss, JsonObject data, GameMap map) {
@@ -73,12 +74,55 @@ public class Player extends Entity {
 	}
 	
 	public void equipItem(Item i) {
+		if(i == null) { return; }
+		System.out.println(i.getID());
+		if((i.getDict().getType(i.getID()) == ItemType.SWORD)||
+		(i.getDict().getType(i.getID()) == ItemType.LONGSWORD)||
+		(i.getDict().getType(i.getID()) == ItemType.DAGGER)||
+		(i.getDict().getType(i.getID()) == ItemType.SPEAR)||
+		(i.getDict().getType(i.getID()) == ItemType.MACE)||
+		(i.getDict().getType(i.getID()) == ItemType.STAFF)||
+		(i.getDict().getType(i.getID()) == ItemType.INSTRUMENT)||
+		(i.getDict().getType(i.getID()) == ItemType.WAND)||
+		(i.getDict().getType(i.getID()) == ItemType.FLAIL)||
+		(i.getDict().getType(i.getID()) == ItemType.HALBERD)) {
+			equipLoc = 32;
+			System.out.println("Weapon");
+		}else if (i.getDict().getType(i.getID()) == ItemType.HEADGEAR) {
+			equipLoc = 0;
+			System.out.println("Head");
+		}else if (i.getDict().getType(i.getID()) == ItemType.TORSO) {
+			equipLoc = 64;
+			System.out.println("Torso");
+		}else if (i.getDict().getType(i.getID()) == ItemType.LEGS) {
+			equipLoc = 96;
+			System.out.println("Legs");
+		}else if (i.getDict().getType(i.getID()) == ItemType.FEET) {
+			equipLoc = 128;
+			System.out.println("Feet");
+		}else if (i.getDict().getType(i.getID()) == ItemType.GAUNTLETS) {
+			equipLoc = 160;
+			System.out.println("Gauntlets");
+		}else if (i.getDict().getType(i.getID()) == ItemType.PAULDRONS) {
+			equipLoc = 192;
+			System.out.println("Pauldrons");
+		}else if (i.getDict().getType(i.getID()) == ItemType.WAIST) {
+			equipLoc = 224;
+			System.out.println("Waist");
+		}else if (i.getDict().getType(i.getID()) == ItemType.CLOAK) {
+			equipLoc = 256;
+			System.out.println("Cloak");
+		}
 		equippedItems.add(i);
 	}
 	
 	public void unequipItem(Item i) {
 		equippedItems.remove(i);
 		inventoryItems.add(i);
+	}
+	
+	public int getEquipLoc() {
+		return equipLoc;
 	}
 	
 	public ArrayList<Item> getPlayerItems() {
