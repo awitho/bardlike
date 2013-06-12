@@ -9,6 +9,7 @@ import java.util.Map;
  * @version 1
  */
 public class Item extends Entity {
+	private ItemDictionary itemDictionary;
 	private String id;
 	private String name;
     private ItemType type;
@@ -31,6 +32,10 @@ public class Item extends Entity {
 	
 	public String getName() {
 		return name;
+	}
+	
+	public ItemDictionary getDict() {
+		return itemDictionary;
 	}
 	
 	@Override

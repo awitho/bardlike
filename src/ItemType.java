@@ -5,6 +5,7 @@
  * @author alex
  */
 public enum ItemType {
+	// ACTUAL WEAPON TYPES
 	SWORD,
 	LONGSWORD,
 	DAGGER,
@@ -12,16 +13,18 @@ public enum ItemType {
 	HAMMER,
 	MACE,
 	STAFF,
+	FLAIL,
+	HALBERD,
 	INSTRUMENT,
 	HEADGEAR,
+	// EQUIP SLOTS BEGIN
 	TORSO,
 	LEGS,
 	FEET,
 	WAND,
 	GAUNTLETS,
 	PAULDRONS,
-	FLAIL,
 	WAIST,
 	CLOAK,
-	HALDBERD
+	WEAPON
 }
