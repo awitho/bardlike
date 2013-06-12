@@ -4,6 +4,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import java.util.Map.Entry;
 
 /**
  * A class to handle items.
@@ -12,21 +13,19 @@ import com.google.gson.JsonObject;
  * @version 1
  */
 public class ItemDictionary {
-	private SpriteSheet itemSprites;
-	private HashMap<String, Image> itemImages;
-	private HashMap<String, ItemType> itemTypes;
-	private HashMap<Integer, HashMap<String, Image>> scaledImages;
-	//private GameMap gameMap;
-	private JsonArray items;
-	private JsonObject curItem;
+	private static HashMap<String, Image> itemImages;
+	private static HashMap<String, ItemType> itemTypes;
+	private static HashMap<Integer, HashMap<String, Image>> scaledImages;
+	private static JsonArray items;
+	private static JsonObject curItem;
 	
-	public ItemDictionary() {
+	public static void initItemDictionary() {
 		itemImages = new HashMap<>();
 		scaledImages = new HashMap<>();
 		itemTypes = new HashMap<>();
 		try {
 			items = new GameConfig("items.json").getArray();
-			itemSprites = new SpriteSheet("./gfx/testitemsheet.png", 32, 32);
+			SpriteSheet itemSprites = new SpriteSheet("./gfx/testitemsheet.png", 32, 32);
 			for(int i = 0; i < items.size(); i++) {
 				curItem = items.get(i).getAsJsonObject();
 				itemTypes.put(curItem.get("name").getAsString(), ItemType.valueOf(curItem.get("type").getAsString()));
@@ -38,28 +37,28 @@ public class ItemDictionary {
 		NameGenerator.setNames(new GameConfig("names.json").getObject());
 	}
 	
-	public ItemType getType(String name) {
+	public static ItemType getType(String name) {
 		return itemTypes.get(name);
 	}
 	
-	/*public void scaleImages(int i) {
+	public static void scaleImages(int i) {
+		HashMap<String, Image> imgs = new HashMap<>();
 		for(Entry<String, Image> ele : itemImages.entrySet()) {
-			itemImages.get(ele.getKey()).getScaledCopy(i, i);
-			System.out.println("Scaling");	
+			imgs.put(ele.getKey(), ele.getValue().getScaledCopy(i, i));
 		}
-		scaledImages.put(i, itemImages);
+		scaledImages.put(i, imgs);
 	}
 	
-	public HashMap<String, Image> getScaledImages(int sized) {
+	public static HashMap<String, Image> getScaledImages(int sized) {
 		return scaledImages.get(sized);
-	}*/
-	
-	public Image getScaledImageByName(int sized, String name) {
-		//return scaledImages.get(sized).get(name).getScaledCopy(32, 322);
-		return itemImages.get(name).getScaledCopy(sized, sized);
 	}
 	
-	public JsonObject getStats(String name) {
+	public static Image getScaledImageByName(int sized, String name) {
+		return getScaledImages(sized).get(name);
+	}
+	
+	public static JsonObject getStats(String name) {
+		
 		for(int i = 0; i < items.size(); i++) {
 			JsonObject item =  items.get(i).getAsJsonObject();
 			//System.out.println(item);
@@ -70,18 +69,18 @@ public class ItemDictionary {
 		return null;
 	}
 	
-	public Image getImage(String name) {
+	public static Image getImage(String name) {
 		return itemImages.get(name);
 	}
 	
-	public int size() {
+	public static int size() {
 		return items.size();
 	}
 	
-	public Item getRandomItem() {
+	public static Item getRandomItem() {
 		for (int i = 0; i < items.size(); i++) {
 			if (items.get(i) == null || (int) (Math.random() * items.size()) - 1 == 0) { continue; }
-			return new Item(this, items.get(i).getAsJsonObject().get("name").getAsString());
+			return new Item(items.get(i).getAsJsonObject().get("name").getAsString());
 		}
 		return null;
 	}

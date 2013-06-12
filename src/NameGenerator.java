@@ -6,12 +6,12 @@ public class NameGenerator {
 	private static JsonObject itemNames;
 	
 	public static void setNames(JsonObject names) {
-		System.out.println(names);
+	//	System.out.println(names);
 		itemNames = names;
 	}
 	
 	public static String generateName(ItemType type) {
-		System.out.println(itemNames);
+	//	System.out.println(itemNames);
 		JsonObject subnames = itemNames.get(type.toString()).getAsJsonObject();
 		String prefix = subnames.get("prefix").getAsJsonArray().get((int) (Math.random() * subnames.get("prefix").getAsJsonArray().size())).getAsString();
 		String midname = subnames.get("midname").getAsJsonArray().get((int) (Math.random() * subnames.get("midname").getAsJsonArray().size())).getAsString();

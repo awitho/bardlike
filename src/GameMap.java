@@ -10,14 +10,12 @@ import org.newdawn.slick.SpriteSheet;
  */
 public class GameMap {
 	private TileDictionary tileDictionary;
-	private ItemDictionary itemDictionary;
 	private MobDictionary mobDictionary;
 	private int width, height;
 	private Tile[][] tiles;
 
-	public GameMap(int w, int h, TileDictionary tileDictionary, ItemDictionary itemDictionary, MobDictionary mobDictionary) {
+	public GameMap(int w, int h, TileDictionary tileDictionary, MobDictionary mobDictionary) {
 		this.tileDictionary = tileDictionary;
-		this.itemDictionary = itemDictionary;
 		this.mobDictionary = mobDictionary;
 		width = w;
 		height = h;
@@ -34,6 +32,7 @@ public class GameMap {
 		}
 	}
 
+	@Deprecated
 	public Tile moveEnt(Tile tile, Entity ent, Direction dir) {
 		if (tile == null) { return null; }// System.out.println("GameMap.moveEnt: Given tile is null!"); return null; }
 		//System.out.println("GameMap.moveEnt: " + ent + " moving in direction:  " + dir);
@@ -57,7 +56,7 @@ public class GameMap {
 	}
 		
 	public Tile getTile(int x, int y) {
-		if (x >= tiles.length && y >= tiles[0].length) { return null; }
+		if (x < 0 || y < 0 || x >= tiles.length || y >= tiles[0].length) { return null; }
 		return tiles[x][y];
 	}
 	
@@ -78,7 +77,7 @@ public class GameMap {
 	}
 	
 	public void regen() {
-		tiles = DungeonGenerator.generateDungeon(24, 24, tileDictionary, itemDictionary, mobDictionary).getTiles().clone();
+		tiles = DungeonGenerator.generateDungeon(24, 24, tileDictionary, mobDictionary).getTiles().clone();
 	}
 
 	public void update() {

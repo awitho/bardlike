@@ -40,14 +40,19 @@ public class Player extends Entity {
 		if(!frozen) {
 			Tile curTile = getTile();
 			if (curTile == null) { System.out.println("Player.move: Player is not currently in map!"); return; };
-			System.out.println("Player.move: Attempting to move in dir: " + dir);
-			Tile tile = getMap().moveEnt(curTile, this, dir);
-
-			if(tile == null) { return; }
-			ArrayList<Entity> foundItems = tile.findType(Item.class);
+			//System.out.println("Player.move: Attempting to move in dir: " + dir);
+			Vector vec = Misc.getLocFromDir(curTile.getX(), curTile.getY(), dir);
+			Tile tile = getMap().getTile(vec.getX(), vec.getY());
+			if (tile == null) { return; }
 			
-			if(foundItems == null) { return; }
-
+			ArrayList<Entity> foundMobs = tile.findType(Mob.class);
+			if (foundMobs != null) { return; }
+			
+			setTile(tile);
+			//Tile tile = getMap().moveEnt(curTile, this, dir);
+			
+			ArrayList<Entity> foundItems = tile.findType(Item.class);
+			if (foundItems == null) { return; }
 			for(int i = 0; i < foundItems.size(); i++) {
 				addItem((Item) foundItems.get(i));
 			}

@@ -23,6 +23,7 @@ public class ClassSelectState extends BasicGameState {
 	private ArrayList<String> charNames;
 	private ArrayList<Image> charSprite;
 	private MouseOverArea mouseOver;
+	private int chosen = -1;
 
 	@Override
 	public void init(GameContainer container, StateBasedGame s) throws SlickException {
@@ -52,8 +53,6 @@ public class ClassSelectState extends BasicGameState {
 	@Override
 	public void update(GameContainer container, StateBasedGame s, int delta) throws SlickException {
 		//add buttons eventually.
-		int chosen = -1;
-		Player player;
 		MainGameState main = (MainGameState) s.getState(4);
 		if (container.getInput().isKeyPressed(Input.KEY_B)) {
 			chosen = 0;

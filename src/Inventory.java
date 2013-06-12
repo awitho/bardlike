@@ -23,14 +23,13 @@ public class Inventory implements Menu {
 	private HashMap<String, Integer> playerStats;
 	private Player ply;
 	private GameConfig invMenu;
-	private ItemDictionary itemDictionary;
 
-	public Inventory(Player p, ItemDictionary id) {
+	public Inventory(Player p) {
 		ply = p;
 		playerStats = p.getStats();
 		invMenu = new GameConfig("./loc/inventorytext.json");
-		itemDictionary = id;
 		selectionReticle = new Rectangle(reticleX, reticleY, 25, 25);
+		ItemDictionary.scaleImages(32); // We need thumbnails at 32x32 here, so tell ItemDictionary to prepare them for us!
 	}
 
 	@Override
@@ -64,7 +63,7 @@ public class Inventory implements Menu {
 					} catch (IndexOutOfBoundsException ex) {
 						break;
 					}
-					g.drawImage(itemDictionary.getScaledImageByName(32, ply.getPlayerItems().get(count).getID()), (y*32) + ply.getX() - INV_OFFSET_X, ((x*32) + 80) + ply.getY() - INV_OFFSET_Y);
+					g.drawImage(ItemDictionary.getScaledImageByName(32, ply.getPlayerItems().get(count).getID()), (y*32) + ply.getX() - INV_OFFSET_X, ((x*32) + 80) + ply.getY() - INV_OFFSET_Y);
 					if(reticleX == (y*32) && (reticleY-80) == (x*32)) {		
 						selected = ply.getPlayerItems().get(count);
 						g.drawString(ply.getPlayerItems().get(count).getName(), 20 + ply.getX() - INV_OFFSET_X + 10, 50 + ply.getY() - INV_OFFSET_Y);

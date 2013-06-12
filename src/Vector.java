@@ -31,4 +31,8 @@ public class Vector {
 	public int getY() {
 		return y;
 	}
+	
+	public String toString() {
+		return "(Vector | x: " + x + ", y: " + y + ")";
+	}
 }

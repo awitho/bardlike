@@ -22,7 +22,6 @@ public class MainGameState extends BasicGameState {
 	private Inventory inventory;
 	private Input input;
 	public TileDictionary tileDictionary;
-	public ItemDictionary itemDictionary;
 	public MobDictionary mobDictionary;
 
 	private int transX = 0;
@@ -30,10 +29,10 @@ public class MainGameState extends BasicGameState {
 
 	@Override
 	public void init(GameContainer container, StateBasedGame s) throws SlickException {
+		ItemDictionary.initItemDictionary();
 		tileDictionary = new TileDictionary();
-		itemDictionary = new ItemDictionary();
 		mobDictionary = new MobDictionary();
-		map = DungeonGenerator.generateDungeon(24, 24, tileDictionary, itemDictionary, mobDictionary);
+		map = DungeonGenerator.generateDungeon(24, 24, tileDictionary, mobDictionary);
 	}
 	
 	@Override
@@ -48,6 +47,7 @@ public class MainGameState extends BasicGameState {
 		//Overlay
 		//g.translate(0, 0);
 		g.setFont(MainMenuState.font);
+		if (player.getTile() == null) { return; }
 		g.drawString("Ply x: " + player.getTile().getX() + ", y: " + player.getTile().getY(), -cam.getX(), -cam.getY() + 20);
 		inventory.draw(g);
 	}
@@ -71,7 +71,7 @@ public class MainGameState extends BasicGameState {
 
 	public void setPlayer(SpriteSheet sprite, JsonObject data) {
 		player = new Player(sprite, data, map);
-		inventory = new Inventory(player, new ItemDictionary());
+		inventory = new Inventory(player);
 		cam = new Camera(player, map);
 		DungeonGenerator.placePlayerInFeasibleLocation(map.getTiles(), player);
 	}

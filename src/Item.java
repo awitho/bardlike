@@ -14,13 +14,15 @@ public class Item extends Entity {
     private ItemType type;
 	private HashMap<String, Integer> stats = new HashMap<>();
 	
-	public Item(ItemDictionary itemDictionary, String name) {
-		super(itemDictionary.getImage(name));
+	public Item(String name) {
+		super(ItemDictionary.getImage(name));
 		this.id = name;
-		this.name = NameGenerator.generateName(itemDictionary.getType(name));
-		for (Map.Entry<String, JsonElement> ele : itemDictionary.getStats(name).entrySet()) {
+		this.type = ItemDictionary.getType(name);
+		this.name = NameGenerator.generateName(type);
+		for (Map.Entry<String, JsonElement> ele : ItemDictionary.getStats(name).entrySet()) {
 			stats.put(ele.getKey(), ele.getValue().getAsInt());
 		}
+		System.out.println(this);
 	}
 	
 	public String getID() {
@@ -33,6 +35,6 @@ public class Item extends Entity {
 	
 	@Override
 	public String toString() {
-		return "(Item | name: " + name + ", stats: " + stats + ", image: " + getImage() + ")";
+		return "(Item | name: " + name + ", stats: " + stats + ", image: " + getImage() + ", type: " + type + ")";
 	}
 }

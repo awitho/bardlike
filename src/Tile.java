@@ -61,12 +61,12 @@ public class Tile {
 
 	public void addEnt(Entity ent) {
 		if (getName().equalsIgnoreCase("Empty"))  { return; }
-		System.out.println("Tile.addEnt: Attempting to add ent: " + ent + " to " + this);
+		//System.out.println("Tile.addEnt: Attempting to add ent: " + ent + " to " + this);
 		containedEnts.add(ent);
 	}
 
 	public void removeEnt(Entity ent) {
-		System.out.println("Tile.addEnt: Attempting to remove ent: " + ent + " from " + this);
+		//System.out.println("Tile.addEnt: Attempting to remove ent: " + ent + " from " + this);
 		containedEnts.remove(ent);
 	}
 
