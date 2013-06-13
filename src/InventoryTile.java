@@ -8,6 +8,7 @@ public class InventoryTile {
 	private ItemType equipType;
 	private Item containedItem;
 	private boolean selected = false;
+	private boolean containsItem = false;
 	
 	public InventoryTile(int ix, int iy) {
 		this.ix = ix;
@@ -35,14 +36,15 @@ public class InventoryTile {
 	
 	public void setContainedItem(Item i) {
 		containedItem = i;
+		containsItem = true;
 	}
 	
 	public Item getContainedItem() {
 		return containedItem;
 	}
 	
-	public void removeContainedItem() {
-		containedItem = null;
+	public boolean containsItem() {
+		return containsItem;
 	}
 	
 	public void toggleSelect() {

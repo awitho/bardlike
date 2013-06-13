@@ -89,6 +89,9 @@ public class Inventory implements Menu {
 		
 		g.drawString(invMenu.getValueAsString("#title"), INV_WIDTH/2 - 40 + screenX, 10 + screenY);
 		g.drawString(invMenu.getValueAsString("#stat"), (width - 130) + screenX, 10 + screenY);
+		if(curInvTile.getContainedItem() != null) {
+			g.drawString(curInvTile.getContainedItem().getName(), screenX + 30, screenY + 50);
+		}
 		g.drawString("Equip", screenX + 30, 10 + screenY);
 		g.drawRect(screenX - EQUIP_OFFSET, screenY, width  + EQUIP_OFFSET, height);
 	}
@@ -99,6 +102,9 @@ public class Inventory implements Menu {
 			for(int y = 0; y < Misc.MAX_INVENTORY / 10; y++) {
 				try{
 					inventoryTiles[x][y].setContainedItem(ply.getPlayerItems().get(count));
+					if(inventoryTiles[x][y].containsItem()) {
+						System.out.println(inventoryTiles[x][y].containsItem() + ", " +inventoryTiles[x][y].getX()+", " +inventoryTiles[x][y].getY());
+					}
 				} catch (IndexOutOfBoundsException ex) {
 					break;
 				}
@@ -131,7 +137,8 @@ public class Inventory implements Menu {
 				ply.isFrozen(false);
 			} else if(container.getInput().isKeyPressed(Input.KEY_D)) {
 				ply.removeItem(curInvTile.getContainedItem());
-				curInvTile.removeContainedItem();
+				curInvTile.setContainedItem(null);
+				
 			} else if(container.getInput().isKeyPressed(Input.KEY_E)){
 				System.out.println("Equipping");
 				//ply.removeItem(selected);
@@ -156,6 +163,9 @@ public class Inventory implements Menu {
 				curInvTile.toggleSelect();
 				newInvTile.toggleSelect();
 				curInvTile = newInvTile;
+			}
+			if(newInvTile != null) {
+				System.out.println(newInvTile.getX()+", "+newInvTile.getY());
 			}
 		}
 	}
