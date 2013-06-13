@@ -1,3 +1,4 @@
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 
 import java.util.ArrayList;
@@ -8,7 +9,9 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SpriteSheet;
 import com.google.gson.JsonObject;
 import java.util.Map;
+import java.util.Map.Entry;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 
 /**
  * The Player that you control.
@@ -18,23 +21,31 @@ import org.newdawn.slick.Graphics;
 public class Player extends Entity {
 	private HashMap<String, Integer> godsFavor = new HashMap<>();
 	private HashMap<String, Integer> stats = new HashMap<>();
-	//private int curHP;
-	private String plyClass = "";
-	private ArrayList<Item> inventoryItems;
-	private ArrayList<Item> equippedItems;
+	private MainGameState mgs;
+	private JsonArray xpTable; // Required exp for each level.
+	private String plyClass, mainStat; // Would be part of stats, but it can't be.
+	private ArrayList<Item> inventoryItems, equippedItems;
 	private int equipLoc;
 	private Log log;
 	private boolean frozen, dead;
+	private Image img;
 
-	public Player(SpriteSheet ss, JsonObject data, Log log) {
+	public Player(SpriteSheet ss, JsonObject data, Log log, MainGameState mgs) {
 		super(ss.getSubImage(data.get("sx").getAsInt(), data.get("sy").getAsInt()));
+		this.log = log;
+		this.mgs = mgs;
 		inventoryItems = new ArrayList<>();
 		equippedItems = new ArrayList<>();
-		this.log = log;
+		xpTable = new GameConfig("exp.json").getArray();
 		plyClass = data.get("name").getAsString();
-		for(Map.Entry<String, JsonElement> entry: data.get("stats").getAsJsonObject().entrySet()){
+		try {
+			mainStat = data.get("mainstat").getAsString();
+		} catch (NullPointerException ex) {}
+		for(Map.Entry<String, JsonElement> entry: data.get("stats").getAsJsonObject().entrySet()) {
 				stats.put(entry.getKey(), entry.getValue().getAsInt());
 		}
+		stats.put("xp", 0);
+		stats.put("level", 1);
 		revive();
 		//addItem(new Item(new ItemDictionary(), getMap(), "Leather Helmet"));
 	}
@@ -42,11 +53,16 @@ public class Player extends Entity {
 	public void move(Direction dir) {
 		if(frozen || dead) { return; }
 		Tile curTile = getTile();
-		if (curTile == null) { System.out.println("Player.move: Player is not currently in map!"); return; };
+		if (curTile == null) { log.append("The game has errored while generating the dungeon, please restart the game."); return; };
 		//System.out.println("Player.move: Attempting to move in dir: " + dir);
 		Vector vec = Misc.getLocFromDir(curTile.getX(), curTile.getY(), dir);
 		Tile tile = getMap().getTile(vec.getX(), vec.getY());
 		if (tile == null) { return; }
+		
+		ArrayList<Entity> foundLadders = tile.findType(DownLadder.class);
+		if (foundLadders != null) {
+			DungeonGenerator.placePlayerInFeasibleLocation(mgs.setLevel(mgs.genNewLevel()), this);
+		}
 		
 		ArrayList<Entity> foundMobs = tile.findType(Mob.class);
 		Mob mob = null;
@@ -55,7 +71,7 @@ public class Player extends Entity {
 			mob.use(this, stats.get("str")*2);
 		}
 
-		getMap().update();
+		getMap().update(mgs);
 		if (mob != null && !mob.isDead()) { return; }
 		if (!dead)
 			setTile(tile);
@@ -72,9 +88,9 @@ public class Player extends Entity {
 		this.log = log;
 	}
         
-        public void log(String str) {
-            log.append(str);
-        }
+	public void log(String str) {
+		log.append(str);
+	}
 	
 	public int getMaxHP() {
 		return stats.get("health");
@@ -90,7 +106,7 @@ public class Player extends Entity {
 	
 	public void use(Entity ent, int amt) {
 		if (dead) { return; }
-                Mob mob = (Mob) ent;
+		Mob mob = (Mob) ent;
 		log.append("Your were hit by " + mob.getName() + " for " + amt + " damage!");
 		setHP(getHP() - amt);
 		if (getHP() <= 0) {
@@ -127,7 +143,7 @@ public class Player extends Entity {
 		if (i.isNamed()) {
 			log.append("You picked up \"" + i.getName() + "\".");
 		} else {
-			log.append("You picked up a " + i.getName());
+			log.append("You picked up a " + i.getName() + ".");
 		}
 		i.setTile(null);
 		inventoryItems.add(i);
@@ -165,6 +181,48 @@ public class Player extends Entity {
 	public HashMap getStats() {
 		return stats;
 	}
+	
+	public void levelUp() {
+		stats.put("level", getLevel() + 1);
+		log.append("You leveled up to level " + getLevel() + "!");
+		for (Entry<String, Integer> ele : stats.entrySet()) {
+			if (ele.getKey().equalsIgnoreCase("level") || ele.getKey().equalsIgnoreCase("xp") || ele.getKey().equalsIgnoreCase("curhp")) { continue; }
+			if (mainStat != null && ele.getKey().equalsIgnoreCase(mainStat)) {
+				ele.setValue(ele.getValue() + (int) (Math.random() * 5) + 1);
+			} else {
+				ele.setValue(ele.getValue() + (int) (Math.random() * 2) + 1);
+			}
+			log.append(ele.getKey() + " went up to " + ele.getValue());
+		}
+		stats.put("curhp", stats.get("end") * 10);
+	}
+	
+	public int getLevel() {
+		return stats.get("level");
+	}
+	
+	public int getMaxLevel() {
+		return xpTable.size();
+	}
+	
+	public int getXP() {
+		return stats.get("xp");
+	}
+	
+	public void addXP(int amount) {
+		setXP(getXP() + amount);
+	}
+
+	public void setXP(int amount) {
+		if (getLevel() >= getMaxLevel()) { return; }
+		int requiredXP = xpTable.get(getLevel()).getAsInt();
+		if (amount > requiredXP) {
+			levelUp();
+			setXP(amount - requiredXP);
+			return;
+		}
+		stats.put("xp", amount);
+	}
 
 	public void update(GameContainer container) {
 		if (container.getInput().isKeyPressed(Input.KEY_LEFT)) {
@@ -180,12 +238,12 @@ public class Player extends Entity {
 			this.move(Direction.UP);
 		}
 		if (container.getInput().isKeyPressed(Input.KEY_SPACE)) {
-			DungeonGenerator.placePlayerInFeasibleLocation(getMap().getTiles(), this, getMap());
+			DungeonGenerator.placePlayerInFeasibleLocation(getMap(), this);
 		}
 		if (container.getInput().isKeyPressed(Input.KEY_R)) {
 			revive();
 			getMap().regen();
-			DungeonGenerator.placePlayerInFeasibleLocation(getMap().getTiles(), this, getMap());
+			DungeonGenerator.placePlayerInFeasibleLocation(getMap(), this);
 		}
 	}
 	

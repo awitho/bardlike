@@ -27,7 +27,7 @@ public class MobDictionary {
 		mobMaxHP = new HashMap<>();
 		stats = new HashMap<>();
 		try {
-			mobSprites = new SpriteSheet("./gfx/mobs.png", 32, 32);
+			mobSprites = new SpriteSheet("./gfx/ents/mobs.png", 32, 32);
 			mobArray = new GameConfig("mobs.json").getArray();
 		} catch (SlickException e) {
 			Misc.showDialog(e);
@@ -62,6 +62,15 @@ public class MobDictionary {
 	
 	public int getStat(String name, String statName) {
 		return stats.get(name).get(statName);
+	}
+	
+	public int getSpawnChance(String name) {
+		for (int i = 0; i < mobArray.size(); i++) {
+			if (mobArray.get(i).getAsJsonObject().get("name").getAsString().equalsIgnoreCase(name)) {
+				return mobArray.get(i).getAsJsonObject().get("spawnchance").getAsInt();
+			}
+		}
+		return 0;
 	}
 	
 	public Mob getRandomMob() {

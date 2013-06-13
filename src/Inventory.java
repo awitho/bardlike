@@ -29,7 +29,7 @@ public class Inventory implements Menu {
 
 	public Inventory(Player p) {
 		ply = p;
-		invMenu = new GameConfig("./loc/inventorytext.json");
+		invMenu = new GameConfig("loc/inv_en.json");
 		ItemDictionary.scaleImages(32); // We need thumbnails at 32x32 here, so tell ItemDictionary to prepare them for us!
 		inventoryTiles = new InventoryTile[11][10];
 		for(int i = 0; i < 11; i++) {

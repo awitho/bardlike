@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.TrueTypeFont;
 
 /*
  * To change this template, choose Tools | Templates
@@ -16,8 +17,10 @@ import org.newdawn.slick.Graphics;
  * @author Alex
  */
 public class Log implements Menu {
+	public static TrueTypeFont LOG_FONT = new TrueTypeFont(new java.awt.Font("Arial", 1, 12), true);
 	private boolean visible = false;
 	private double curTime = 0.0;
+	private final int LOG_LENGTH = 8;
 	private Color white = new Color(0, 0, 0, 255);
 	private Color black = new Color(0, 0, 0, 255);
 	private ArrayList<String> lines = new ArrayList<>();
@@ -46,17 +49,21 @@ public class Log implements Menu {
 	}
 	
 	public void draw(Graphics g, int x, int y) {
-		int begin = lines.size() - 5;
+		int begin = lines.size() - LOG_LENGTH;
 		if (begin < 0) {
 			begin = 0;
 		}
 		
-		g.setFont(MainMenuState.font);
+		g.setFont(LOG_FONT);
 	
 		int count = 0;
 		for(int i = begin; i < lines.size(); i++) {
 			g.setColor(black);
-			g.drawString(lines.get(i), x + 4, y - (count*g.getFont().getHeight(lines.get(i)))-g.getFont().getHeight(lines.get(i)) + 2);
+			g.drawString(lines.get(i), x, y - (count*g.getFont().getHeight(lines.get(i)))-g.getFont().getHeight(lines.get(i)) - 2);//TOP
+			g.drawString(lines.get(i), x + 2, y - (count*g.getFont().getHeight(lines.get(i)))-g.getFont().getHeight(lines.get(i)));//LEFT
+			g.drawString(lines.get(i), x - 2, y - (count*g.getFont().getHeight(lines.get(i)))-g.getFont().getHeight(lines.get(i)));//RIGHT
+			g.drawString(lines.get(i), x, y - (count*g.getFont().getHeight(lines.get(i)))-g.getFont().getHeight(lines.get(i)) + 2);//DOWN
+			
 			g.setColor(white);
 			g.drawString(lines.get(i), x + 2, y - (count*g.getFont().getHeight(lines.get(i)))-g.getFont().getHeight(lines.get(i)));
 			count++;

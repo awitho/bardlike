@@ -5,9 +5,9 @@ import java.util.ArrayList;
  * @author Alex
  */
 public class Room {
-	private int x,y,w,h;
+	private int x,y,w,h,connections,looped;
 	private Tile[][] tiles;
-	private int connections, looped;
+	private boolean deleted = false;
 	
 	public Room(Tile[][] tiles, int x, int y, int w, int h) {
 		this.x = x;
@@ -15,8 +15,6 @@ public class Room {
 		this.w = w;
 		this.h = h;
 		this.tiles = tiles;
-		
-		System.out.println("Room created x: " + x + ", y: " + y + ", w: " + w + ", h: " + h);
 	}
 	
 	public void addHallway() {
@@ -25,6 +23,15 @@ public class Room {
 	
 	public int getConnections() {
 		return connections;
+	}
+	
+	public void delete() {
+		for (int x = this.x; x < (this.x + w); x++) {
+			for (int y = this.y; y < (this.y + h); y++) {
+				tiles[x][y] = new Tile("Empty", x, y);
+			}
+		}
+		this.deleted = true;
 	}
 	
 	public Vector getRandomWall() {
@@ -36,7 +43,7 @@ public class Room {
 				if (x > this.x && x < (this.x + w) && y > this.y && y < (this.y + h)) { continue; } // If not a wall, skip.
 				if ((x == this.x && y == this.y) || (x == this.x + w - 1 && y == this.y) || (x == this.x && y == this.y + h - 1) || (x == this.x + w - 1 && y == this.y + h - 1)) { continue; } // If the tile is corner, no dice.
 				if ((int) (Math.random() * 100) + 1 <= 50) { continue; } // Random chance (10% true)
-				System.out.println("vector: x: " + x + ", y: " + y);
+				//System.out.println("vector: x: " + x + ", y: " + y);
 				return new Vector(x, y);
 			}
 		}
@@ -46,6 +53,8 @@ public class Room {
 	}
 	
 	public String toString() {
+		if (deleted)
+			return "(Deleted Room)";
 		return "(Room | x: " + x + ", y: " + y + ", w: " + w + ", h: " + h + ", c: " + connections + ")";
 	}
 }

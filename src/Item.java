@@ -25,7 +25,6 @@ public class Item extends Entity {
 		for (Map.Entry<String, JsonElement> ele : ItemDictionary.getStats(name).entrySet()) {
 			stats.put(ele.getKey(), ele.getValue().getAsInt());
 		}
-		System.out.println(this);
 	}
 	
 	public String getID() {
@@ -46,6 +45,6 @@ public class Item extends Entity {
 	
 	@Override
 	public String toString() {
-		return "(Item | name: " + name + ", stats: " + stats + ", image: " + getImage() + ", type: " + type + ")";
+		return "(Item | name: " + getName() + ", stats: " + stats + ", image: " + getImage() + ", type: " + type + ")";
 	}
 }

@@ -22,8 +22,8 @@ public class Main extends StateBasedGame {
 		game.setTargetFrameRate(60);
 		game.setMaximumLogicUpdateInterval(10);
 		game.setSmoothDeltas(true);
-
-		game.start(); 
+	
+		game.start();
 	}
 
 	@Override

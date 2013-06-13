@@ -23,6 +23,7 @@ public class ClassSelectState extends BasicGameState {
 	private ArrayList<String> charNames;
 	private ArrayList<Image> charSprite;
 	private MouseOverArea mouseOver;
+	private boolean loading = false;
 	private int chosen = -1;
 
 	@Override
@@ -30,7 +31,7 @@ public class ClassSelectState extends BasicGameState {
 		charSprite = new ArrayList<>();
 		charNames = new ArrayList<>();
 		classes = new GameConfig("classes.json").getArray();
-		classSprites = new SpriteSheet("./gfx/charcreation.png", 64, 64);
+		classSprites = new SpriteSheet("./gfx/ents/chars.png", 64, 64);
 
 		for(int i = 0; i < classes.size(); i++) {
 			JsonObject character = classes.get(i).getAsJsonObject();
@@ -41,6 +42,10 @@ public class ClassSelectState extends BasicGameState {
 
 	@Override
 	public void render(GameContainer container, StateBasedGame s, Graphics g) throws SlickException {
+		if (loading) {
+			g.drawString("Loading...", container.getWidth()/2 - g.getFont().getWidth("Loading...")/2, container.getHeight()/2 - g.getFont().getHeight("Loading...")/2);
+			return;
+		}
 		g.drawString("Choose Your Character!", container.getWidth()/2 - 100, 50);
 		int locY = container.getHeight() / 2 - 130;
 		for(int i = 0; i < charSprite.size(); i++) {
@@ -52,6 +57,7 @@ public class ClassSelectState extends BasicGameState {
 
 	@Override
 	public void update(GameContainer container, StateBasedGame s, int delta) throws SlickException {
+		if (loading) { return; }
 		//add buttons eventually.
 		MainGameState main = (MainGameState) s.getState(4);
 		if (container.getInput().isKeyPressed(Input.KEY_B)) {
@@ -66,14 +72,36 @@ public class ClassSelectState extends BasicGameState {
 			chosen = 4;
 		}
 		if (chosen > -1) {
-			main.setPlayer(classSprites, classes.get(chosen).getAsJsonObject());
-			s.enterState(4);
+			(new LevelLoader(s, this, main)).start();
+			loading = true;
 		}
 		container.getInput().clearKeyPressedRecord();
+	}
+	
+	public void finishLoading(MainGameState main, StateBasedGame s) {
+		main.setPlayer(classSprites, classes.get(chosen).getAsJsonObject());
+		s.enterState(4);
 	}
 
 	@Override
 	public int getID() {
 		return 2;
+	}
+	
+	private class LevelLoader extends Thread {
+		private MainGameState state;
+		private ClassSelectState css;
+		private StateBasedGame s;
+		
+		public LevelLoader(StateBasedGame s, ClassSelectState css, MainGameState state) {
+			this.state = state;
+			this.css = css;
+			this.s = s;
+		}
+		
+		public void run() {
+			state.setLevel(state.genNewLevel());
+			css.finishLoading(state, s);
+		}
 	}
 }

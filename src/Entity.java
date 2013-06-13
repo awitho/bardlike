@@ -27,9 +27,7 @@ public class Entity {
 		g.drawImage(img, x, y);
 	}
 
-	public void update() {
-		
-	}
+	public void update(MainGameState mgs) {}
 
 	public void setTile(Tile tile) {
 		if (curTile != null) { getTile().removeEnt(this); } // Remove from old tile, if we had a last tile.
@@ -49,7 +47,6 @@ public class Entity {
 	}
 	
 	public void setMap(GameMap map) {
-		System.out.println("Set map: " + map + " of " + this);
 		this.map = map;
 	}
 

@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.SpriteSheet;
 
 /**
  * A class representing an entire dungeon level of the game.
@@ -10,13 +7,11 @@ import org.newdawn.slick.SpriteSheet;
  * @author alex
  */
 public class GameMap {
-	private TileDictionary tileDictionary;
 	private MobDictionary mobDictionary;
 	private int width, height;
 	private Tile[][] tiles;
 
-	public GameMap(int w, int h, TileDictionary tileDictionary, MobDictionary mobDictionary) {
-		this.tileDictionary = tileDictionary;
+	public GameMap(int w, int h, MobDictionary mobDictionary) {
 		this.mobDictionary = mobDictionary;
 		width = w;
 		height = h;
@@ -33,38 +28,15 @@ public class GameMap {
 		}
 	}
 	
-	public void update() {
+	public void update(MainGameState mgs) {
 		for (int x = 0; x < tiles.length; x++) {
 			for (int y = 0; y < tiles[0].length; y++) {
 				Tile tile = tiles[x][y];
 				if (tile != null) {
-					tile.update();
+					tile.update(mgs);
 				}
 			}
 		}
-	}
-
-	@Deprecated
-	public Tile moveEnt(Tile tile, Entity ent, Direction dir) {
-		if (tile == null) { return null; }// System.out.println("GameMap.moveEnt: Given tile is null!"); return null; }
-		//System.out.println("GameMap.moveEnt: " + ent + " moving in direction:  " + dir);
-		Tile newTile = null;
-		try {
-			if (dir == Direction.LEFT) {
-				newTile = tiles[tile.getX() - 1][tile.getY()];
-			} else if (dir == Direction.RIGHT) {
-				newTile = tiles[tile.getX() + 1][tile.getY()];
-			} else if (dir == Direction.UP) {
-				newTile = tiles[tile.getX()][tile.getY() - 1];
-			} else if (dir == Direction.DOWN) {
-				newTile = tiles[tile.getX()][tile.getY() + 1];
-			}
-		} catch (ArrayIndexOutOfBoundsException ex) {
-			return null;
-		}
-		//if (newTile == null || tileDictionary.getTileIsWall(newTile.getName())) { return null; }
-		ent.setTile(newTile);
-		return newTile;
 	}
 		
 	public Tile getTile(int x, int y) {
@@ -89,6 +61,6 @@ public class GameMap {
 	}
 	
 	public void regen() {
-		tiles = DungeonGenerator.generateDungeon(24, 24, tileDictionary, mobDictionary).getTiles().clone();
+		tiles = DungeonGenerator.generateDungeon(Misc.DUNGEON_SIZE, Misc.DUNGEON_SIZE, mobDictionary).getTiles().clone();
 	}
 }

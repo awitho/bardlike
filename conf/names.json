@@ -1,5 +1,15 @@
-
 {
+	"WEAPON": {
+		"prefix": [
+			"Nondescript"
+		],
+		"midname": [
+			"Item"
+		],
+		"suffix": [
+			""
+		]
+	},
 	"SWORD": {
 		"prefix": [
 			"Huge",

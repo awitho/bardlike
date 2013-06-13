@@ -12,10 +12,10 @@ import org.newdawn.slick.SpriteSheet;
  * @author alex
  */
 public class TileDictionary {
-	HashMap<String, Image> imgs;
-	HashMap<String, Boolean> walls;
+	private static HashMap<String, Image> imgs;
+	private static HashMap<String, Boolean> walls;
 
-	public TileDictionary() {
+	public static void initTileDictionary() {
 		walls = new HashMap<>();
 		imgs = new HashMap<>();
 		
@@ -41,21 +41,21 @@ public class TileDictionary {
 		}
 	}
 
-	public int size() {
+	public static int size() {
 		return imgs.size();
 	}
 
-	public boolean getTileIsWall(String name) {
+	public static boolean getTileIsWall(String name) {
 		Boolean isWall = walls.get(name);
 		if (isWall != null) { return true; }
 		return false;
 	}
 
-	public Image getTileImageByName(String name) {
+	public static Image getTileImageByName(String name) {
 		return imgs.get(name);
 	}
 
-	public String getRandomWall() {
+	public static String getRandomWall() {
 		for (Map.Entry<String, Boolean> ele : walls.entrySet()) {
 			if (ele.getKey().equalsIgnoreCase("Empty") || ele.getKey().equalsIgnoreCase("Overlay") || (int) (Math.random() * 2) - 1 == 0) { continue; }
 				return ele.getKey();
@@ -63,7 +63,7 @@ public class TileDictionary {
 		return "Stone";
 	}
 	
-	public String getRandomNonwall() {
+	public static String getRandomNonwall() {
 		for (Map.Entry<String, Image> ele : imgs.entrySet()) {
 			if (walls.get(ele.getKey()) != null || (int) (Math.random() * 2) - 1 == 0) { continue; }
 			return ele.getKey();

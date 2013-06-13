@@ -23,6 +23,7 @@ public class MainMenuState extends BasicGameState {
 
 	@Override
 	public void init(GameContainer container, StateBasedGame s) {
+		container.setShowFPS(false);
 		this.menu = "What Do? [ (P)lay | (H)elp | (Esc)ape ]";
 		try {
 			this.titleImg = new Image("./gfx/title.png");

@@ -18,14 +18,14 @@ public class Tile {
 
 	private static final Color overlayColor = new Color(0, 0, 0, 200);
 
-	public Tile(TileDictionary tileDictionary, String tile, int x, int y) {
+	public Tile(String tile, int x, int y) {
 		if (tile == null) { return; }
 		name = tile;
 		ix = x;
 		iy = y;
-		overlay = tileDictionary.getTileImageByName("Overlay");
-		isWall = tileDictionary.getTileIsWall(tile); // Ditto.
-		spr = tileDictionary.getTileImageByName(tile); // Grab a reference for the tile image from the tile dictionary, no need to make our own copy!
+		overlay = TileDictionary.getTileImageByName("Overlay");
+		isWall = TileDictionary.getTileIsWall(tile); // Ditto.
+		spr = TileDictionary.getTileImageByName(tile); // Grab a reference for the tile image from the tile dictionary, no need to make our own copy!
 		isEmpty = !tile.equalsIgnoreCase("Empty");
 	}
 
@@ -118,9 +118,9 @@ public class Tile {
 		}
 	}
 
-	public void update() {
+	public void update(MainGameState mgs) {
 		for (int i = 0; i < containedEnts.size(); i++) {
-			containedEnts.get(i).update();
+			containedEnts.get(i).update(mgs);
 		}
 	}
 	

@@ -69,7 +69,7 @@ public class GameConfig {
 		if (aData != null) {
 			return aData.getAsJsonArray();
 		}
-		return data.getAsJsonArray();
+		return null;
 	}
 	
 	public JsonObject getObject() {

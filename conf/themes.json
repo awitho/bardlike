@@ -1,0 +1,10 @@
+{
+	1: {
+		"walls": "Stone",
+		"floors": "Wood"
+	},
+	12: {
+		"walls": "Obsidian",
+		"floors": "Glass"
+	}
+}

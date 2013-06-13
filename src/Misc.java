@@ -1,5 +1,9 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import javax.swing.JOptionPane;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.SpriteSheet;
 
 /**
  * Purely static class that provides miscellaneous functions for the game.
@@ -10,6 +14,9 @@ import javax.swing.JOptionPane;
 public class Misc {
 	public static final int TARGET_SIZE = 64;
 	public static final int MAX_INVENTORY = 110;
+	public static final int DUNGEON_SIZE = 50;
+	
+	public static HashMap<String, Image> miscImages = new HashMap<>();
 
 	/**
 	 * Pop-up dialog, replaces console println
@@ -17,6 +24,13 @@ public class Misc {
 	 */
 	public static void showDialog(Object obj) {
 		JOptionPane.showMessageDialog(null, obj.toString());
+	}
+	
+	/**
+	 * This is a really hacky method to get images for misc ents.
+	 */
+	public static void fillMiscImages() throws SlickException {
+		miscImages.put("downladder", new SpriteSheet("./gfx/ents/hole.png", 32, 32).getSprite(0, 0).getScaledCopy(Misc.TARGET_SIZE, Misc.TARGET_SIZE));
 	}
 
 	/**
@@ -81,6 +95,10 @@ public class Misc {
 			return false;
 		}
 		return true;
+	}
+	
+	public static int randomInt(int n, int m) {
+		return (int) (Math.random() * (m - n)) + n;
 	}
 	
 	/*
