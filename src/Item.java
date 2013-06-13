@@ -19,7 +19,9 @@ public class Item extends Entity {
 		super(ItemDictionary.getImage(name));
 		this.id = name;
 		this.type = ItemDictionary.getType(name);
-		this.name = NameGenerator.generateName(type);
+		if ((int) (Math.random() * 100) <= 10) {
+			this.name = NameGenerator.generateName(type);
+		}
 		for (Map.Entry<String, JsonElement> ele : ItemDictionary.getStats(name).entrySet()) {
 			stats.put(ele.getKey(), ele.getValue().getAsInt());
 		}
@@ -31,7 +33,11 @@ public class Item extends Entity {
 	}
 	
 	public String getName() {
-		return name;
+		return name != null ? name : id;
+	}
+	
+	public boolean isNamed() {
+		return this.name != null;
 	}
 	
 	public ItemDictionary getDict() {

@@ -4,12 +4,10 @@
         "health": 10,
 		"sx": 0,
 		"sy": 0,
+		"spawnchance": 80,
 		"stats": {
-			"str": 1,
-			"int": 1,
-			"dex": 1,
-			"end": 1,
-            "agi": 1
+			"atk": 10,
+			"def": 1
 		}
     },
     {
@@ -17,12 +15,21 @@
         "health": 20,
 		"sx": 1,
 		"sy": 0,
+		"spawnchance": 60,
 		"stats": {
-			"str": 1,
-			"int": 1,
-			"dex": 1,
-			"end": 1,
-            "agi": 1
+			"atk": 50,
+			"def": 20
 		}
-    }
+    },
+	{
+		"name": "Durgen",
+		"health": 200,
+		"sx": 1,
+		"sy": 1,
+		"spawnchance": 10,
+		"stats": {
+			"atk": 100,
+			"def": 100
+		}
+	}
 ]

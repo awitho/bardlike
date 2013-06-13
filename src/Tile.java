@@ -118,7 +118,10 @@ public class Tile {
 		}
 	}
 
-	public void update() {	
+	public void update() {
+		for (int i = 0; i < containedEnts.size(); i++) {
+			containedEnts.get(i).update();
+		}
 	}
 	
 	public String toString() {

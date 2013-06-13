@@ -18,27 +18,29 @@ import org.newdawn.slick.Graphics;
 public class Player extends Entity {
 	private HashMap<String, Integer> godsFavor = new HashMap<>();
 	private HashMap<String, Integer> stats = new HashMap<>();
-	private GameMap curMap;
+	//private int curHP;
 	private String plyClass = "";
 	private ArrayList<Item> inventoryItems;
 	private ArrayList<Item> equippedItems;
 	private int equipLoc;
-	private boolean frozen;
+	private Log log;
+	private boolean frozen, dead;
 
-	public Player(SpriteSheet ss, JsonObject data, GameMap map) {
+	public Player(SpriteSheet ss, JsonObject data, Log log) {
 		super(ss.getSubImage(data.get("sx").getAsInt(), data.get("sy").getAsInt()));
-		curMap = map;
 		inventoryItems = new ArrayList<>();
 		equippedItems = new ArrayList<>();
+		this.log = log;
 		plyClass = data.get("name").getAsString();
 		for(Map.Entry<String, JsonElement> entry: data.get("stats").getAsJsonObject().entrySet()){
 				stats.put(entry.getKey(), entry.getValue().getAsInt());
 		}
+		revive();
 		//addItem(new Item(new ItemDictionary(), getMap(), "Leather Helmet"));
 	}
 
 	public void move(Direction dir) {
-		if(!frozen) {
+		if(frozen || dead) { return; }
 			Tile curTile = getTile();
 			if (curTile == null) { System.out.println("Player.move: Player is not currently in map!"); return; };
 			//System.out.println("Player.move: Attempting to move in dir: " + dir);
@@ -46,18 +48,61 @@ public class Player extends Entity {
 			Tile tile = getMap().getTile(vec.getX(), vec.getY());
 			if (tile == null) { return; }
 			
+			ArrayList<Entity> foundItems = tile.findType(Item.class);
+			if (foundItems != null) { 
+				for(int i = 0; i < foundItems.size(); i++) {
+					addItem((Item) foundItems.get(i));
+				}
+			}
+			
 			ArrayList<Entity> foundMobs = tile.findType(Mob.class);
 			if (foundMobs != null) { return; }
 			
 			setTile(tile);
+			getMap().update();
 			//Tile tile = getMap().moveEnt(curTile, this, dir);
-			
-			ArrayList<Entity> foundItems = tile.findType(Item.class);
-			if (foundItems == null) { return; }
-			for(int i = 0; i < foundItems.size(); i++) {
-				addItem((Item) foundItems.get(i));
-			}
+	}
+	
+	public void setLog(Log log) {
+		this.log = log;
+	}
+	
+	public int getMaxHP() {
+		return stats.get("health");
+	}
+	
+	public int getHP() {
+		return stats.get("curhp");
+	}
+	
+	public void setHP(int hp) {
+		stats.put("curhp", hp);
+	}
+	
+	public void use(int amt) {
+		if (dead) { return; }
+		log.append("Your were hit for " + amt + " damage!");
+		setHP(getHP() - amt);
+		if (getHP() <= 0) {
+			setHP(0);
+			die();
 		}
+	}
+	
+	public boolean isDead() {
+		return dead;
+	}
+	
+	public void die() {
+		dead = true;
+		log.append("You have died!");
+		// Goto game over/menu. && delete save.
+	}
+
+	public void revive() {
+		dead = false;
+		stats.put("curhp", stats.get("health"));
+		log.append("You have been revived from the dead!");
 	}
 	
 	public void isFrozen(boolean b) {
@@ -66,10 +111,14 @@ public class Player extends Entity {
 	
 	public void addItem(Item i) {
 		if(inventoryItems.size() > 100) {
-			Misc.showDialog("I'm alredy carrying too much!");
+			log.append("Your inventory is full, you cannot pickup anymore items!");
 			return;
 		}
-		System.out.println("Calling addItem from: " +this.getClass());
+		if (i.isNamed()) {
+			log.append("You picked up \"" + i.getName() + "\".");
+		} else {
+			log.append("You picked up a " + i.getName());
+		}
 		i.setTile(null);
 		inventoryItems.add(i);
 	}
@@ -106,11 +155,7 @@ public class Player extends Entity {
 	public HashMap getStats() {
 		return stats;
 	}
-	
-	public GameMap getMap() {
-		return curMap;
-	}
-	
+
 	public void update(GameContainer container) {
 		if (container.getInput().isKeyPressed(Input.KEY_LEFT)) {
 			this.move(Direction.LEFT);
@@ -125,11 +170,12 @@ public class Player extends Entity {
 			this.move(Direction.UP);
 		}
 		if (container.getInput().isKeyPressed(Input.KEY_SPACE)) {
-			DungeonGenerator.placePlayerInFeasibleLocation(getMap().getTiles(), this);
+			DungeonGenerator.placePlayerInFeasibleLocation(getMap().getTiles(), this, getMap());
 		}
 		if (container.getInput().isKeyPressed(Input.KEY_R)) {
+			revive();
 			getMap().regen();
-			DungeonGenerator.placePlayerInFeasibleLocation(getMap().getTiles(), this);
+			DungeonGenerator.placePlayerInFeasibleLocation(getMap().getTiles(), this, getMap());
 		}
 	}
 	

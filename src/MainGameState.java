@@ -16,11 +16,10 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public class MainGameState extends BasicGameState {
 	private GameMap map;
-	private SpriteSheet playerSprites;
 	private Player player;
 	private Camera cam;
 	private Inventory inventory;
-	private Input input;
+	private Log log;
 	public TileDictionary tileDictionary;
 	public MobDictionary mobDictionary;
 
@@ -32,6 +31,7 @@ public class MainGameState extends BasicGameState {
 		ItemDictionary.initItemDictionary();
 		tileDictionary = new TileDictionary();
 		mobDictionary = new MobDictionary();
+		log = new Log();
 		map = DungeonGenerator.generateDungeon(24, 24, tileDictionary, mobDictionary);
 	}
 	
@@ -44,11 +44,13 @@ public class MainGameState extends BasicGameState {
 
 		map.draw(g, player, cam);
 		
+		log.draw(g, -cam.getX(), (-cam.getY()) + container.getHeight());
+		
 		//Overlay
 		//g.translate(0, 0);
 		g.setFont(MainMenuState.font);
 		if (player.getTile() == null) { return; }
-		g.drawString("Ply x: " + player.getTile().getX() + ", y: " + player.getTile().getY(), -cam.getX(), -cam.getY() + 20);
+		g.drawString("Ply x: " + player.getTile().getX() + ", y: " + player.getTile().getY() + " HP: " + player.getHP(), -cam.getX(), -cam.getY() + 20);
 		inventory.draw(g);
 	}
 
@@ -57,9 +59,14 @@ public class MainGameState extends BasicGameState {
 		if (container.getInput().isKeyPressed(Input.KEY_ESCAPE) && !inventory.isOpen()) {
 			container.exit();
 		}
-
+		//map.update(container);
 		player.update(container);
 		inventory.update(container);
+		log.update();
+		
+		if(player.isDead()) {
+			
+		}
 
 		container.getInput().clearKeyPressedRecord();
 	}
@@ -70,9 +77,9 @@ public class MainGameState extends BasicGameState {
 	}
 
 	public void setPlayer(SpriteSheet sprite, JsonObject data) {
-		player = new Player(sprite, data, map);
+		player = new Player(sprite, data, log);
 		inventory = new Inventory(player);
 		cam = new Camera(player, map);
-		DungeonGenerator.placePlayerInFeasibleLocation(map.getTiles(), player);
+		DungeonGenerator.placePlayerInFeasibleLocation(map.getTiles(), player, map);
 	}
 }
