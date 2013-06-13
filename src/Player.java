@@ -120,7 +120,7 @@ public class Player extends Entity {
 	}
 	
 	public void addItem(Item i) {
-		if(inventoryItems.size() > 100) {
+		if(inventoryItems.size() >= 110) {
 			log.append("Your inventory is full, you cannot pickup anymore items!");
 			return;
 		}
@@ -138,45 +138,6 @@ public class Player extends Entity {
 	}
 	
 	public void equipItem(Item i) {
-		if(i == null) { return; }
-		System.out.println(i.getID());
-		if((ItemDictionary.getType(i.getID()) == ItemType.SWORD)||
-		(ItemDictionary.getType(i.getID()) == ItemType.LONGSWORD)||
-		(ItemDictionary.getType(i.getID()) == ItemType.DAGGER)||
-		(ItemDictionary.getType(i.getID()) == ItemType.SPEAR)||
-		(ItemDictionary.getType(i.getID()) == ItemType.MACE)||
-		(ItemDictionary.getType(i.getID()) == ItemType.STAFF)||
-		(ItemDictionary.getType(i.getID()) == ItemType.INSTRUMENT)||
-		(ItemDictionary.getType(i.getID()) == ItemType.WAND)||
-		(ItemDictionary.getType(i.getID()) == ItemType.FLAIL)||
-		(ItemDictionary.getType(i.getID()) == ItemType.HALBERD)) {
-			equipLoc = 32;
-			System.out.println("Weapon");
-		}else if (i.getDict().getType(i.getID()) == ItemType.HEADGEAR) {
-			equipLoc = 0;
-			System.out.println("Head");
-		}else if (i.getDict().getType(i.getID()) == ItemType.TORSO) {
-			equipLoc = 64;
-			System.out.println("Torso");
-		}else if (i.getDict().getType(i.getID()) == ItemType.LEGS) {
-			equipLoc = 96;
-			System.out.println("Legs");
-		}else if (i.getDict().getType(i.getID()) == ItemType.FEET) {
-			equipLoc = 128;
-			System.out.println("Feet");
-		}else if (i.getDict().getType(i.getID()) == ItemType.GAUNTLETS) {
-			equipLoc = 160;
-			System.out.println("Gauntlets");
-		}else if (i.getDict().getType(i.getID()) == ItemType.PAULDRONS) {
-			equipLoc = 192;
-			System.out.println("Pauldrons");
-		}else if (i.getDict().getType(i.getID()) == ItemType.WAIST) {
-			equipLoc = 224;
-			System.out.println("Waist");
-		}else if (i.getDict().getType(i.getID()) == ItemType.CLOAK) {
-			equipLoc = 256;
-			System.out.println("Cloak");
-		}
 		equippedItems.add(i);
 	}
 	

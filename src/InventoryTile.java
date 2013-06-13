@@ -3,32 +3,64 @@ import org.newdawn.slick.Graphics;
 
 public class InventoryTile {
 	private int ix, iy;
+	private int curX, curY;
 	private boolean equipSlot = false;
 	private ItemType equipType;
 	private Item containedItem;
 	private boolean selected = false;
+	private boolean containsItem = false;
 	
 	public InventoryTile(int ix, int iy) {
 		this.ix = ix;
 		this.iy = iy;
-		if (ix == 1) { 
+		if (ix == 0) { 
 			equipSlot = true;
-			
-		}
+		} 
 	}
 	
 	public void draw(Graphics g, int x, int y) {
 		if (selected) {
-			g.drawRect(x, y, 25, 25); // This might need to be offset to the left a bit
+			g.drawRect(x + 4, y + 4, 25, 25); // This might need to be offset to the left a bit
+			curX = x;
+			curY = y;
 		}
 		g.drawRect(x, y, 32, 32); // farts.
 		if (containedItem != null) {
-			g.drawImage(containedItem.getImage(), 0, 0);
+			g.drawImage(containedItem.getImage().getScaledCopy(32, 32), x, y);
 		}
+	}
+	
+	public boolean isEquipSlot() {
+		return equipSlot;
+	}
+	
+	public void setContainedItem(Item i) {
+		containedItem = i;
+		containsItem = true;
+	}
+	
+	public Item getContainedItem() {
+		return containedItem;
+	}
+	
+	public boolean containsItem() {
+		return containsItem;
 	}
 	
 	public void toggleSelect() {
 		selected = !selected;
+	}
+	
+	public int getX() {
+		return ix;
+	}
+	
+	public int getY() {
+		return iy;
+	}
+	
+	public Vector getPos() {
+		return new Vector(ix, iy);
 	}
 	
 	public static ItemType indexToItemType(int iy) {
@@ -51,6 +83,8 @@ public class InventoryTile {
 				return ItemType.WEAPON;
 			case 8:
 				return ItemType.FEET;
+			case 9:
+				return ItemType.RING;
 		}
 		return null;
 	}

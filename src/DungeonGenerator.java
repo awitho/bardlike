@@ -185,7 +185,7 @@ public class DungeonGenerator {
 		for (int x = 0; x < w; x++) {
 			for (int y = 0; y < h; y++) {
 				//calculate random shit and if equals other random shit place random item
-				if((int) (Math.random() * 100) + 1 <= 10) {
+				if((int) (Math.random() * 100) + 1 <= 100) {
 					Item item = ItemDictionary.getRandomItem();
 					if (item == null || !tiles[x][y].isReal() || tiles[x][y].isWall()) { continue; }
 					ArrayList<Entity> foundMobs = tiles[x][y].findType(Mob.class);
@@ -245,7 +245,7 @@ public class DungeonGenerator {
 		//generateHallway(tiles, 1, 9, 13, 1);
 		
 		placeItems(tiles, w, h, empty);
-		placeMobs(tiles, w, h, empty);
+		//placeMobs(tiles, w, h, empty);
 		
 		empty.setTiles(tiles);
 		return empty;

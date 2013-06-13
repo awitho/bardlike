@@ -15,6 +15,7 @@ import java.util.Map.Entry;
 public class ItemDictionary {
 	private static HashMap<String, Image> itemImages;
 	private static HashMap<String, ItemType> itemTypes;
+	private static HashMap<String, WeaponType> weaponTypes;
 	private static HashMap<Integer, HashMap<String, Image>> scaledImages;
 	private static JsonArray items;
 	private static JsonObject curItem;
@@ -23,6 +24,7 @@ public class ItemDictionary {
 		itemImages = new HashMap<>();
 		scaledImages = new HashMap<>();
 		itemTypes = new HashMap<>();
+		weaponTypes = new HashMap<>();
 		try {
 			items = new GameConfig("items.json").getArray();
 			SpriteSheet itemSprites = new SpriteSheet("./gfx/testitemsheet.png", 32, 32);
@@ -30,6 +32,10 @@ public class ItemDictionary {
 				curItem = items.get(i).getAsJsonObject();
 				itemTypes.put(curItem.get("name").getAsString(), ItemType.valueOf(curItem.get("type").getAsString()));
 				itemImages.put(curItem.get("name").getAsString(), itemSprites.getSubImage(curItem.get("sx").getAsInt(), curItem.get("sy").getAsInt()).getScaledCopy(Misc.TARGET_SIZE, Misc.TARGET_SIZE));
+				String wepType = curItem.get("type2").getAsString();
+				if(wepType != null) {
+					weaponTypes.put(curItem.get("name").getAsString(), WeaponType.valueOf(wepType));
+				}
 			}
 		} catch (Exception e) {
 			Misc.showDialog(e);
@@ -39,6 +45,10 @@ public class ItemDictionary {
 	
 	public static ItemType getType(String name) {
 		return itemTypes.get(name);
+	}
+	
+	public static WeaponType getWeaponType(String name) {
+		return weaponTypes.get(name);
 	}
 	
 	public static void scaleImages(int i) {
