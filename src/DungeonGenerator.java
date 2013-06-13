@@ -9,7 +9,6 @@ import java.util.ArrayList;
 public class DungeonGenerator {
 	private static TileDictionary tileDictionary;
 	private static MobDictionary mobDictionary;
-	private static GameMap map;
 	
 	public static void initTileDictionary(TileDictionary tileDictionary) {
 		DungeonGenerator.tileDictionary = tileDictionary;
@@ -164,24 +163,25 @@ public class DungeonGenerator {
 		}
 	}
 	
-	public static void placePlayerInFeasibleLocation(Tile[][] tiles, Player ply) {
+	public static void placePlayerInFeasibleLocation(Tile[][] tiles, Player ply, GameMap map) {
 		for (int x = 0; x < tiles.length; x++) {
 			if ((int) (Math.random() * 100) + 1 <= 90) { continue; }
 			for (int y = 0; y < tiles[0].length; y++) {
 				if (tiles[x][y] == null || tiles[x][y].getName().equalsIgnoreCase("") || tiles[x][y].isWall() || (int) (Math.random() * 100) + 1 <= 80) { continue; }
 			//	System.out.println("Placing player at: (" + x + ", " + y + ")");
+				ply.setMap(map);
 				ply.setTile(tiles[x][y]);
 				return;
 			}
 		}
 		try {
-			placePlayerInFeasibleLocation(tiles, ply);
+			placePlayerInFeasibleLocation(tiles, ply, map);
 		} catch (StackOverflowError ex) {
 			return;
 		}
 	}
 	
-	public static void placeItems(Tile[][] tiles, int w, int h) {
+	public static void placeItems(Tile[][] tiles, int w, int h, GameMap map) {
 		for (int x = 0; x < w; x++) {
 			for (int y = 0; y < h; y++) {
 				//calculate random shit and if equals other random shit place random item
@@ -190,19 +190,21 @@ public class DungeonGenerator {
 					if (item == null || !tiles[x][y].isReal() || tiles[x][y].isWall()) { continue; }
 					ArrayList<Entity> foundMobs = tiles[x][y].findType(Mob.class);
 					if (foundMobs != null) { return; }
+					item.setMap(map);
 					item.setTile(tiles[x][y]);
 				}
 			}
 		}
 	}
 	
-	public static void placeMobs(Tile[][] tiles, int w, int h) {
+	public static void placeMobs(Tile[][] tiles, int w, int h, GameMap map) {
 		for (int x = 0; x < w; x++) {
 			for (int y = 0; y < h; y++) {
 				//calculate random shit and if equals other random shit place random item
 				if((int) (Math.random() * 100) + 1 <= 10) {
 					Mob mob = mobDictionary.getRandomMob();
 					if (mob == null || !tiles[x][y].isReal() || tiles[x][y].isWall()) { continue; }
+					mob.setMap(map);
 					mob.setTile(tiles[x][y]);
 				}
 			}
@@ -242,8 +244,8 @@ public class DungeonGenerator {
 		//generateRoom(tiles, 10, 7, 3, 5);
 		//generateHallway(tiles, 1, 9, 13, 1);
 		
-		placeItems(tiles, w, h);
-		placeMobs(tiles, w, h);
+		placeItems(tiles, w, h, empty);
+		placeMobs(tiles, w, h, empty);
 		
 		empty.setTiles(tiles);
 		return empty;

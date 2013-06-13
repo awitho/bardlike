@@ -34,5 +34,50 @@
         "stats": {
             "def": 20
         }
-    }
+    },
+	{
+		"name": "Iron Shortsword",
+		"type": "SWORD",
+		"sx": 0,
+		"sy": 1,
+		"stats": {
+			"atk": 20
+		}
+	},
+	{
+		"name": "Double-edged sword",
+		"type": "SWORD",
+		"sx": 1,
+		"sy": 1,
+		"stats": {
+			"atk": 20
+		}
+	},
+	{
+		"name": "Rapier",
+		"type": "SWORD",
+		"sx": 2,
+		"sy": 1,
+		"stats": {
+			"atk": 20
+		}
+	},
+	{
+		"name": "Butter Knife",
+		"type": "DAGGER",
+		"sx": 0,
+		"sy": 2,
+		"stats": {
+			"atk": 20
+		}
+	},
+	{
+		"name": "Iron Dagger",
+		"type": "DAGGER",
+		"sx": 1,
+		"sy": 2,
+		"stats": {
+			"atk": 20
+		}
+	}
 ]

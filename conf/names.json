@@ -36,7 +36,7 @@
 			"the gut-wrencher",
 			"the bone cruncher",
 			"the defiler",
-			"teh 1337 sauce",
+			"t3h 1337 sauc3",
 			"of cakes",
 			"of doom",
 			"of Gryffindor",
@@ -68,16 +68,43 @@
 	},
 	"HEADGEAR": {
 		"prefix":[
-			"Head",
+			"Sturdy",
+			"Rigid",
+			"Loose",
+			"Solid",
 			""
 		],
 		
 		"midname":[
-			"Protector"
+			"Helm",
+			"Headgear",
+			"Cap"
 		],
 
 		"suffix":[
 			"of love",
+			""
+		]
+	},
+	"DAGGER": {
+		"prefix": [
+			"Pointy",
+			"Dull",
+			"Butter",
+			""
+		],
+		
+		"midname":[
+			"Dagger",
+			"Knife"
+		],
+
+		"suffix":[
+			"of love",
+			"of toast",
+			"of buttering",
+			"of slicing",
+			"the overlooked",
 			""
 		]
 	}

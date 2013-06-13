@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SpriteSheet;
 
@@ -27,6 +28,17 @@ public class GameMap {
 				Tile tile = tiles[x][y];
 				if (tile != null) {
 					tile.draw(g, x * tile.getWidth(), y * tile.getHeight());
+				}
+			}
+		}
+	}
+	
+	public void update() {
+		for (int x = 0; x < tiles.length; x++) {
+			for (int y = 0; y < tiles[0].length; y++) {
+				Tile tile = tiles[x][y];
+				if (tile != null) {
+					tile.update();
 				}
 			}
 		}
@@ -78,8 +90,5 @@ public class GameMap {
 	
 	public void regen() {
 		tiles = DungeonGenerator.generateDungeon(24, 24, tileDictionary, mobDictionary).getTiles().clone();
-	}
-
-	public void update() {
 	}
 }

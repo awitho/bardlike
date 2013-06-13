@@ -47,6 +47,11 @@ public class Entity {
 	public Image getImage() {
 		return img;
 	}
+	
+	public void setMap(GameMap map) {
+		System.out.println("Set map: " + map + " of " + this);
+		this.map = map;
+	}
 
 	public GameMap getMap() {
 		return map;

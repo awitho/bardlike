@@ -78,10 +78,11 @@ public class ItemDictionary {
 	}
 	
 	public static Item getRandomItem() {
-		for (int i = 0; i < items.size(); i++) {
-			if (items.get(i) == null || (int) (Math.random() * items.size()) - 1 == 0) { continue; }
-			return new Item(items.get(i).getAsJsonObject().get("name").getAsString());
-		}
-		return null;
+		return new Item(items.get((int) (Math.random() * items.size())).getAsJsonObject().get("name").getAsString());
+		//for (int i = 0; i < items.size(); i++) {
+		//	if (items.get(i) == null || (int) (Math.random() * items.size()) - 1 == 0) { continue; }
+		//	return new Item(items.get(i).getAsJsonObject().get("name").getAsString());
+		//}
+		//return null;
 	}
 }

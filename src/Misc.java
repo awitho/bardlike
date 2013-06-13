@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
@@ -80,5 +81,86 @@ public class Misc {
 			return false;
 		}
 		return true;
+	}
+	
+	/*
+	 * Pathfinds to a certain tile, then returns the path!
+	 * @param map The map to pathfind on.
+	 * @param x1 X of first point.
+	 * @param y1 Y of first point.
+	 * @param x2 X of second point.
+	 * @param y2 Y of second point.
+	 * @return ArrayList of PathfindingTiles of path.
+	 */
+	public static ArrayList<PathfindingTile> pathfindTo(GameMap map, int x1, int y1, int x2, int y2) {
+			ArrayList<PathfindingTile> openList = new ArrayList<>();
+			ArrayList<PathfindingTile> closedList = new ArrayList<>();
+			
+			Tile[][] tiles = map.getTiles();
+			
+			PathfindingTile curLookingTile = new PathfindingTile(null, x1, y1, 0, 0, 0);
+			openList.add(curLookingTile);
+			
+			int added = 0; // May not be needed?
+			
+			outerloop: // Loop label.
+			while (true) {
+				innerloop: // Loop label.
+				for (Direction dir : Direction.values()) { // Find adj tiles to starting point.
+					Vector vec = Misc.getLocFromDir(curLookingTile.x, curLookingTile.y, dir);
+					
+					if (vec.getX() == x2 && vec.getY() == y2) { closedList.add(new PathfindingTile(curLookingTile, x2, y2, 0, 0, 0)); break outerloop; }
+					
+					for (int i = 0; i < closedList.size(); i++) {
+						if (vec.getX() == closedList.get(i).x && vec.getY() == closedList.get(i).y) {
+							continue innerloop;
+						}
+					}
+					
+					for (int i = 0; i < openList.size(); i++) {
+						if (vec.getX() == openList.get(i).x && vec.getY() == openList.get(i).y) {
+							continue innerloop; // Possibly, might want to remove?
+						}
+					}
+					
+					try {
+						if (vec.getX() < 0 || vec.getX() > tiles.length || vec.getY() < 0 || vec.getY() > tiles[0].length || (tiles[vec.getX()][vec.getY()].isWall() && tiles[vec.getX()][vec.getY()].isReal())) { continue; }
+					} catch (IndexOutOfBoundsException ex) { }
+
+					//calculate f, g & h here.
+					double g = 10.0;
+					double h = Double.MAX_VALUE;
+
+					double xDistance = Math.abs(vec.getX() - x2); // Diagonol Shortcut Huerisitic
+					double yDistance = Math.abs(vec.getY() - y2);
+					if (xDistance > yDistance) {
+						h = 14.0 * yDistance + 10.0 * (xDistance-yDistance);
+					} else {
+						h = 14.0 * xDistance + 10.0 * (yDistance-xDistance);
+					}
+					
+					//double h = 10 * (Math.abs(vec.getX() - x2) + Math.abs(vec.getY() - y2)); // Manhattan Huerisitic
+
+					openList.add(new PathfindingTile(curLookingTile, vec.getX(), vec.getY(), g + h, g, h));
+					added++;
+				}
+				if (added == 0) { return null; }
+				if (openList.isEmpty()) { return null; }
+				
+				openList.remove(curLookingTile); // Add starting tile to closed list.
+				closedList.add(curLookingTile);
+				
+				int lowest = 0;
+				for (int i = 0; i < openList.size(); i++) { // Find lowest cost tile. (Will pick last tile if some are the same.)
+					if (openList.get(i).f < openList.get(lowest).f) {
+						lowest = i;
+					}
+				}
+				
+				curLookingTile = openList.get(lowest); // Set new tile to starting point, remove from open, add to closed.
+				closedList.add(curLookingTile);
+				openList.remove(lowest);
+            }
+			return openList;
 	}
 }
