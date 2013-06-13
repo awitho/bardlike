@@ -12,10 +12,9 @@ public class InventoryTile {
 	public InventoryTile(int ix, int iy) {
 		this.ix = ix;
 		this.iy = iy;
-		if (ix == 1) { 
+		if (ix == 0) { 
 			equipSlot = true;
-			
-		}
+		} 
 	}
 	
 	public void draw(Graphics g, int x, int y) {
@@ -26,12 +25,40 @@ public class InventoryTile {
 		}
 		g.drawRect(x, y, 32, 32); // farts.
 		if (containedItem != null) {
-			g.drawImage(containedItem.getImage(), 0, 0);
+			g.drawImage(containedItem.getImage().getScaledCopy(32, 32), x, y);
 		}
+	}
+	
+	public boolean isEquipSlot() {
+		return equipSlot;
+	}
+	
+	public void setContainedItem(Item i) {
+		containedItem = i;
+	}
+	
+	public Item getContainedItem() {
+		return containedItem;
+	}
+	
+	public void removeContainedItem() {
+		containedItem = null;
 	}
 	
 	public void toggleSelect() {
 		selected = !selected;
+	}
+	
+	public int getX() {
+		return ix;
+	}
+	
+	public int getY() {
+		return iy;
+	}
+	
+	public Vector getPos() {
+		return new Vector(ix, iy);
 	}
 	
 	public static ItemType indexToItemType(int iy) {
@@ -54,6 +81,8 @@ public class InventoryTile {
 				return ItemType.WEAPON;
 			case 8:
 				return ItemType.FEET;
+			case 9:
+				return ItemType.RING;
 		}
 		return null;
 	}

@@ -110,7 +110,7 @@ public class Player extends Entity {
 	}
 	
 	public void addItem(Item i) {
-		if(inventoryItems.size() > 100) {
+		if(inventoryItems.size() >= 110) {
 			log.append("Your inventory is full, you cannot pickup anymore items!");
 			return;
 		}

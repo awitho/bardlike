@@ -26,5 +26,6 @@ public enum ItemType {
 	PAULDRONS,
 	WAIST,
 	CLOAK,
-	WEAPON
+	WEAPON,
+	RING
 }

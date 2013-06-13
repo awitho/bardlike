@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
  */
 public class Misc {
 	public static final int TARGET_SIZE = 64;
-	public static final int MAX_INVENTORY = 100;
+	public static final int MAX_INVENTORY = 110;
 
 	/**
 	 * Pop-up dialog, replaces console println

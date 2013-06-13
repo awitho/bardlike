@@ -17,20 +17,18 @@ public class Inventory implements Menu {
 	private int INV_OFFSET_X = width/2 - 85, INV_OFFSET_Y = height/2 - 30;
 	private int INV_WIDTH = 320;
 	private int EQUIP_OFFSET = 96;
-	private int lastDelta;
-	private int curSelectedX, curSelectedY;
 	private long curTime = 0;
+	
 	private boolean visible;
-	private HashMap<String, Integer> playerStats;
 	private Player ply;
 	private GameConfig invMenu;
 	private InventoryTile[][] inventoryTiles;
+	
 	private InventoryTile newInvTile;
 	private InventoryTile curInvTile;
 
 	public Inventory(Player p) {
 		ply = p;
-		playerStats = p.getStats();
 		invMenu = new GameConfig("./loc/inventorytext.json");
 		ItemDictionary.scaleImages(32); // We need thumbnails at 32x32 here, so tell ItemDictionary to prepare them for us!
 		inventoryTiles = new InventoryTile[11][10];
@@ -53,21 +51,25 @@ public class Inventory implements Menu {
 	public boolean isOpen() {
 		return visible;
 	}
-
+	
 	@Override
 	public void draw(Graphics g) {
+		draw(g, 0, 0);
+	}
+	
+	public void draw(Graphics g, int screenX, int screenY) {
 		if(visible) {
-			drawBase(g);
+			drawBase(g, screenX, screenY);
 			drawItems(g);
 			for(int x = 0; x < inventoryTiles.length; x++) {
 				for(int y = 0; y < inventoryTiles[0].length; y++) {
 					InventoryTile tile = inventoryTiles[x][y];
 					if(tile != null) {
-						if(x == 0) {
-							tile.draw(g, ((x * 32) - 64) + ply.getX() - INV_OFFSET_X, ((y * 32) + 80) + ply.getY() - INV_OFFSET_Y);
+						if(tile.isEquipSlot()) {
+							tile.draw(g, ((x * 32) - 64) + screenX + EQUIP_OFFSET, ((y * 32) + 80) + screenY);
 						}else {
-							tile.draw(g, (x * 32) + (ply.getX() - INV_OFFSET_X), ((y * 32) + 80) + ply.getY() - INV_OFFSET_Y);
-						}
+							tile.draw(g, (x * 32) + screenX + EQUIP_OFFSET, ((y * 32) + 80) + screenY);
+						} 
 					}
 				}
 			}
@@ -78,33 +80,27 @@ public class Inventory implements Menu {
 		}
 	}
 	
-	private void drawBase(Graphics g) {
+	private void drawBase(Graphics g, int screenX, int screenY) {
 		g.setColor(Color.black);
-		g.fillRect(ply.getX() - INV_OFFSET_X - EQUIP_OFFSET, ply.getY() - INV_OFFSET_Y, EQUIP_OFFSET, height);
-		g.fillRect(ply.getX() - INV_OFFSET_X, ply.getY() - INV_OFFSET_Y, width, height);
+		g.fillRect(screenX + EQUIP_OFFSET, screenY, EQUIP_OFFSET, height);
+		g.fillRect(screenX, screenY, width, height);
 		
 		g.setColor(Color.white);
 		
-		g.drawString(invMenu.getValueAsString("#title"), INV_WIDTH/2 - 40 + ply.getX() - INV_OFFSET_X, 10 + ply.getY() - INV_OFFSET_Y);
-		g.drawString(invMenu.getValueAsString("#stat"), (width - 130) + ply.getX() - INV_OFFSET_X, 10 + ply.getY() - INV_OFFSET_Y);
-		g.drawString("Equip", ply.getX() - INV_OFFSET_X - EQUIP_OFFSET + 30, 10 + ply.getY() - INV_OFFSET_Y);
-		g.drawRect(ply.getX() - INV_OFFSET_X, ply.getY() - INV_OFFSET_Y, width, height);
-		g.drawRect(ply.getX() - INV_OFFSET_X - EQUIP_OFFSET, ply.getY() - INV_OFFSET_Y, EQUIP_OFFSET, height);
+		g.drawString(invMenu.getValueAsString("#title"), INV_WIDTH/2 - 40 + screenX, 10 + screenY);
+		g.drawString(invMenu.getValueAsString("#stat"), (width - 130) + screenX, 10 + screenY);
+		g.drawString("Equip", screenX + 30, 10 + screenY);
+		g.drawRect(screenX - EQUIP_OFFSET, screenY, width  + EQUIP_OFFSET, height);
 	}
 	
 	private void drawItems(Graphics g) {
 		int count = 0;
-		for(int x = 0; x < Misc.MAX_INVENTORY / 10; x++) {	
+		for(int x = 1; x < Misc.MAX_INVENTORY / 10; x++) {	
 			for(int y = 0; y < Misc.MAX_INVENTORY / 10; y++) {
 				try{
-					ply.getPlayerItems().get(count);
+					inventoryTiles[x][y].setContainedItem(ply.getPlayerItems().get(count));
 				} catch (IndexOutOfBoundsException ex) {
 					break;
-				}
-				g.drawImage(ItemDictionary.getScaledImageByName(32, ply.getPlayerItems().get(count).getID()), (y*32) + ply.getX() - INV_OFFSET_X, ((x*32) + 80) + ply.getY() - INV_OFFSET_Y);
-				if(reticleX == (y*32) && (reticleY-80) == (x*32)) {		
-					//selected = ply.getPlayerItems().get(count);
-					g.drawString(ply.getPlayerItems().get(count).getName(), 20 + ply.getX() - INV_OFFSET_X + 10, 50 + ply.getY() - INV_OFFSET_Y);
 				}
 				count++;
 			}
@@ -129,45 +125,37 @@ public class Inventory implements Menu {
 				ply.isFrozen(true);
 			}
 		} else {
+			if (container.getTime() - curTime <= 150) { return; }
+			if (container.getInput().isKeyPressed(Input.KEY_I)) {
+				this.setVisible(false);
+				ply.isFrozen(false);
+			} else if(container.getInput().isKeyPressed(Input.KEY_D)) {
+				ply.removeItem(curInvTile.getContainedItem());
+				curInvTile.removeContainedItem();
+			} else if(container.getInput().isKeyPressed(Input.KEY_E)){
+				System.out.println("Equipping");
+				//ply.removeItem(selected);
+				//ply.equipItem(selected);
+			}
 			try {
-				if (container.getTime() - curTime <= 150) { return; }
-				if (container.getInput().isKeyPressed(Input.KEY_I)) {
-					this.setVisible(false);
-					ply.isFrozen(false);
-				}else if(container.getInput().isKeyPressed(Input.KEY_D)) {
-					//ply.removeItem(selected);
-				}else if(container.getInput().isKeyPressed(Input.KEY_E)){
-					System.out.println("Equipping");
-					//ply.removeItem(selected);
-					//ply.equipItem(selected);
-				}else if (container.getInput().isKeyDown(Input.KEY_UP)) {
-					newInvTile = inventoryTiles[curSelectedX][curSelectedY -= 1];
-					curTime = container.getTime();
+				if (container.getInput().isKeyDown(Input.KEY_UP)) {
+					newInvTile = inventoryTiles[curInvTile.getX()][curInvTile.getY() - 1];
 				} else if (container.getInput().isKeyDown(Input.KEY_DOWN)) {
-					newInvTile = inventoryTiles[curSelectedX][curSelectedY += 1];
-					curTime = container.getTime();
+					newInvTile = inventoryTiles[curInvTile.getX()][curInvTile.getY() + 1];
 				} else if (container.getInput().isKeyDown(Input.KEY_LEFT)) {
-					newInvTile = inventoryTiles[curSelectedX -= 1][curSelectedY];
-					curTime = container.getTime();
+					newInvTile = inventoryTiles[curInvTile.getX() - 1][curInvTile.getY()];
 				} else if (container.getInput().isKeyDown(Input.KEY_RIGHT)) {
-					newInvTile = inventoryTiles[curSelectedX += 1][curSelectedY];
-					curTime = container.getTime();
+					newInvTile = inventoryTiles[curInvTile.getX() + 1][curInvTile.getY()];
 				}
-				if(newInvTile != null) {
-					curInvTile.toggleSelect();
-					newInvTile.toggleSelect();
-					curInvTile = newInvTile;
-				}
-			}catch(IndexOutOfBoundsException e) {
-				if(curSelectedX < 0) {
-					curSelectedX = 0;
-				}else if(curSelectedX > 10) {
-					curSelectedX = 10;
-				}else if(curSelectedY < 0) {
-					curSelectedY = 0;
-				}else if(curSelectedY > 10) {
-					curSelectedY = 10;
-				}
+			} catch(IndexOutOfBoundsException e) {
+				newInvTile = curInvTile;
+				return;
+			}
+			if(newInvTile != null && newInvTile != curInvTile) {
+				curTime = container.getTime();
+				curInvTile.toggleSelect();
+				newInvTile.toggleSelect();
+				curInvTile = newInvTile;
 			}
 		}
 	}
