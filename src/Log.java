@@ -64,7 +64,7 @@ public class Log implements Menu {
 	}
 	
 	public void update() {
-		if (System.currentTimeMillis() - curTime >= 2000.0 && white.getAlpha() > 0) {
+		if (System.currentTimeMillis() - curTime >= 10000.0 && white.getAlpha() > 0) {
 			white = new Color(255, 255, 255, white.getAlpha() - 1);
 			black = new Color(0, 0, 0, black.getAlpha() - 1);
 		}

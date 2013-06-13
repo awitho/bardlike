@@ -6,7 +6,7 @@
 		"sy": 0,
 		"spawnchance": 80,
 		"stats": {
-			"atk": 10,
+			"atk": 2,
 			"def": 1
 		}
     },
@@ -17,7 +17,7 @@
 		"sy": 0,
 		"spawnchance": 60,
 		"stats": {
-			"atk": 50,
+			"atk": 5,
 			"def": 20
 		}
     },
@@ -26,7 +26,7 @@
 		"health": 200,
 		"sx": 1,
 		"sy": 1,
-		"spawnchance": 10,
+		"spawnchance": 2,
 		"stats": {
 			"atk": 100,
 			"def": 100

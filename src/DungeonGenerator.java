@@ -155,7 +155,7 @@ public class DungeonGenerator {
 			for (int j = 0; j < (int) (Math.random() * 3) + 1; j++) {
 				Vector vec = rooms.get(i).getRandomWall();
 				Vector vec2 = rooms.get((int) (Math.random() * rooms.size())).getRandomWall();
-				if (vec == null || vec2 == null) { continue; }
+				if (vec == null || vec2 == null || (vec2.getX() == vec.getX() && vec2.getY() == vec2.getY())) { continue; }
 				//Misc.showDialog(vec);
 				if (generateHallway(tiles, vec.getX(), vec.getY(), vec2.getX(), vec2.getY())) { System.out.println("Added connection!"); rooms.get(i).addHallway(); }
 				if (rooms.get(i).getConnections() <= 0) { System.out.println("No connections, retrying!"); generateHallways(tiles, rooms, i); }

@@ -5,12 +5,11 @@
 		"sx": 0,
 		"sy": 0,
 		"stats": {
-			"health": 10,
-			"str": 1,
+			"str": 4,
 			"int": 1,
 			"dex": 1,
-			"end": 1,
-            "agi": 1
+			"end": 4,
+            "agi": 4
 		}
     },
     {
@@ -19,11 +18,10 @@
 		"sx": 1,
 		"sy": 0,
 		"stats": {
-			"health": 10,
 			"str": 1,
 			"int": 1,
 			"dex": 1,
-			"end": 1,
+			"end": 3,
             "agi": 1
 		}
     },
@@ -33,11 +31,10 @@
 		"sx": 0,
 		"sy": 1,
 		"stats": {
-			"health": 10,
-			"str": 1,
+			"str": 6,
 			"int": 1,
 			"dex": 1,
-			"end": 1,
+			"end": 6,
             "agi": 1
 		}
     },
@@ -47,11 +44,10 @@
         "sx": 1,
         "sy": 1,
         "stats": {
-			"health": 10,
-			"str": 1,
+			"str": 8,
 			"int": 1,
 			"dex": 1,
-			"end": 1,
+			"end": 10,
             "agi": 1
 		}
     },
@@ -61,11 +57,10 @@
         "sx": 0,
         "sy": 2,
 		"stats": {
-			"health": 10,
-			"str": 1,
+			"str": 3,
 			"int": 1,
 			"dex": 1,
-			"end": 1,
+			"end": 4,
             "agi": 1
 		}
     }

@@ -41,31 +41,40 @@ public class Player extends Entity {
 
 	public void move(Direction dir) {
 		if(frozen || dead) { return; }
-			Tile curTile = getTile();
-			if (curTile == null) { System.out.println("Player.move: Player is not currently in map!"); return; };
-			//System.out.println("Player.move: Attempting to move in dir: " + dir);
-			Vector vec = Misc.getLocFromDir(curTile.getX(), curTile.getY(), dir);
-			Tile tile = getMap().getTile(vec.getX(), vec.getY());
-			if (tile == null) { return; }
-			
-			ArrayList<Entity> foundItems = tile.findType(Item.class);
-			if (foundItems != null) { 
-				for(int i = 0; i < foundItems.size(); i++) {
-					addItem((Item) foundItems.get(i));
-				}
-			}
-			
-			ArrayList<Entity> foundMobs = tile.findType(Mob.class);
-			if (foundMobs != null) { return; }
-			
+		Tile curTile = getTile();
+		if (curTile == null) { System.out.println("Player.move: Player is not currently in map!"); return; };
+		//System.out.println("Player.move: Attempting to move in dir: " + dir);
+		Vector vec = Misc.getLocFromDir(curTile.getX(), curTile.getY(), dir);
+		Tile tile = getMap().getTile(vec.getX(), vec.getY());
+		if (tile == null) { return; }
+		
+		ArrayList<Entity> foundMobs = tile.findType(Mob.class);
+		Mob mob = null;
+		if (foundMobs != null) {
+			mob = (Mob) foundMobs.get(0);
+			mob.use(this, stats.get("str")*2);
+		}
+
+		getMap().update();
+		if (mob != null && !mob.isDead()) { return; }
+		if (!dead)
 			setTile(tile);
-			getMap().update();
-			//Tile tile = getMap().moveEnt(curTile, this, dir);
+		
+		ArrayList<Entity> foundItems = tile.findType(Item.class);
+		if (foundItems != null) { 
+			for(int i = 0; i < foundItems.size(); i++) {
+				addItem((Item) foundItems.get(i));
+			}
+		}
 	}
 	
 	public void setLog(Log log) {
 		this.log = log;
 	}
+        
+        public void log(String str) {
+            log.append(str);
+        }
 	
 	public int getMaxHP() {
 		return stats.get("health");
@@ -79,9 +88,10 @@ public class Player extends Entity {
 		stats.put("curhp", hp);
 	}
 	
-	public void use(int amt) {
+	public void use(Entity ent, int amt) {
 		if (dead) { return; }
-		log.append("Your were hit for " + amt + " damage!");
+                Mob mob = (Mob) ent;
+		log.append("Your were hit by " + mob.getName() + " for " + amt + " damage!");
 		setHP(getHP() - amt);
 		if (getHP() <= 0) {
 			setHP(0);
@@ -101,7 +111,7 @@ public class Player extends Entity {
 
 	public void revive() {
 		dead = false;
-		stats.put("curhp", stats.get("health"));
+		stats.put("curhp", stats.get("end")*10);
 		log.append("You have been revived from the dead!");
 	}
 	
@@ -130,16 +140,16 @@ public class Player extends Entity {
 	public void equipItem(Item i) {
 		if(i == null) { return; }
 		System.out.println(i.getID());
-		if((i.getDict().getType(i.getID()) == ItemType.SWORD)||
-		(i.getDict().getType(i.getID()) == ItemType.LONGSWORD)||
-		(i.getDict().getType(i.getID()) == ItemType.DAGGER)||
-		(i.getDict().getType(i.getID()) == ItemType.SPEAR)||
-		(i.getDict().getType(i.getID()) == ItemType.MACE)||
-		(i.getDict().getType(i.getID()) == ItemType.STAFF)||
-		(i.getDict().getType(i.getID()) == ItemType.INSTRUMENT)||
-		(i.getDict().getType(i.getID()) == ItemType.WAND)||
-		(i.getDict().getType(i.getID()) == ItemType.FLAIL)||
-		(i.getDict().getType(i.getID()) == ItemType.HALBERD)) {
+		if((ItemDictionary.getType(i.getID()) == ItemType.SWORD)||
+		(ItemDictionary.getType(i.getID()) == ItemType.LONGSWORD)||
+		(ItemDictionary.getType(i.getID()) == ItemType.DAGGER)||
+		(ItemDictionary.getType(i.getID()) == ItemType.SPEAR)||
+		(ItemDictionary.getType(i.getID()) == ItemType.MACE)||
+		(ItemDictionary.getType(i.getID()) == ItemType.STAFF)||
+		(ItemDictionary.getType(i.getID()) == ItemType.INSTRUMENT)||
+		(ItemDictionary.getType(i.getID()) == ItemType.WAND)||
+		(ItemDictionary.getType(i.getID()) == ItemType.FLAIL)||
+		(ItemDictionary.getType(i.getID()) == ItemType.HALBERD)) {
 			equipLoc = 32;
 			System.out.println("Weapon");
 		}else if (i.getDict().getType(i.getID()) == ItemType.HEADGEAR) {
