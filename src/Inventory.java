@@ -18,20 +18,20 @@ public class Inventory implements Menu {
 	private int INV_WIDTH = 320;
 	private int EQUIP_OFFSET = 96;
 	private int lastDelta;
-	private Item selected;
+	private int curSelectedX, curSelectedY;
 	private long curTime = 0;
-	private Rectangle selectionReticle;
 	private boolean visible;
 	private HashMap<String, Integer> playerStats;
 	private Player ply;
 	private GameConfig invMenu;
 	private InventoryTile[][] inventoryTiles;
+	private InventoryTile newInvTile;
+	private InventoryTile curInvTile;
 
 	public Inventory(Player p) {
 		ply = p;
 		playerStats = p.getStats();
 		invMenu = new GameConfig("./loc/inventorytext.json");
-		selectionReticle = new Rectangle(reticleX, reticleY, 25, 25);
 		ItemDictionary.scaleImages(32); // We need thumbnails at 32x32 here, so tell ItemDictionary to prepare them for us!
 		inventoryTiles = new InventoryTile[11][10];
 		for(int i = 0; i < 11; i++) {
@@ -39,6 +39,9 @@ public class Inventory implements Menu {
 				inventoryTiles[i][j] = new InventoryTile(i, j);
 			}
 		}
+		inventoryTiles[0][0].toggleSelect();
+		curInvTile = inventoryTiles[0][0];
+		newInvTile = null;
 	}
 
 	@Override
@@ -100,7 +103,7 @@ public class Inventory implements Menu {
 				}
 				g.drawImage(ItemDictionary.getScaledImageByName(32, ply.getPlayerItems().get(count).getID()), (y*32) + ply.getX() - INV_OFFSET_X, ((x*32) + 80) + ply.getY() - INV_OFFSET_Y);
 				if(reticleX == (y*32) && (reticleY-80) == (x*32)) {		
-					selected = ply.getPlayerItems().get(count);
+					//selected = ply.getPlayerItems().get(count);
 					g.drawString(ply.getPlayerItems().get(count).getName(), 20 + ply.getX() - INV_OFFSET_X + 10, 50 + ply.getY() - INV_OFFSET_Y);
 				}
 				count++;
@@ -126,30 +129,45 @@ public class Inventory implements Menu {
 				ply.isFrozen(true);
 			}
 		} else {
-			System.out.println("reticle: (" +reticleX+", "+reticleY+")");
-			if (container.getTime() - curTime <= 150) { return; }
-			if (container.getInput().isKeyPressed(Input.KEY_I)) {
-				this.setVisible(false);
-				ply.isFrozen(false);
-			}else if(container.getInput().isKeyPressed(Input.KEY_D)) {
-				ply.removeItem(selected);
-			}else if(container.getInput().isKeyPressed(Input.KEY_E)){
-				System.out.println("Equipping");
-				ply.removeItem(selected);
-				ply.equipItem(selected);
-				selected = null;
-			}else if (container.getInput().isKeyDown(Input.KEY_UP)) {
-				
-				curTime = container.getTime();
-			} else if (container.getInput().isKeyDown(Input.KEY_DOWN)) {
-				
-				curTime = container.getTime();
-			} else if (container.getInput().isKeyDown(Input.KEY_LEFT)) {
-				
-				curTime = container.getTime();
-			} else if (container.getInput().isKeyDown(Input.KEY_RIGHT)) {
-				
-				curTime = container.getTime();
+			try {
+				if (container.getTime() - curTime <= 150) { return; }
+				if (container.getInput().isKeyPressed(Input.KEY_I)) {
+					this.setVisible(false);
+					ply.isFrozen(false);
+				}else if(container.getInput().isKeyPressed(Input.KEY_D)) {
+					//ply.removeItem(selected);
+				}else if(container.getInput().isKeyPressed(Input.KEY_E)){
+					System.out.println("Equipping");
+					//ply.removeItem(selected);
+					//ply.equipItem(selected);
+				}else if (container.getInput().isKeyDown(Input.KEY_UP)) {
+					newInvTile = inventoryTiles[curSelectedX][curSelectedY -= 1];
+					curTime = container.getTime();
+				} else if (container.getInput().isKeyDown(Input.KEY_DOWN)) {
+					newInvTile = inventoryTiles[curSelectedX][curSelectedY += 1];
+					curTime = container.getTime();
+				} else if (container.getInput().isKeyDown(Input.KEY_LEFT)) {
+					newInvTile = inventoryTiles[curSelectedX -= 1][curSelectedY];
+					curTime = container.getTime();
+				} else if (container.getInput().isKeyDown(Input.KEY_RIGHT)) {
+					newInvTile = inventoryTiles[curSelectedX += 1][curSelectedY];
+					curTime = container.getTime();
+				}
+				if(newInvTile != null) {
+					curInvTile.toggleSelect();
+					newInvTile.toggleSelect();
+					curInvTile = newInvTile;
+				}
+			}catch(IndexOutOfBoundsException e) {
+				if(curSelectedX < 0) {
+					curSelectedX = 0;
+				}else if(curSelectedX > 10) {
+					curSelectedX = 10;
+				}else if(curSelectedY < 0) {
+					curSelectedY = 0;
+				}else if(curSelectedY > 10) {
+					curSelectedY = 10;
+				}
 			}
 		}
 	}

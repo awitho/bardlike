@@ -3,6 +3,7 @@ import org.newdawn.slick.Graphics;
 
 public class InventoryTile {
 	private int ix, iy;
+	private int curX, curY;
 	private boolean equipSlot = false;
 	private ItemType equipType;
 	private Item containedItem;
@@ -19,7 +20,9 @@ public class InventoryTile {
 	
 	public void draw(Graphics g, int x, int y) {
 		if (selected) {
-			g.drawRect(x, y, 25, 25); // This might need to be offset to the left a bit
+			g.drawRect(x + 4, y + 4, 25, 25); // This might need to be offset to the left a bit
+			curX = x;
+			curY = y;
 		}
 		g.drawRect(x, y, 32, 32); // farts.
 		if (containedItem != null) {
