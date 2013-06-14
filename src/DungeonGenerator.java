@@ -27,9 +27,9 @@ public class DungeonGenerator {
 			for (int y1 = y; y1 < (y + height); y1++) {
 				Tile tile;
 				if (x1 == x || y1 == y || x1 == (x + width) - 1 || y1 == (y + height) - 1) {
-					tile = new Tile(TileDictionary.getRandomWall(), x1, y1);
+					tile = new Tile(TileDictionary.getWallForTheme(), x1, y1);
 				} else {
-					tile = new Tile(TileDictionary.getRandomNonwall(), x1, y1);
+					tile = new Tile(TileDictionary.getFloorForTheme(), x1, y1);
 				}
 				tiles[x1][y1] = tile; 
 			}
@@ -107,7 +107,7 @@ public class DungeonGenerator {
 			
 			PathfindingTile tile = closedList.get(closedList.size() - 1); // Get last tile in path.
 			while (true) {
-				DungeonGenerator.placeTile(tiles, new Tile("Wood", tile.x, tile.y));
+				DungeonGenerator.placeTile(tiles, new Tile(TileDictionary.getFloorForTheme(), tile.x, tile.y));
 			//	if ((tile.x == x1 && tile.y == y1) || (tile.x == x2 && tile.y == y2)) { if (tile.parent == null) { break; } tile = tile.parent; continue; }
 				for (Direction dir : Direction.values()) {
 					Vector vec = Misc.getLocFromDir(tile.x, tile.y, dir);
@@ -115,7 +115,7 @@ public class DungeonGenerator {
 						Tile wall = tiles[vec.getX()][vec.getY()]; // Location of tobe wall, get tile there!
 						//if (wall.isReal() || tile.parent != null && (vec.getX() == tile.parent.x && vec.getY() == tile.parent.y)) { continue; }
 					} catch (ArrayIndexOutOfBoundsException ex) { continue; }
-					wallsToBe.add(new Tile("Stone", vec.getX(), vec.getY()));
+					wallsToBe.add(new Tile(TileDictionary.getWallForTheme(), vec.getX(), vec.getY()));
 					//DungeonGenerator.placeTile(tiles, new Tile(tileDictionary, "Stone", vec.getX(), vec.getY()));
 				}
 				if (tile.parent == null) { break; }
@@ -151,7 +151,7 @@ public class DungeonGenerator {
 	}
 	
 	public static void generateHallways(Tile[][] tiles, ArrayList<Room> rooms, int startPoint) {
-		if (startPoint > rooms.size() - 1) { System.out.println("Exceeded rooms!"); return; }
+		if (startPoint > rooms.size() - 1) { return; }
 		int count = 0;
 		for (int i = startPoint; i < rooms.size(); i++) {
 			if (count > 20) { rooms.get(i).delete(); count = 0; continue; }
@@ -172,7 +172,6 @@ public class DungeonGenerator {
 			if ((int) (Math.random() * 100) + 1 <= 90) { continue; }
 			for (int y = 0; y < tiles[0].length; y++) {
 				if (tiles[x][y] == null || tiles[x][y].getName().equalsIgnoreCase("") || tiles[x][y].isWall() || (int) (Math.random() * 100) + 1 <= 80) { continue; }
-			//	System.out.println("Placing player at: (" + x + ", " + y + ")");
 				ply.setMap(map);
 				ply.setTile(tiles[x][y]);
 				return;
@@ -243,7 +242,7 @@ public class DungeonGenerator {
 	public static GameMap generateDungeon(int w, int h, MobDictionary mobDictionary) {
 		DungeonGenerator.initMobDictionary(mobDictionary);
 		wallsToBe = new ArrayList<>();
-		GameMap empty = new GameMap(w, h, mobDictionary);
+		GameMap empty = new GameMap(w, h, TileDictionary.getDungeonLevel(), mobDictionary);
 		
 		Tile[][] tiles = new Tile[w][h];
 		for (int x = 0; x < w; x++) {

@@ -32,5 +32,6 @@ public class Main extends StateBasedGame {
 		this.addState(new ClassSelectState());
 		this.addState(new MainGameState());
 		this.addState(new HelpMenuState());
+		this.addState(new GameOverState());
 	}
 }

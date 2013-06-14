@@ -25,6 +25,7 @@ public class MainGameState extends BasicGameState {
 	private Camera cam;
 	private Inventory inventory;
 	private Log log;
+	private HUD hud;
 	public MobDictionary mobDictionary;
 
 	@Override
@@ -46,6 +47,7 @@ public class MainGameState extends BasicGameState {
 		curMap.draw(g, player, cam);
 		
 		log.draw(g, -cam.getX(), (-cam.getY()) + container.getHeight());
+		hud.draw(g, (-cam.getX()) + container.getWidth(), (-cam.getY()) + container.getHeight());
 		
 		//Overlay
 		
@@ -64,6 +66,10 @@ public class MainGameState extends BasicGameState {
 		player.update(container);
 		inventory.update(container);
 		log.update();
+		
+		if (player.isDead()) {
+			s.enterState(5);
+		}
 
 		container.getInput().clearKeyPressedRecord();
 	}
@@ -73,21 +79,31 @@ public class MainGameState extends BasicGameState {
 		return 4;
 	}
 	
+	public void restart() {
+		levels.clear();
+		setLevel(genNewLevel());
+		DungeonGenerator.placePlayerInFeasibleLocation(curMap, player);
+	}
+	
 	public int genNewLevel() {
-		System.out.println("Generating dungeon!");
 		levels.add(DungeonGenerator.generateDungeon(Misc.DUNGEON_SIZE, Misc.DUNGEON_SIZE, mobDictionary));
 		return levels.size() - 1;
 	}
 	
 	public GameMap setLevel (int l) {
-		System.out.println("setting level to: " + l);
 		if (l < 0 || l > levels.size()) { return null; }
 		curMap = levels.get(l);
+		TileDictionary.setDungeonLevel(l + 1);
 		return curMap;
+	}
+	
+	public Player getPlayer() {
+		return player;
 	}
 
 	public void setPlayer(SpriteSheet sprite, JsonObject data) {
 		player = new Player(sprite, data, log, this);
+		hud = new HUD(player);
 		inventory = new Inventory(player);
 		cam = new Camera(player, curMap);
 		DungeonGenerator.placePlayerInFeasibleLocation(curMap, player);

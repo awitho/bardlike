@@ -62,19 +62,25 @@ public class Player extends Entity {
 		ArrayList<Entity> foundLadders = tile.findType(DownLadder.class);
 		if (foundLadders != null) {
 			DungeonGenerator.placePlayerInFeasibleLocation(mgs.setLevel(mgs.genNewLevel()), this);
+			return;
 		}
+		
+		getMap().update(mgs);
 		
 		ArrayList<Entity> foundMobs = tile.findType(Mob.class);
 		Mob mob = null;
 		if (foundMobs != null) {
 			mob = (Mob) foundMobs.get(0);
-			mob.use(this, stats.get("str")*2);
+			mob.use(this, stats.get("str"));
 		}
-
-		getMap().update(mgs);
-		if (mob != null && !mob.isDead()) { return; }
-		if (!dead)
-			setTile(tile);
+		
+		if (!dead) {
+			if (mob != null && !mob.isDead()) {} else {
+				setTile(tile);
+			}
+		}
+		
+		getMap().updateAttacks();
 		
 		ArrayList<Entity> foundItems = tile.findType(Item.class);
 		if (foundItems != null) { 
@@ -238,13 +244,12 @@ public class Player extends Entity {
 			this.move(Direction.UP);
 		}
 		if (container.getInput().isKeyPressed(Input.KEY_SPACE)) {
-			DungeonGenerator.placePlayerInFeasibleLocation(getMap(), this);
+			//DungeonGenerator.placePlayerInFeasibleLocation(getMap(), this);
+			getMap().update(mgs);
 		}
-		if (container.getInput().isKeyPressed(Input.KEY_R)) {
-			revive();
-			getMap().regen();
-			DungeonGenerator.placePlayerInFeasibleLocation(getMap(), this);
-		}
+	//	if (container.getInput().isKeyPressed(Input.KEY_V)) {
+	//		DungeonGenerator.placePlayerInFeasibleLocation(mgs.setLevel(mgs.genNewLevel()), this);
+	//	}
 	}
 	
 	public void draw(Graphics g, int x, int y) {

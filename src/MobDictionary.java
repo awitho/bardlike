@@ -43,8 +43,6 @@ public class MobDictionary {
 				tempStats.put(ele.getKey(), ele.getValue().getAsInt());
 			}
 			stats.put(mob.get("name").getAsString(), tempStats);
-			
-			System.out.println(stats);
 		}
 	}
 	

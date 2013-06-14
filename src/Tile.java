@@ -61,12 +61,10 @@ public class Tile {
 
 	public void addEnt(Entity ent) {
 		if (getName().equalsIgnoreCase("Empty"))  { return; }
-		//System.out.println("Tile.addEnt: Attempting to add ent: " + ent + " to " + this);
 		containedEnts.add(ent);
 	}
 
 	public void removeEnt(Entity ent) {
-		//System.out.println("Tile.addEnt: Attempting to remove ent: " + ent + " from " + this);
 		containedEnts.remove(ent);
 	}
 
@@ -96,9 +94,9 @@ public class Tile {
 	}
 	
 	public ArrayList<Entity> findType(Class<?> cls) {
-		ArrayList<Entity> foundEnts = new ArrayList<Entity>();
+		ArrayList<Entity> foundEnts = new ArrayList<>();
 		for (int i = 0; i < containedEnts.size(); i++) {
-			if (cls == containedEnts.get(i).getClass()) {
+			if (cls.isAssignableFrom(containedEnts.get(i).getClass())) {
 				foundEnts.add(containedEnts.get(i));
 			}
 		}
@@ -121,6 +119,12 @@ public class Tile {
 	public void update(MainGameState mgs) {
 		for (int i = 0; i < containedEnts.size(); i++) {
 			containedEnts.get(i).update(mgs);
+		}
+	}
+	
+	public void updateAttacks() {
+		for (int i = 0; i < containedEnts.size(); i++) {
+			containedEnts.get(i).updateAttacks();
 		}
 	}
 	

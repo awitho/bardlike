@@ -167,6 +167,7 @@ public class Misc {
 				
 				openList.remove(curLookingTile); // Add starting tile to closed list.
 				closedList.add(curLookingTile);
+				//System.out.println("Added: " + curLookingTile + " to closedList");
 				
 				int lowest = 0;
 				for (int i = 0; i < openList.size(); i++) { // Find lowest cost tile. (Will pick last tile if some are the same.)
@@ -176,9 +177,10 @@ public class Misc {
 				}
 				
 				curLookingTile = openList.get(lowest); // Set new tile to starting point, remove from open, add to closed.
-				closedList.add(curLookingTile);
+				//closedList.add(curLookingTile);
+				//System.out.println("Added: " + curLookingTile + " to closedList");
 				openList.remove(lowest);
             }
-			return openList;
+			return closedList;
 	}
 }

@@ -9,7 +9,7 @@ public class Mob extends Entity {
 	private static final int EXP_MULT = 5;
 	private HashMap<String, Integer> stats = new HashMap<>();
 	private String name;
-	private boolean dead = false;
+	private boolean dead, moved = false;
         
 	public Mob(MobDictionary mobDictionary, String name) {
 		super(mobDictionary.getMobImage(name));
@@ -54,9 +54,35 @@ public class Mob extends Entity {
 		dead = true;
 		setTile(null);
 	}
+	
+	public void setMoved(boolean bool) {
+		moved = bool;
+	}
         
 	@Override
 	public void update(MainGameState mgs) {
+		if (moved) { return; }
+		if ((Math.abs(getTile().getX() - mgs.getPlayer().getTile().getX()) + Math.abs(getTile().getY() - mgs.getPlayer().getTile().getY())) <= 8) {
+			ArrayList<PathfindingTile> tiles = Misc.pathfindTo(getMap(), getTile().getX(), getTile().getY(), mgs.getPlayer().getTile().getX(), mgs.getPlayer().getTile().getY());
+			if (tiles == null || tiles.size() == 1) { return; }
+			PathfindingTile tile = tiles.get(tiles.size() - 1); // Get last tile in path.
+			while (true) {
+				if (tile.parent.parent == null) {
+					Tile tile2 = getMap().getTile(tile.x, tile.y);
+					ArrayList<Entity> ents = tile2.findType(Player.class);
+					ArrayList<Entity> ents2 = tile2.findType(Mob.class);
+					if (ents != null || ents2 != null) { break; }
+					setTile(tile2);
+					moved = true;
+					break;
+				}
+				tile = tile.parent; // This causes us to iterate backwards until we reach the root tile!
+			}
+		}
+	}
+
+	@Override
+	public void updateAttacks() {
 		for (Direction dir : Direction.values()) {
 			Vector vec = Misc.getLocFromDir(getTile().getX(), getTile().getY(), dir);
 			Tile tile = getMap().getTile(vec.getX(), vec.getY());

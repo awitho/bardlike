@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import org.newdawn.slick.Graphics;
 
 /**
@@ -8,13 +9,14 @@ import org.newdawn.slick.Graphics;
  */
 public class GameMap {
 	private MobDictionary mobDictionary;
-	private int width, height;
+	private int width, height, level;
 	private Tile[][] tiles;
 
-	public GameMap(int w, int h, MobDictionary mobDictionary) {
+	public GameMap(int w, int h, int level, MobDictionary mobDictionary) {
 		this.mobDictionary = mobDictionary;
 		width = w;
 		height = h;
+		this.level = level;
 	}
 
 	public void draw(Graphics g, Player ply, Camera cam) {
@@ -34,6 +36,29 @@ public class GameMap {
 				Tile tile = tiles[x][y];
 				if (tile != null) {
 					tile.update(mgs);
+				}
+			}
+		}
+		for (int x = 0; x < tiles.length; x++) {
+			for (int y = 0; y < tiles[0].length; y++) {
+				Tile tile = tiles[x][y];
+				if (tile != null) {
+					ArrayList<Entity> mobs = tile.findType(Mob.class);
+					if (mobs != null) { 
+						Mob mob = (Mob) mobs.get(0);
+						mob.setMoved(false);
+					}
+				}
+			}
+		}
+	}
+	
+	public void updateAttacks() {
+		for (int x = 0; x < tiles.length; x++) {
+			for (int y = 0; y < tiles[0].length; y++) {
+				Tile tile = tiles[x][y];
+				if (tile != null) {
+					tile.updateAttacks();
 				}
 			}
 		}
@@ -62,5 +87,9 @@ public class GameMap {
 	
 	public void regen() {
 		tiles = DungeonGenerator.generateDungeon(Misc.DUNGEON_SIZE, Misc.DUNGEON_SIZE, mobDictionary).getTiles().clone();
+	}
+	
+	public String toString() {
+		return "(GameMap | level: " + level + ")";
 	}
 }
