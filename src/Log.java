@@ -45,6 +45,10 @@ public class Log implements Menu {
 		black = new Color(0, 0, 0, 255);
 	}
 	
+	public void clear() {
+		lines.clear();
+	}
+	
 	@Override
 	public void draw(Graphics g) {
 		draw(g, 0, 0);

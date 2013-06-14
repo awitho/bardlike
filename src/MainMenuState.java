@@ -57,7 +57,8 @@ public class MainMenuState extends BasicGameState {
 		g.setFont(font);
 		g.setColor(Color.white);
 		g.drawString(menu, container.getWidth()/2 - (font.getWidth(menu))/2, 
-				titleImg.getHeight() + 50);
+				titleImg.getHeight() + (container.getHeight()/2 - 
+				titleImg.getHeight()/2));
 	}
 
 	@Override

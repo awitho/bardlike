@@ -63,7 +63,7 @@ public class Player extends Entity {
 		//System.out.println("Player.move: Attempting to move in dir: " + dir);
 		Vector vec = Misc.getLocFromDir(curTile.getX(), curTile.getY(), dir);
 		Tile tile = getMap().getTile(vec.getX(), vec.getY());
-		if (tile == null) { return; }
+		if (tile == null || tile.isWall()) { return; }
 		
 		ArrayList<Entity> foundLadders = tile.findType(DownLadder.class);
 		if (foundLadders != null) {
@@ -165,14 +165,35 @@ public class Player extends Entity {
 		inventoryItems.remove(i);
 	}
 	
-	public void equipItem(Item i) {
-		equippedItems.add(i);
+	public void equipItem(Item item) {
+		equippedItems.add(item);
+		updateBonuses();
 	}
 	
 	public void unequipItem(Item i) {
 		if(i == null) { return; }
 		equippedItems.remove(i);
 		inventoryItems.add(i);
+		updateBonuses();
+	}
+        
+	public void updateBonuses() {
+		bonuses.put("end", 0);
+		bonuses.put("agi", 0);
+		bonuses.put("int", 0);
+		bonuses.put("dex", 0);
+		bonuses.put("str", 0);
+		for (int i = 0; i < equippedItems.size(); i++) {
+			for (Entry<String, Integer> ele : getEquippedItems().get(i).getStats().entrySet()) {
+				System.out.println(ele);
+				bonuses.put(ele.getKey(), ele.getValue() + bonuses.get(ele.getKey()));
+			}
+		}
+	}
+	
+	public void clearInventory() {
+		equippedItems.clear();
+		inventoryItems.clear();
 	}
 	
 	public int getEquipLoc() {
@@ -208,6 +229,10 @@ public class Player extends Entity {
 			log.append(ele.getKey() + " went up to " + ele.getValue());
 		}
 		stats.put("curhp", getStat("end") * 10);
+	}
+	
+	public void setLevel(int level) {
+		stats.put("level", 0);
 	}
 	
 	public int getLevel() {
@@ -257,27 +282,6 @@ public class Player extends Entity {
 	//	if (container.getInput().isKeyPressed(Input.KEY_V)) {
 	//		DungeonGenerator.placePlayerInFeasibleLocation(mgs.setLevel(mgs.genNewLevel()), this);
 	//	}
-		for (int i = 0; i < getEquippedItems().size(); i++) {
-			int strength = 0;
-			int agility = 0;
-			int dexterity = 0;
-			int intelligence = 0;
-			int endurance = 0;
-			
-			for(int j = 0; j < getEquippedItems().get(i).getStats().size(); j++) {
-				endurance += getEquippedItems().get(i).getStats().get("end");
-				agility += getEquippedItems().get(i).getStats().get("agi");
-				intelligence += getEquippedItems().get(i).getStats().get("int");
-				dexterity += getEquippedItems().get(i).getStats().get("dex");
-				endurance += getEquippedItems().get(i).getStats().get("str");
-			}
-			
-			bonuses.put("end", endurance);
-			bonuses.put("agi", agility);
-			bonuses.put("int", intelligence);
-			bonuses.put("dex", dexterity);
-			bonuses.put("str", strength);
-		}
 	}
 	
 	public void draw(Graphics g, int x, int y) {

@@ -32,7 +32,6 @@ public class ItemDictionary {
 					32, 32);
 			for(int i = 0; i < items.size(); i++) {
 				curItem = items.get(i).getAsJsonObject();
-				System.out.println(curItem);
 				itemTypes.put(curItem.get("name").getAsString(), 
 						ItemType.valueOf(curItem.get("type").getAsString()));
 				itemImages.put(curItem.get("name").getAsString(),

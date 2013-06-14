@@ -41,8 +41,8 @@ public class GameOverState extends BasicGameState {
 				throws SlickException {
 		if (gc.getInput().isKeyPressed(Input.KEY_R)) {
 			MainGameState s = (MainGameState) sbg.getState(4);
-			s.getPlayer().revive();
 			s.restart();
+			s.getPlayer().revive();
 			sbg.enterState(4);
 		}
 	}

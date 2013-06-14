@@ -34,7 +34,6 @@ public class TileDictionary {
 				TileDictionary.themesWalls.put(Integer.parseInt(ele.getKey()), ele.getValue().getAsJsonObject().get("walls").getAsString());
 				TileDictionary.themesFloors.put(Integer.parseInt(ele.getKey()), ele.getValue().getAsJsonObject().get("floors").getAsString());
 			}
-			System.out.println(themes + ", " + themesWalls);
 			for (int i = 0; i < tiles.size(); i++) {
 				JsonObject tile = tiles.get(i).getAsJsonObject();
 				imgs.put(tile.get("name").getAsString(), sprites.getSubImage(tile.get("sx").getAsInt(), tile.get("sy").getAsInt()).getScaledCopy(Misc.TARGET_SIZE, Misc.TARGET_SIZE));
@@ -50,7 +49,6 @@ public class TileDictionary {
 			walls.put("Empty", true);
 		} catch (Exception e) {
 			Misc.showDialog(e);
-			System.out.println(themesWalls + ", " + themesFloors);
 			return;
 		}
 	}
@@ -80,7 +78,6 @@ public class TileDictionary {
 	public static String getWallForTheme() {
 		for (Entry<Integer, String> ele : themesWalls.entrySet()) {
 			if (dungeonLevel < ele.getKey()) { continue; }
-			System.out.println(ele.getKey() + ", " + dungeonLevel);
 			return ele.getValue();
 		}
 		return "Stone";

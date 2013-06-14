@@ -21,7 +21,6 @@ public class Item extends Entity {
 		this.id = name;
 		this.type = ItemDictionary.getType(name);
 		this.weaponType = ItemDictionary.getWeaponType(name);
-		System.out.println(name + ", " + type + ", " + weaponType);
 		if ((int) (Math.random() * 100) <=45) {
 			if (weaponType != null) {
 				this.name = NameGenerator.generateName(weaponType.toString());
