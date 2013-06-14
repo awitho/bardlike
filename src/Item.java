@@ -19,7 +19,8 @@ public class Item extends Entity {
 		super(ItemDictionary.getImage(name));
 		this.id = name;
 		this.type = ItemDictionary.getType(name);
-		if ((int) (Math.random() * 100) <= 10) {
+		System.out.println("Item type: " +type);
+		if ((int) (Math.random() * 100) <=45) {
 			this.name = NameGenerator.generateName(type);
 		}
 		for (Map.Entry<String, JsonElement> ele : ItemDictionary.getStats(name).entrySet()) {
@@ -39,8 +40,8 @@ public class Item extends Entity {
 		return this.name != null;
 	}
 	
-	public ItemDictionary getDict() {
-		return itemDictionary;
+	public ItemType getType() {
+		return type;
 	}
 	
 	@Override
