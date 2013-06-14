@@ -20,12 +20,16 @@ public class GameOverState extends BasicGameState {
 	}
 
 	@Override
-	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {}
+ public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {}
 
 	@Override
-	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
+	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
+			throws SlickException {
 		g.drawImage(backImg, 0, 0);
-		g.drawString("Game over: Press R to restart.", gc.getWidth() / 2 - (g.getFont().getWidth("Game over: Press R to restart.") / 2), gc.getHeight() / 2 - (g.getFont().getHeight("Game over: Press R to restart.") / 2));
+		g.drawString("Game over: Press R to restart.", gc.getWidth() / 2 - 
+					(g.getFont().getWidth("Game over: Press R to restart.") / 2)
+					,gc.getHeight() / 2 - 
+				(g.getFont().getHeight("Game over: Press R to restart.") / 2));
 	}
 	
 	public void setBackImg(Image img) {
@@ -33,7 +37,8 @@ public class GameOverState extends BasicGameState {
 	}
 
 	@Override
-	public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
+	public void update(GameContainer gc, StateBasedGame sbg, int i) 
+				throws SlickException {
 		if (gc.getInput().isKeyPressed(Input.KEY_R)) {
 			MainGameState s = (MainGameState) sbg.getState(4);
 			s.getPlayer().revive();

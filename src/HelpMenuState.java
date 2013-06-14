@@ -19,24 +19,28 @@ public class HelpMenuState extends BasicGameState {
 	private Image backImg;
 
 	@Override
-	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
+	public void init(GameContainer gc, StateBasedGame sbg)
+					throws SlickException {
 		help = new GameConfig("loc/help_en.json").getArray();
 	}
 
 	@Override
-	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
+	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
+					throws SlickException {
 		g.drawImage(backImg, 0, 0);
 		g.setColor(Color.white);
 		g.setFont(MainMenuState.font);
 		int y = 50;
 		for (int i = 0; i < help.size(); i++) {
-			g.drawString(help.get(i).getAsString(), gc.getWidth()/2 - MainMenuState.font.getWidth(help.get(i).getAsString())/2, y);
+			g.drawString(help.get(i).getAsString(), gc.getWidth()/2 - 
+				 MainMenuState.font.getWidth(help.get(i).getAsString())/2, y);
 			y += MainMenuState.font.getHeight(help.get(i).getAsString());
 		}
 	}
 
 	@Override
-	public void update(GameContainer gc, StateBasedGame s, int i) throws SlickException {
+	public void update(GameContainer gc, StateBasedGame s, int i) 
+			throws SlickException {
 		if(gc.getInput().isKeyPressed(Input.KEY_ESCAPE)) {
 			s.enterState(1); // Jump to main menu!
 		}

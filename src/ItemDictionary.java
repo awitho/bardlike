@@ -5,6 +5,7 @@ import org.newdawn.slick.SpriteSheet;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import java.util.Map.Entry;
+import org.newdawn.slick.SlickException;
 
 /**
  * A class to handle items.
@@ -15,7 +16,7 @@ import java.util.Map.Entry;
 public class ItemDictionary {
 	private static HashMap<String, Image> itemImages;
 	private static HashMap<String, ItemType> itemTypes;
-//	private static HashMap<String, WeaponType> weaponTypes;
+	private static HashMap<String, WeaponType> weaponTypes;
 	private static HashMap<Integer, HashMap<String, Image>> scaledImages;
 	private static JsonArray items;
 	private static JsonObject curItem;
@@ -24,18 +25,28 @@ public class ItemDictionary {
 		itemImages = new HashMap<>();
 		scaledImages = new HashMap<>();
 		itemTypes = new HashMap<>();
-	//	weaponTypes = new HashMap<>();
+		weaponTypes = new HashMap<>();
 		try {
 			items = new GameConfig("items.json").getArray();
-			SpriteSheet itemSprites = new SpriteSheet("./gfx/ents/items.png", 32, 32);
+			SpriteSheet itemSprites = new SpriteSheet("./gfx/ents/items.png",
+					32, 32);
 			for(int i = 0; i < items.size(); i++) {
 				curItem = items.get(i).getAsJsonObject();
-				itemTypes.put(curItem.get("name").getAsString(), ItemType.valueOf(curItem.get("type").getAsString()));
-				itemImages.put(curItem.get("name").getAsString(), itemSprites.getSubImage(curItem.get("sx").getAsInt(), curItem.get("sy").getAsInt()).getScaledCopy(Misc.TARGET_SIZE, Misc.TARGET_SIZE));
-				//String wepType = curItem.get("type2").getAsString();
-			//	if(wepType != null) {
-				//	weaponTypes.put(curItem.get("name").getAsString(), WeaponType.valueOf(wepType));
-				//}
+				System.out.println(curItem);
+				itemTypes.put(curItem.get("name").getAsString(), 
+						ItemType.valueOf(curItem.get("type").getAsString()));
+				itemImages.put(curItem.get("name").getAsString(),
+						itemSprites.getSubImage(curItem.get("sx").getAsInt(),
+						curItem.get("sy").getAsInt())
+							.getScaledCopy(Misc.TARGET_SIZE, Misc.TARGET_SIZE));
+				String wepType;
+				try {
+					wepType = curItem.get("type2").getAsString();
+				} catch (NullPointerException ex) { continue; }
+				if(wepType != null) {
+					weaponTypes.put(curItem.get("name").getAsString(), 
+							WeaponType.valueOf(wepType));
+				}
 			}
 		} catch (Exception e) {
 			Misc.showDialog(e);
@@ -47,9 +58,9 @@ public class ItemDictionary {
 		return itemTypes.get(name);
 	}
 	
-	//public static WeaponType getWeaponType(String name) {
-	//	return weaponTypes.get(name);
-	//}
+	public static WeaponType getWeaponType(String name) {
+		return weaponTypes.get(name);
+	}
 	
 	public static void scaleImages(int i) {
 		HashMap<String, Image> imgs = new HashMap<>();
@@ -88,11 +99,7 @@ public class ItemDictionary {
 	}
 	
 	public static Item getRandomItem() {
-		return new Item(items.get((int) (Math.random() * items.size())).getAsJsonObject().get("name").getAsString());
-		//for (int i = 0; i < items.size(); i++) {
-		//	if (items.get(i) == null || (int) (Math.random() * items.size()) - 1 == 0) { continue; }
-		//	return new Item(items.get(i).getAsJsonObject().get("name").getAsString());
-		//}
-		//return null;
+		return new Item(items.get((int) (Math.random() * 
+				items.size())).getAsJsonObject().get("name").getAsString());
 	}
 }

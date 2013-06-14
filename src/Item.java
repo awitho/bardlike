@@ -13,17 +13,24 @@ public class Item extends Entity {
 	private String id;
 	private String name;
     private ItemType type;
+	private WeaponType weaponType;
 	private HashMap<String, Integer> stats = new HashMap<>();
 	
 	public Item(String name) {
 		super(ItemDictionary.getImage(name));
 		this.id = name;
 		this.type = ItemDictionary.getType(name);
-		System.out.println("Item type: " +type);
+		this.weaponType = ItemDictionary.getWeaponType(name);
+		System.out.println(name + ", " + type + ", " + weaponType);
 		if ((int) (Math.random() * 100) <=45) {
-			this.name = NameGenerator.generateName(type);
+			if (weaponType != null) {
+				this.name = NameGenerator.generateName(weaponType.toString());
+			} else {
+				this.name = NameGenerator.generateName(type.toString());
+			}
 		}
-		for (Map.Entry<String, JsonElement> ele : ItemDictionary.getStats(name).entrySet()) {
+		for (Map.Entry<String, JsonElement> ele : ItemDictionary.getStats(name)
+					.entrySet()) {
 			stats.put(ele.getKey(), ele.getValue().getAsInt());
 		}
 	}
@@ -36,6 +43,10 @@ public class Item extends Entity {
 		return name != null ? name : id;
 	}
 	
+	public HashMap<String, Integer> getStats() {
+		return stats;
+	}
+	
 	public boolean isNamed() {
 		return this.name != null;
 	}
@@ -46,6 +57,7 @@ public class Item extends Entity {
 	
 	@Override
 	public String toString() {
-		return "(Item | name: " + getName() + ", stats: " + stats + ", image: " + getImage() + ", type: " + type + ")";
+		return "(Item | name: " + getName() + ", stats: " + stats + ", image: "
+				+ getImage() + ", type: " + type + ")";
 	}
 }

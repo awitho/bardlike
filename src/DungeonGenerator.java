@@ -16,7 +16,6 @@ public class DungeonGenerator {
 	}
 	
 	public static Room generateRoom(Tile[][] tiles, int x, int y, int width, int height) {
-		//if (height > tiles.size()) { return; }
 		if (x + width > tiles.length || y + height > tiles[0].length) { return null; }
 		for (int x1 = x; x1 < (x + width); x1++) {
 			for (int y1 = y; y1 < (y + height); y1++) {
@@ -81,8 +80,6 @@ public class DungeonGenerator {
 					} else {
 						h = 14.0 * xDistance + 10.0 * (yDistance-xDistance);
 					}
-					
-					//double h = 10 * (Math.abs(vec.getX() - x2) + Math.abs(vec.getY() - y2)); // Manhattan Huerisitic
 
 					openList.add(new PathfindingTile(curLookingTile, vec.getX(), vec.getY(), g + h, g, h));
 					added++;
@@ -108,15 +105,12 @@ public class DungeonGenerator {
 			PathfindingTile tile = closedList.get(closedList.size() - 1); // Get last tile in path.
 			while (true) {
 				DungeonGenerator.placeTile(tiles, new Tile(TileDictionary.getFloorForTheme(), tile.x, tile.y));
-			//	if ((tile.x == x1 && tile.y == y1) || (tile.x == x2 && tile.y == y2)) { if (tile.parent == null) { break; } tile = tile.parent; continue; }
 				for (Direction dir : Direction.values()) {
 					Vector vec = Misc.getLocFromDir(tile.x, tile.y, dir);
 					try {
 						Tile wall = tiles[vec.getX()][vec.getY()]; // Location of tobe wall, get tile there!
-						//if (wall.isReal() || tile.parent != null && (vec.getX() == tile.parent.x && vec.getY() == tile.parent.y)) { continue; }
 					} catch (ArrayIndexOutOfBoundsException ex) { continue; }
 					wallsToBe.add(new Tile(TileDictionary.getWallForTheme(), vec.getX(), vec.getY()));
-					//DungeonGenerator.placeTile(tiles, new Tile(tileDictionary, "Stone", vec.getX(), vec.getY()));
 				}
 				if (tile.parent == null) { break; }
 				tile = tile.parent; // This causes us to iterate backwards until we reach the root tile!
@@ -187,7 +181,6 @@ public class DungeonGenerator {
 	public static void placeItems(Tile[][] tiles, int w, int h, GameMap map) {
 		for (int x = 0; x < w; x++) {
 			for (int y = 0; y < h; y++) {
-				//calculate random shit and if equals other random shit place random item
 				if((int) (Math.random() * 100) + 1 <= 1) {
 					Item item = ItemDictionary.getRandomItem();
 					if (item == null || !tiles[x][y].isReal() || tiles[x][y].isWall()) { continue; }
@@ -220,7 +213,6 @@ public class DungeonGenerator {
 	public static void placeMobs(Tile[][] tiles, int w, int h, GameMap map) {
 		for (int x = 0; x < w; x++) {
 			for (int y = 0; y < h; y++) {
-				//calculate random shit and if equals other random shit place random item
 				if((int) (Math.random() * 100) + 1 <= 4) {
 					Mob mob = mobDictionary.getRandomMob();
 					if (mob == null || !tiles[x][y].isReal() || tiles[x][y].isWall() || (int) (Math.random() * 100) >= mob.getSpawnChance()) { continue; }
@@ -235,7 +227,6 @@ public class DungeonGenerator {
 	
 	public static void placeTile(Tile[][] tiles, Tile tile) {
 			if (tile.getX() < 0 || tile.getY() < 0 || tile.getName().trim().equalsIgnoreCase("") || tile.getX() >= tiles.length || tile.getY() >= tiles[0].length) { return; }
-			// System.out.println("DungeonGenerator.placeTile: Placing tile at " + tile.getX() + ", " + tile.getY());
 			tiles[tile.getX()][tile.getY()] = tile;
 	}
 
@@ -256,15 +247,6 @@ public class DungeonGenerator {
 		generateRooms(tiles, rooms);
 		generateHallways(tiles, rooms);
 		generateHallwayWalls(tiles);
-
-		//Fill map
-		//generateRoom(tiles, 0, 0, tiles.length, tiles.length);
-		
-		//Debug layout
-		//generateRoom(tiles, 0, 0, 10, 10);
-		//generateRoom(tiles, 11, 1, 5, 5);
-		//generateRoom(tiles, 10, 7, 3, 5);
-		//generateHallway(tiles, 1, 9, 13, 1);
 		
 		placeItems(tiles, w, h, empty);
 		placeMobs(tiles, w, h, empty);

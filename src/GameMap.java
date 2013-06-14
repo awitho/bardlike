@@ -30,7 +30,7 @@ public class GameMap {
 		}
 	}
 	
-	public void update(MainGameState mgs) {
+	public void update(MainGameState mgs) { // This is where all the mobs move
 		for (int x = 0; x < tiles.length; x++) {
 			for (int y = 0; y < tiles[0].length; y++) {
 				Tile tile = tiles[x][y];
@@ -53,7 +53,7 @@ public class GameMap {
 		}
 	}
 	
-	public void updateAttacks() {
+	public void updateAttacks() { // This is where all the mobs attack.
 		for (int x = 0; x < tiles.length; x++) {
 			for (int y = 0; y < tiles[0].length; y++) {
 				Tile tile = tiles[x][y];
@@ -65,7 +65,9 @@ public class GameMap {
 	}
 		
 	public Tile getTile(int x, int y) {
-		if (x < 0 || y < 0 || x >= tiles.length || y >= tiles[0].length) { return null; }
+		if (x < 0 || y < 0 || x >= tiles.length || y >= tiles[0].length) {
+			return null;
+		}
 		return tiles[x][y];
 	}
 	
@@ -86,7 +88,8 @@ public class GameMap {
 	}
 	
 	public void regen() {
-		tiles = DungeonGenerator.generateDungeon(Misc.DUNGEON_SIZE, Misc.DUNGEON_SIZE, mobDictionary).getTiles().clone();
+		tiles = DungeonGenerator.generateDungeon(Misc.DUNGEON_SIZE,
+				Misc.DUNGEON_SIZE, mobDictionary).getTiles().clone();
 	}
 	
 	public String toString() {

@@ -35,18 +35,24 @@ public class ClassSelectState extends BasicGameState {
 
 		for(int i = 0; i < classes.size(); i++) {
 			JsonObject character = classes.get(i).getAsJsonObject();
-			charSprite.add(classSprites.getSubImage(character.get("sx").getAsInt(), character.get("sy").getAsInt()));
-			charNames.add("(" + character.get("hotkey").getAsString() + ")" + character.get("name").getAsString().substring(1));
+			charSprite.add(classSprites.getSubImage(character.get("sx")
+					.getAsInt(), character.get("sy").getAsInt()));
+			charNames.add("(" + character.get("hotkey").getAsString() + ")" 
+					+ character.get("name").getAsString().substring(1));
 		}
 	}
 
 	@Override
-	public void render(GameContainer container, StateBasedGame s, Graphics g) throws SlickException {
+	public void render(GameContainer container, StateBasedGame s, Graphics g) 
+			throws SlickException {
 		if (loading) {
-			g.drawString("Loading...", container.getWidth()/2 - g.getFont().getWidth("Loading...")/2, container.getHeight()/2 - g.getFont().getHeight("Loading...")/2);
+			g.drawString("Loading...", container.getWidth()/2 - g.getFont()
+					.getWidth("Loading...")/2, container.getHeight()/2
+					- g.getFont().getHeight("Loading...")/2);
 			return;
 		}
-		g.drawString("Choose Your Character!", container.getWidth()/2 - 100, 50);
+		g.drawString("Choose Your Character!", container.getWidth()/2 - 
+				100, 50);
 		int locY = container.getHeight() / 2 - 130;
 		for(int i = 0; i < charSprite.size(); i++) {
 			g.drawImage(charSprite.get(i), container.getWidth() / 2 + 50, locY);
@@ -56,7 +62,8 @@ public class ClassSelectState extends BasicGameState {
 	}
 
 	@Override
-	public void update(GameContainer container, StateBasedGame s, int delta) throws SlickException {
+	public void update(GameContainer container, StateBasedGame s, int delta)
+			throws SlickException {
 		if (loading) { return; }
 		//add buttons eventually.
 		MainGameState main = (MainGameState) s.getState(4);
@@ -93,13 +100,15 @@ public class ClassSelectState extends BasicGameState {
 		private ClassSelectState css;
 		private StateBasedGame s;
 		
-		public LevelLoader(StateBasedGame s, ClassSelectState css, MainGameState state) {
+		public LevelLoader(StateBasedGame s, ClassSelectState css, 
+				MainGameState state) {
 			this.state = state;
 			this.css = css;
 			this.s = s;
 		}
 		
 		public void run() {
+			state.clearMaps();
 			state.setLevel(state.genNewLevel());
 			css.finishLoading(state, s);
 		}

@@ -31,11 +31,20 @@ public class Entity {
 	public void updateAttacks() {}
 
 	public void setTile(Tile tile) {
-		if (curTile != null) { getTile().removeEnt(this); } // Remove from old tile, if we had a last tile.
-		if (tile == null) { curTile = tile; visible = false; return; } else { visible = true; } // Make sure entity is visible, now that we are on a tile!
+		if (curTile != null) { getTile().removeEnt(this); } 
+						// Remove from old tile, if we had a last tile.
+		if (tile == null) {
+			curTile = tile;
+			visible = false;
+			return;
+		} else {
+			visible = true;
+		} // Make sure entity is visible, now that we are on a tile!
+		
 		curTile = tile; // Set our current tile.
 		tile.addEnt(this); // Add to new tile.
-		x = tile.getX() * Misc.TARGET_SIZE; // Translate from tile index, to actual world coords.
+		x = tile.getX() * Misc.TARGET_SIZE; // Translate from tile index,
+												//to actual world coords.
 		y = tile.getY() * Misc.TARGET_SIZE;
 	}
 

@@ -47,6 +47,11 @@ public class Player extends Entity {
 		}
 		stats.put("xp", 0);
 		stats.put("level", 1);
+		bonuses.put("end", 0);
+		bonuses.put("agi", 0);
+		bonuses.put("int", 0);
+		bonuses.put("dex", 0);
+		bonuses.put("str", 0);
 		revive();
 		//addItem(new Item(new ItemDictionary(), getMap(), "Leather Helmet"));
 	}
@@ -72,7 +77,7 @@ public class Player extends Entity {
 		Mob mob = null;
 		if (foundMobs != null) {
 			mob = (Mob) foundMobs.get(0);
-			mob.use(this, stats.get("str"));
+			mob.use(this, getStat("str"));
 		}
 		
 		if (!dead) {
@@ -183,7 +188,7 @@ public class Player extends Entity {
 	}
 	
 	public int getStat(String stat) {
-		return stats.get(stat);
+		return stats.get(stat) + bonuses.get(stat);
 	}
 	
 	public HashMap getStats() {
@@ -202,7 +207,7 @@ public class Player extends Entity {
 			}
 			log.append(ele.getKey() + " went up to " + ele.getValue());
 		}
-		stats.put("curhp", stats.get("end") * 10);
+		stats.put("curhp", getStat("end") * 10);
 	}
 	
 	public int getLevel() {
@@ -252,6 +257,27 @@ public class Player extends Entity {
 	//	if (container.getInput().isKeyPressed(Input.KEY_V)) {
 	//		DungeonGenerator.placePlayerInFeasibleLocation(mgs.setLevel(mgs.genNewLevel()), this);
 	//	}
+		for (int i = 0; i < getEquippedItems().size(); i++) {
+			int strength = 0;
+			int agility = 0;
+			int dexterity = 0;
+			int intelligence = 0;
+			int endurance = 0;
+			
+			for(int j = 0; j < getEquippedItems().get(i).getStats().size(); j++) {
+				endurance += getEquippedItems().get(i).getStats().get("end");
+				agility += getEquippedItems().get(i).getStats().get("agi");
+				intelligence += getEquippedItems().get(i).getStats().get("int");
+				dexterity += getEquippedItems().get(i).getStats().get("dex");
+				endurance += getEquippedItems().get(i).getStats().get("str");
+			}
+			
+			bonuses.put("end", endurance);
+			bonuses.put("agi", agility);
+			bonuses.put("int", intelligence);
+			bonuses.put("dex", dexterity);
+			bonuses.put("str", strength);
+		}
 	}
 	
 	public void draw(Graphics g, int x, int y) {

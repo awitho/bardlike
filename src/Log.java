@@ -17,7 +17,8 @@ import org.newdawn.slick.TrueTypeFont;
  * @author Alex
  */
 public class Log implements Menu {
-	public static TrueTypeFont LOG_FONT = new TrueTypeFont(new java.awt.Font("Arial", 1, 12), true);
+	public static TrueTypeFont LOG_FONT = 
+				new TrueTypeFont(new java.awt.Font("Arial", 1, 12), true);
 	private boolean visible = false;
 	private double curTime = 0.0;
 	private final int LOG_LENGTH = 8;
@@ -37,7 +38,8 @@ public class Log implements Menu {
 	}
 	
 	public void append(String str) {
-		lines.add("[" + dateFormat.format(Calendar.getInstance().getTime()) + "] " + str);
+		lines.add("[" + dateFormat.format(Calendar.getInstance().getTime())
+					+ "] " + str);
 		curTime = System.currentTimeMillis();
 		white = new Color(255, 255, 255, 255);
 		black = new Color(0, 0, 0, 255);
@@ -59,19 +61,30 @@ public class Log implements Menu {
 		int count = 0;
 		for(int i = begin; i < lines.size(); i++) {
 			g.setColor(black);
-			g.drawString(lines.get(i), x, y - (count*g.getFont().getHeight(lines.get(i)))-g.getFont().getHeight(lines.get(i)) - 2);//TOP
-			g.drawString(lines.get(i), x + 2, y - (count*g.getFont().getHeight(lines.get(i)))-g.getFont().getHeight(lines.get(i)));//LEFT
-			g.drawString(lines.get(i), x - 2, y - (count*g.getFont().getHeight(lines.get(i)))-g.getFont().getHeight(lines.get(i)));//RIGHT
-			g.drawString(lines.get(i), x, y - (count*g.getFont().getHeight(lines.get(i)))-g.getFont().getHeight(lines.get(i)) + 2);//DOWN
+			g.drawString(lines.get(i), x, y - 
+					(count*g.getFont().getHeight(lines.get(i)))
+					-g.getFont().getHeight(lines.get(i)) - 2);//TOP
+			g.drawString(lines.get(i), x + 2, y - 
+					(count*g.getFont().getHeight(lines.get(i)))
+					-g.getFont().getHeight(lines.get(i)));//LEFT
+			g.drawString(lines.get(i), x - 2, y - 
+					(count*g.getFont().getHeight(lines.get(i)))
+					-g.getFont().getHeight(lines.get(i)));//RIGHT
+			g.drawString(lines.get(i), x, y - 
+					(count*g.getFont().getHeight(lines.get(i)))
+					-g.getFont().getHeight(lines.get(i)) + 2);//DOWN
 			
 			g.setColor(white);
-			g.drawString(lines.get(i), x + 2, y - (count*g.getFont().getHeight(lines.get(i)))-g.getFont().getHeight(lines.get(i)));
+			g.drawString(lines.get(i), x + 2, y -
+				(count*g.getFont().getHeight(lines.get(i)))
+					-g.getFont().getHeight(lines.get(i)));
 			count++;
 		}
 	}
 	
 	public void update() {
-		if (System.currentTimeMillis() - curTime >= 10000.0 && white.getAlpha() > 0) {
+		if (System.currentTimeMillis() - curTime >= 10000.0 &&
+				white.getAlpha() > 0) {
 			white = new Color(255, 255, 255, white.getAlpha() - 1);
 			black = new Color(0, 0, 0, black.getAlpha() - 1);
 		}

@@ -12,8 +12,10 @@ import java.io.FileReader;
  * @author alex
  */
 public class GameConfig {
-	public final static String pathPrefix = "conf/"; // Since everything is going to be in the same directory, static this!
-	public final static Gson json = new Gson(); // Since we don't need multiple copies of this, make one static one to parse everything!
+	public final static String pathPrefix = "conf/"; // Since everything is 
+						//going to be in the same directory, static this!
+	public final static Gson json = new Gson(); // Since we don't 
+		//need multiple copies of this, make one static one to parse everything!
 
 	private String filePath = "";
 	private JsonObject data;
