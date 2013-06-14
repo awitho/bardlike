@@ -21,6 +21,7 @@ import org.newdawn.slick.Image;
 public class Player extends Entity {
 	private HashMap<String, Integer> godsFavor = new HashMap<>();
 	private HashMap<String, Integer> stats = new HashMap<>();
+	private HashMap<String, Integer> bonuses = new HashMap<>();
 	private MainGameState mgs;
 	private JsonArray xpTable; // Required exp for each level.
 	private String plyClass, mainStat; // Would be part of stats, but it can't be.
@@ -158,6 +159,7 @@ public class Player extends Entity {
 	}
 	
 	public void unequipItem(Item i) {
+		if(i == null) { return; }
 		equippedItems.remove(i);
 		inventoryItems.add(i);
 	}
@@ -251,9 +253,4 @@ public class Player extends Entity {
 		if (!getVisible()) { return; }
 		g.drawImage(getImage(), x, y);
 	}
-	
-	/*@Override
-	public String toString() {
-		return "(Player | class: " + plyClass + ", stats: " + stats + ", tileX: " + getTile().getX() + ", tileY: " + getTile().getY() + ")";
-	}*/
 }

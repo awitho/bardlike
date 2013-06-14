@@ -13,10 +13,11 @@ import org.newdawn.slick.geom.Rectangle;
  * @version 1
  */
 public class Inventory implements Menu {
-	private int width = 550, height = 400, reticleX, reticleY = 80, equipLoc = 0;;
+	private int width = 650, height = 400, reticleX, reticleY = 80, equipLoc = 0;;
 	private int INV_OFFSET_X = width/2 - 85, INV_OFFSET_Y = height/2 - 30;
 	private int INV_WIDTH = 320;
 	private int EQUIP_OFFSET = 96;
+	private int lastItemX, lastItemY;
 	private long curTime = 0;
 	
 	private boolean visible;
@@ -73,10 +74,6 @@ public class Inventory implements Menu {
 					}
 				}
 			}
-			// "" + ply.getStat(
-			/*for (Entry<String, JsonElement> ele : invMenu.getObject().entrySet()) {
-				g.drawString(ele.getValue().getAsString().replace("%n", ele.getKey().split("#(.*)")[0]), 50, 50);
-			}*/
 		}
 	}
 	
@@ -87,8 +84,14 @@ public class Inventory implements Menu {
 		
 		g.setColor(Color.white);
 		
-		g.drawString(invMenu.getValueAsString("#title"), INV_WIDTH/2 - 40 + screenX, 10 + screenY);
+		
+		g.drawString(invMenu.getValueAsString("#title"), INV_WIDTH/2 + EQUIP_OFFSET + screenX, 10 + screenY);
 		g.drawString(invMenu.getValueAsString("#stat"), (width - 130) + screenX, 10 + screenY);
+		g.drawString(invMenu.getValueAsString("#str").replace("%n", ply.getStat("str") +""), (width - 170) + screenX, 80 + screenY);
+		g.drawString(invMenu.getValueAsString("#int").replace("%n", ply.getStat("int") +""), (width - 170) + screenX, 130 + screenY);
+		g.drawString(invMenu.getValueAsString("#dex").replace("%n", ply.getStat("dex") +""), (width - 170) + screenX, 180 + screenY);
+		g.drawString(invMenu.getValueAsString("#end").replace("%n", ply.getStat("end") +""), (width - 170) + screenX, 230 + screenY);
+		g.drawString(invMenu.getValueAsString("#agi").replace("%n", ply.getStat("agi") +""), (width - 170) + screenX, 280 + screenY);
 		if(curInvTile.getContainedItem() != null) {
 			g.drawString(curInvTile.getContainedItem().getName(), screenX + 30, screenY + 50);
 		}
@@ -103,25 +106,15 @@ public class Inventory implements Menu {
 				try{
 					inventoryTiles[x][y].setContainedItem(ply.getPlayerItems().get(count));
 					if(inventoryTiles[x][y].containsItem()) {
-						System.out.println(inventoryTiles[x][y].containsItem() + ", " +inventoryTiles[x][y].getX()+", " +inventoryTiles[x][y].getY());
+						lastItemX = x;
+						lastItemY = y;
 					}
 				} catch (IndexOutOfBoundsException ex) {
 					break;
 				}
 				count++;
 			}
-		
-			for(int i = 0; i < ply.getEquippedItems().size(); i++) {
-				if(ply.getEquippedItems().get(i) == null) { continue; }
-				System.out.println(ply.getEquipLoc());
-				g.drawImage(ply.getEquippedItems().get(i).getImage().getScaledCopy(32, 32), ply.getX() - INV_OFFSET_X - EQUIP_OFFSET + 32, (ply.getEquipLoc()+80) + ply.getY() - INV_OFFSET_Y);
-			}
 		}
-		
-		/*g.draw(selectionReticle);
-		selectionReticle.setX(reticleX + ply.getX() - INV_OFFSET_X + 4);
-		selectionReticle.setY(reticleY + ply.getY() - INV_OFFSET_Y + 4);
-		*/
 	}	
 	
 	public void update(GameContainer container) {
@@ -137,12 +130,39 @@ public class Inventory implements Menu {
 				ply.isFrozen(false);
 			} else if(container.getInput().isKeyPressed(Input.KEY_D)) {
 				ply.removeItem(curInvTile.getContainedItem());
-				curInvTile.setContainedItem(null);
+				inventoryTiles[lastItemX][lastItemY].setContainedItem(null);
+				//curInvTile.setContainedItem(null);
 				
 			} else if(container.getInput().isKeyPressed(Input.KEY_E)){
-				System.out.println("Equipping");
-				//ply.removeItem(selected);
-				//ply.equipItem(selected);
+				if(curInvTile.getContainedItem() != null) {
+					System.out.println("Equipping");
+					InventoryTile equipTile; 
+					for(int i = 0; i < inventoryTiles[0].length; i++) {
+						equipTile = inventoryTiles[0][i];
+						ItemType type = InventoryTile.indexToItemType(i);
+						System.out.println(type.toString());
+						System.out.println("Item at : " + curInvTile.getX()+ ", "+ curInvTile.getY()+": " + curInvTile.getContainedItem());
+						if(type == null) { continue; }
+						if(curInvTile != null) {
+							if(curInvTile.getContainedItem().getType() == type) {
+								if(equipTile.getContainedItem() != null) { return; }
+								ply.removeItem(curInvTile.getContainedItem());
+								ply.equipItem(curInvTile.getContainedItem());
+								equipTile.setContainedItem(curInvTile.getContainedItem());
+								inventoryTiles[lastItemX][lastItemY].setContainedItem(null);
+								curInvTile.setContainedItem(null);
+								return;
+							}
+						}
+					}
+				}
+			}else if(container.getInput().isKeyPressed(Input.KEY_U)) {
+				if(curInvTile != null) {
+					if(curInvTile.isEquipSlot()) {
+						ply.unequipItem(curInvTile.getContainedItem());
+						curInvTile.setContainedItem(null);
+					}
+				}
 			}
 			try {
 				if (container.getInput().isKeyDown(Input.KEY_UP)) {
