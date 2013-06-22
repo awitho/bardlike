@@ -1,417 +1,359 @@
 {
-	"WEAPON": {
-		"prefix": [
-			"Nondescript"
-		],
-		"midname": [
-			"Item"
-		],
-		"suffix": [
-			""
-		]
-	},
-	"SWORD": {
-		"prefix": [
-			"Huge",
-			"Awesome",
-			"Great",
-			"The best",
-			"Regal",
-			"Happy",
-			""
-		],
-		"midname": [
-			"Deastro",
-			"Ragnarok",
-			"Hywelbane",
-			"Glamdring",
-			"Narsil",
-			"Orcrist",
-			"Ringil",
-			"Sting",
-			"Anglachel",
-			"Anguirel",
-			"Gurthang",
-			"Herugrim",
-			"Aranruth",
-			"Guthwine",
-			"Barrow-blade",
-			"Sword",
-			"Lightsaber",
-			"Hrunting"
-		],
-		"suffix": [
-			"the destroyer",
-			"the mutilator",
-			"the gut-wrencher",
-			"the bone cruncher",
-			"the defiler",
-			"t3h 1337 sauc3",
-			"of cakes",
-			"of doom",
-			"of Gryffindor",
-			"of evil",
-			""
-		]
-	},
-	"STAFF": {
-		"prefix":[
-			"Magic",
-			"Crystalized",
-			"Universal",
-			"Fiery",
-			"Explosive",
-			"Elongated",
-			""
-		],
-		"midname":[
-			"Wood",
-			"Staff",
-			"Rod"
-		],
-		"suffix":[
-			"of the Morning",
-			"of Basket-Weaving",
-			"the reviler",
-			""
-		]
-	},
-	"HEADGEAR": {
-		"prefix":[
-			"Sturdy",
-			"Rigid",
-			"Loose",
-			"Solid",
-			""
-		],
-		
-		"midname":[
-			"Helm",
-			"Headgear",
-			"Cap"
-		],
-
-		"suffix":[
-			"of love",
-			""
-		]
-	},
-	"DAGGER": {
-		"prefix": [
-			"Pointy",
-			"Dull",
-			"Butter",
-			""
-		],
-		
-		"midname":[
-			"Dagger",
-			"Knife"
-		],
-
-		"suffix":[
-			"of love",
-			"of toast",
-			"of buttering",
-			"of slicing",
-			"the overlooked",
-			""
-		]
-	},
-	"SPEAR": {
-		"prefix": [
-			"Pointy",
-			""
-		],
-		
-		"midname":[
-			"Spear"
-		],
-
-		"suffix":[
-			"of love",
-			"of toast",,
-			"the overlooked",
-			""
-		]
-	},
-	"Hammer": {
-		"prefix": [
-			"Heavy",
-			""
-		],
-		
-		"midname":[
-			"Hammer"
-		],
-
-		"suffix":[
-			"of love",
-			"of slicing",
-			"the overlooked",
-			""
-		]
-	},
-	"Mace": {
-		"prefix": [
-			"Pointy",
-			""
-		],
-		
-		"midname":[
-			"Mace"
-		],
-
-		"suffix":[
-			"of love",
-			"of toast",
-			"of buttering",
-			"of slicing",
-			"the overlooked",
-			""
-		]
-	},
-	"INSTRUMENT": {
-		"prefix": [
-			"Pointy",
-			""
-		],
-		
-		"midname":[
-			"Lute",
-			"Flute"
-		],
-
-		"suffix":[
-			"of love",
-			"of toast",
-			"of buttering",
-			"of slicing",
-			"the overlooked",
-			""
-		]
-	},
-	"WAND": {
-		"prefix": [
-			"Pointy",
-			""
-		],
-		
-		"midname":[
-			"WAND"
-		],
-
-		"suffix":[
-			"of love",
-			"of toast",
-			"of buttering",
-			"of slicing",
-			"the overlooked",
-			""
-		]
-	},
-	"FLAIL": {
-		"prefix": [
-			"Pointy",
-			""
-		],
-		
-		"midname":[
-			"Flail"
-		],
-
-		"suffix":[
-			"of love",
-			"of toast",
-			"of buttering",
-			"of slicing",
-			"the overlooked",
-			"of swinging",
-			""
-		]
-	},
-	"HALBERD": {
-		"prefix": [
-			"Pointy",
-			""
-		],
-		
-		"midname":[
-			"Halberd"
-		],
-
-		"suffix":[
-			"of love",
-			"of toast",
-			"of buttering",
-			"of slicing",
-			"the overlooked",
-			""
-		]
-	},
-	"TORSO": {
-		"prefix": [
-			"Pointy",
-			""
-		],
-		
-		"midname":[
-			"Chestplate"
-		],
-
-		"suffix":[
-			"of love",
-			"of toast",
-			"of buttering",
-			"of slicing",
-			"the overlooked",
-			""
-		]
-	},
-	"Legs": {
-		"prefix": [
-			"Pointy",
-			""
-		],
-		
-		"midname":[
-			"Leggings"
-		],
-
-		"suffix":[
-			"of love",
-			"of toast",
-			"of buttering",
-			"of slicing",
-			"the overlooked",
-			""
-		]
-	},
-	"FEET": {
-		"prefix": [
-			"Pointy",
-			""
-		],
-		
-		"midname":[
-			"Boots"
-		],
-
-		"suffix":[
-			"of love",
-			"of toast",
-			"of buttering",
-			"of slicing",
-			"the overlooked",
-			""
-		]
-	},
-	"GAUNTLETS": {
-		"prefix": [
-			"Pointy",
-			""
-		],
-		
-		"midname":[
-			"Gauntlets"
-		],
-
-		"suffix":[
-			"of love",
-			"of toast",
-			"of buttering",
-			"of slicing",
-			"the overlooked",
-			""
-		]
-	},
-	"PAULDRONS": {
-		"prefix": [
-			"Pointy",
-			""
-		],
-		
-		"midname":[
-			"Pauldrons"
-		],
-
-		"suffix":[
-			"of love",
-			"of toast",
-			"of buttering",
-			"of slicing",
-			"the overlooked",
-			""
-		]
-	},
-	"WAIST": {
-		"prefix": [
-			"Pointy",
-			""
-		],
-		
-		"midname":[
-			"Belt"
-		],
-
-		"suffix":[
-			"of love",
-			"of toast",
-			"of buttering",
-			"of slicing",
-			"the overlooked",
-			""
-		]
-	},
-	"CLOAK": {
-		"prefix": [
-			"Pointy",
-			""
-		],
-		
-		"midname":[
-			"Cloak"
-		],
-
-		"suffix":[
-			"of love",
-			"of toast",
-			"of buttering",
-			"of slicing",
-			"the overlooked",
-			""
-		]
-	},
-	"RING": {
-		"prefix": [
-			"Pointy",
-			""
-		],
-		
-		"midname":[
-			"Ring"
-		],
-
-		"suffix":[
-			"of love",
-			"of toast",
-			"of buttering",
-			"of slicing",
-			"the overlooked",
-			""
-		]
-	},
-	"WEAPON": {
-		"prefix": [
-			""
-		],
-		
-		"midname":[
-			"Weapon"
-		],
-
-		"suffix":[
-			""
-		]
-	}
+    "SWORD": {
+        "prefix": [
+            "Huge",
+            "Awesome",
+            "Great",
+            "The best",
+            "Regal",
+            "Happy",
+            ""
+        ],
+        "midname": [
+            "Deastro",
+            "Ragnarok",
+            "Hywelbane",
+            "Glamdring",
+            "Narsil",
+            "Orcrist",
+            "Ringil",
+            "Sting",
+            "Anglachel",
+            "Anguirel",
+            "Gurthang",
+            "Herugrim",
+            "Aranruth",
+            "Guthwine",
+            "Barrow-blade",
+            "Sword",
+            "Lightsaber",
+            "Hrunting"
+        ],
+        "suffix": [
+            "the destroyer",
+            "the mutilator",
+            "the gut-wrencher",
+            "the bone cruncher",
+            "the defiler",
+            "t3h 1337 sauc3",
+            "of cakes",
+            "of doom",
+            "of Gryffindor",
+            "of evil",
+            ""
+        ]
+    },
+    "STAFF": {
+        "prefix": [
+            "Magic",
+            "Crystalized",
+            "Universal",
+            "Fiery",
+            "Explosive",
+            "Elongated",
+            ""
+        ],
+        "midname": [
+            "Wood",
+            "Staff",
+            "Rod"
+        ],
+        "suffix": [
+            "of the Morning",
+            "of Basket-Weaving",
+            "the reviler",
+            ""
+        ]
+    },
+    "HEADGEAR": {
+        "prefix": [
+            "Sturdy",
+            "Rigid",
+            "Loose",
+            "Solid",
+            ""
+        ],
+        "midname": [
+            "Helm",
+            "Headgear",
+            "Cap"
+        ],
+        "suffix": [
+            "of love",
+            ""
+        ]
+    },
+    "DAGGER": {
+        "prefix": [
+            "Pointy",
+            "Dull",
+            "Butter",
+            ""
+        ],
+        "midname": [
+            "Dagger",
+            "Knife"
+        ],
+        "suffix": [
+            "of love",
+            "of toast",
+            "of buttering",
+            "of slicing",
+            "the overlooked",
+            ""
+        ]
+    },
+    "SPEAR": {
+        "prefix": [
+            "Pointy",
+            ""
+        ],
+        "midname": [
+            "Spear"
+        ],
+        "suffix": [
+            "of love",
+            "of toast",
+            "the overlooked",
+            ""
+        ]
+    },
+    "HAMMER": {
+        "prefix": [
+            "Heavy",
+            ""
+        ],
+        "midname": [
+            "Hammer"
+        ],
+        "suffix": [
+            "of love",
+            "of slicing",
+            "the overlooked",
+            ""
+        ]
+    },
+    "MACE": {
+        "prefix": [
+            "Pointy",
+            ""
+        ],
+        "midname": [
+            "Mace"
+        ],
+        "suffix": [
+            "of love",
+            "of toast",
+            "of buttering",
+            "of slicing",
+            "the overlooked",
+            ""
+        ]
+    },
+    "INSTRUMENT": {
+        "prefix": [
+            "Pointy",
+            ""
+        ],
+        "midname": [
+            "Lute",
+            "Flute"
+        ],
+        "suffix": [
+            "of love",
+            "of toast",
+            "of buttering",
+            "of slicing",
+            "the overlooked",
+            ""
+        ]
+    },
+    "WAND": {
+        "prefix": [
+            "Pointy",
+            ""
+        ],
+        "midname": [
+            "WAND"
+        ],
+        "suffix": [
+            "of love",
+            "of toast",
+            "of buttering",
+            "of slicing",
+            "the overlooked",
+            ""
+        ]
+    },
+    "FLAIL": {
+        "prefix": [
+            "Pointy",
+            ""
+        ],
+        "midname": [
+            "Flail"
+        ],
+        "suffix": [
+            "of love",
+            "of toast",
+            "of buttering",
+            "of slicing",
+            "the overlooked",
+            "of swinging",
+            ""
+        ]
+    },
+    "HALBERD": {
+        "prefix": [
+            "Pointy",
+            ""
+        ],
+        "midname": [
+            "Halberd"
+        ],
+        "suffix": [
+            "of love",
+            "of toast",
+            "of buttering",
+            "of slicing",
+            "the overlooked",
+            ""
+        ]
+    },
+    "TORSO": {
+        "prefix": [
+            "Pointy",
+            ""
+        ],
+        "midname": [
+            "Chestplate"
+        ],
+        "suffix": [
+            "of love",
+            "of toast",
+            "of buttering",
+            "of slicing",
+            "the overlooked",
+            ""
+        ]
+    },
+    "LEGS": {
+        "prefix": [
+            "Pointy",
+            ""
+        ],
+        "midname": [
+            "Leggings"
+        ],
+        "suffix": [
+            "of love",
+            "of toast",
+            "of buttering",
+            "of slicing",
+            "the overlooked",
+            ""
+        ]
+    },
+    "FEET": {
+        "prefix": [
+            "Pointy",
+            ""
+        ],
+        "midname": [
+            "Boots"
+        ],
+        "suffix": [
+            "of love",
+            "of toast",
+            "of buttering",
+            "of slicing",
+            "the overlooked",
+            ""
+        ]
+    },
+    "GAUNTLETS": {
+        "prefix": [
+            "Pointy",
+            ""
+        ],
+        "midname": [
+            "Gauntlets"
+        ],
+        "suffix": [
+            "of love",
+            "of toast",
+            "of buttering",
+            "of slicing",
+            "the overlooked",
+            ""
+        ]
+    },
+    "PAULDRONS": {
+        "prefix": [
+            "Pointy",
+            ""
+        ],
+        "midname": [
+            "Pauldrons"
+        ],
+        "suffix": [
+            "of love",
+            "of toast",
+            "of buttering",
+            "of slicing",
+            "the overlooked",
+            ""
+        ]
+    },
+    "WAIST": {
+        "prefix": [
+            "Pointy",
+            ""
+        ],
+        "midname": [
+            "Belt"
+        ],
+        "suffix": [
+            "of love",
+            "of toast",
+            "of buttering",
+            "of slicing",
+            "the overlooked",
+            ""
+        ]
+    },
+    "CLOAK": {
+        "prefix": [
+            "Pointy",
+            ""
+        ],
+        "midname": [
+            "Cloak"
+        ],
+        "suffix": [
+            "of love",
+            "of toast",
+            "of buttering",
+            "of slicing",
+            "the overlooked",
+            ""
+        ]
+    },
+    "RING": {
+        "prefix": [
+            "Pointy",
+            ""
+        ],
+        "midname": [
+            "Ring"
+        ],
+        "suffix": [
+            "of love",
+            "of toast",
+            "of buttering",
+            "of slicing",
+            "the overlooked",
+            ""
+        ]
+    }
 }
