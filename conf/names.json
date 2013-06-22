@@ -1,15 +1,4 @@
 {
-    "WEAPON": {
-        "prefix": [
-            ""
-        ],
-        "midname": [
-            "Weapon"
-        ],
-        "suffix": [
-            ""
-        ]
-    },
     "SWORD": {
         "prefix": [
             "Huge",
