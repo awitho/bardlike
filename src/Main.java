@@ -1,3 +1,5 @@
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
@@ -16,7 +18,11 @@ public class Main extends StateBasedGame {
 
 	public static void main(String[] args) throws SlickException {
 		AppGameContainer game = new AppGameContainer(new Main("bardLIKE"));
-		game.setDisplayMode(800, 600, false);
+		
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		int width = (int) screenSize.getWidth();
+		int height = (int) screenSize.getHeight();
+		game.setDisplayMode(width, height, true);
 
 		game.setVSync(true);
 		game.setTargetFrameRate(60);

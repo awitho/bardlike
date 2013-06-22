@@ -149,15 +149,10 @@ public class Inventory implements Menu {
 				
 			} else if(container.getInput().isKeyPressed(Input.KEY_E)){
 				if(curInvTile.getContainedItem() != null) {
-					System.out.println("Equipping");
 					InventoryTile equipTile; 
 					for(int i = 0; i < inventoryTiles[0].length; i++) {
 						equipTile = inventoryTiles[0][i];
 						ItemType type = InventoryTile.indexToItemType(i);
-						System.out.println(type.toString());
-						System.out.println("Item at : " + curInvTile.getX()+
-								", "+ curInvTile.getY()+": "
-								+ curInvTile.getContainedItem());
 						if(type == null) { continue; }
 						if(curInvTile != null) {
 							if(curInvTile.getContainedItem().getType() == type) {
@@ -207,9 +202,6 @@ public class Inventory implements Menu {
 				curInvTile.toggleSelect();
 				newInvTile.toggleSelect();
 				curInvTile = newInvTile;
-			}
-			if(newInvTile != null) {
-				System.out.println(newInvTile.getX()+", "+newInvTile.getY());
 			}
 		}
 	}

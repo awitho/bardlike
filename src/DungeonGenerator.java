@@ -215,7 +215,7 @@ public class DungeonGenerator {
 			for (int y = 0; y < h; y++) {
 				if((int) (Math.random() * 100) + 1 <= 4) {
 					Mob mob = mobDictionary.getRandomMob();
-					if (mob == null || !tiles[x][y].isReal() || tiles[x][y].isWall() || (int) (Math.random() * 100) >= mob.getSpawnChance()) { continue; }
+					if (mob == null || !tiles[x][y].isReal() || tiles[x][y].isWall() || (int) (Math.random() * 100) >= (mob.getSpawnChance() + (TileDictionary.getDungeonLevel() * 2))) { continue; }
 					ArrayList<Entity> foundEnts = tiles[x][y].findType(Entity.class);
 					if (foundEnts != null) { continue; }
 					mob.setMap(map);

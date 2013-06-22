@@ -58,9 +58,6 @@ public class MainGameState extends BasicGameState {
 		
 		g.setFont(MainMenuState.font);
 		if (player.getTile() == null) { return; } // If the player doesn't exist drawing his stats will draw null.
-		g.drawString("Ply x: " + player.getTile().getX() + ", y: " 
-				+ player.getTile().getY() + " HP: " + player.getHP(),
-				-cam.getX(), -cam.getY() + 20);
 		inventory.draw(g, -cam.getX(), -cam.getY());
 	}
 
@@ -92,6 +89,9 @@ public class MainGameState extends BasicGameState {
 	public void restart() {
 		levels.clear();
 		setLevel(genNewLevel());
+		player.setXP(0);
+		player.clearInventory();
+		log.clear();
 		DungeonGenerator.placePlayerInFeasibleLocation(curMap, player);
 	}
 	

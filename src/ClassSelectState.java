@@ -87,6 +87,8 @@ public class ClassSelectState extends BasicGameState {
 	
 	public void finishLoading(MainGameState main, StateBasedGame s) {
 		main.setPlayer(classSprites, classes.get(chosen).getAsJsonObject());
+                chosen = -1;
+                loading = false;
 		s.enterState(4);
 	}
 

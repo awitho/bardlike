@@ -18,5 +18,5 @@ public enum WeaponType {
 	INSTRUMENT,
 	WAND,
 	FLAIL,
-	HALDBERD
+	HALBERD
 }
