@@ -1,9 +1,0 @@
-{
-	"#title": "Inventory",
-	"#stat": "Stats",
-    "#str": "Strength: %n",
-	"#int": "Intelligence: %n",
-	"#dex": "Dexterity: %n",
-	"#end": "Endurance: %n",
-	"#agi": "Agility: %n"
-}
