@@ -1,0 +1,68 @@
+[
+    {
+        "name": "Slime",
+        "health": 10,
+        "sx": 0,
+        "sy": 0,
+        "spawnchance": 80,
+        "stats": {
+            "atk": 2,
+            "def": 1
+        }
+    },
+    {
+        "name": "Mimic",
+        "health": 20,
+        "sx": 1,
+        "sy": 0,
+        "spawnchance": 40,
+        "stats": {
+            "atk": 5,
+            "def": 20
+        }
+    },
+    {
+        "name": "Durgen",
+        "health": 200,
+        "sx": 1,
+        "sy": 1,
+        "spawnchance": 2,
+        "stats": {
+            "atk": 100,
+            "def": 100
+        }
+    },
+    {
+        "name": "Tentacle",
+        "health": 30,
+        "sx": 2,
+        "sy": 0,
+        "spawnchance": 30,
+        "stats": {
+            "atk": 10,
+            "def": 10
+        }
+    },
+    {
+        "name": "Shroom",
+        "health": 40,
+        "sx": 3,
+        "sy": 0,
+        "spawnchance": 20,
+        "stats": {
+            "atk": 12,
+            "def": 11
+        }
+    },
+    {
+        "name": "Magmathing",
+        "health": 50,
+        "sx": 0,
+        "sy": 1,
+        "spawnchance": 15,
+        "stats": {
+            "atk": 15,
+            "def": 10
+        }
+    }
+]

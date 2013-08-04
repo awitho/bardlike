@@ -5,11 +5,11 @@
 		"sx": 0,
 		"sy": 0,
 		"stats": {
-			"str": 1,
-			"int": 1,
-			"dex": 1,
-			"end": 1,
-            "agi": 1
+			"str": 4,
+			"int": 4,
+			"dex": 4,
+			"end": 4,
+            "agi": 4
 		}
     },
     {
@@ -17,12 +17,13 @@
         "hotkey": "M",
 		"sx": 1,
 		"sy": 0,
+		"mainstat": "int",
 		"stats": {
-			"str": 1,
-			"int": 1,
+			"str": 2,
+			"int": 6,
 			"dex": 1,
-			"end": 1,
-            "agi": 1
+			"end": 3,
+            "agi": 2
 		}
     },
     {
@@ -30,11 +31,12 @@
         "hotkey": "P",
 		"sx": 0,
 		"sy": 1,
+		"mainstat": "end",
 		"stats": {
-			"str": 1,
+			"str": 6,
 			"int": 1,
-			"dex": 1,
-			"end": 1,
+			"dex": 3,
+			"end": 6,
             "agi": 1
 		}
     },
@@ -43,11 +45,12 @@
         "hotkey": "W",
         "sx": 1,
         "sy": 1,
+		"mainstat": "str",
         "stats": {
-			"str": 1,
+			"str": 8,
 			"int": 1,
-			"dex": 1,
-			"end": 1,
+			"dex": 3,
+			"end": 10,
             "agi": 1
 		}
     },
@@ -56,12 +59,13 @@
 		"hotkey": "R",
         "sx": 0,
         "sy": 2,
+		"mainstat": "agi",
 		"stats": {
-			"str": 1,
-			"int": 1,
-			"dex": 1,
-			"end": 1,
-            "agi": 1
+			"str": 3,
+			"int": 2,
+			"dex": 6,
+			"end": 4,
+            "agi": 7
 		}
     }
 ]
