@@ -20,6 +20,7 @@ Thumbs.db
 # Project Specific #
 .classpath
 .project
+nbactions.xml
 build.xml
 manifest.mf
 
