@@ -3,11 +3,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>me.bloodarowman</groupId>
-  <artifactId>bardLikeMaven</artifactId>
+  <artifactId>bardLike</artifactId>
   <version>0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>bardLikeMaven</name>
+  <name>bardLike</name>
   <url>http://maven.apache.org</url>
   
   <repositories>
@@ -20,6 +20,32 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
+  
+  <build>
+	  <resources>
+		  <resource>
+			  <targetPath>conf</targetPath>
+			  <directory>${basedir}/conf</directory>
+			  <includes>
+				  <include>**/*</include>
+			  </includes>
+		  </resource>
+		  <resource>
+			  <targetPath>gfx</targetPath>
+			  <directory>${basedir}/gfx</directory>
+			  <includes>
+				  <include>**/*</include>
+			  </includes>
+		  </resource>
+		<!--  <resource>
+			  <targetPath>lib/native</targetPath>
+			  <directory>${basedir}/lib/native</directory>
+			  <includes>
+				  <include>**/*</include>
+			  </includes>
+		  </resource> -->
+	  </resources>
+  </build>
 
   <dependencies>
     <dependency>
