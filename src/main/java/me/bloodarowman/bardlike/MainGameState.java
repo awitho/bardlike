@@ -30,10 +30,10 @@ public class MainGameState extends BasicGameState {
 	@Override
 	public void init(GameContainer container, StateBasedGame s) 
 			throws SlickException {
+		Misc.init();
 		ItemDictionary.initItemDictionary(); // Needed as itemdicionary
 					//is static, also so we can on-demand load.
 		TileDictionary.initTileDictionary();
-		Misc.fillMiscImages();
 		mobDictionary = new MobDictionary();
 		log = new Log();
 	}

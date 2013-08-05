@@ -27,18 +27,20 @@ public class ItemDictionary {
 		scaledImages = new HashMap<Integer, HashMap<String, Image>>();
 		itemTypes = new HashMap<String, ItemType>();
 		weaponTypes = new HashMap<String, WeaponType>();
+		
 		try {
 			items = new GameConfig("items.json").getArray();
-			SpriteSheet itemSprites = new SpriteSheet("./gfx/ents/items.png",
-					32, 32);
+			SpriteSheet itemSprites = ImageLoader.loadSpritesheet("./gfx/ents/items.png", 32, 32);
 			for(int i = 0; i < items.size(); i++) {
 				curItem = items.get(i).getAsJsonObject();
-				itemTypes.put(curItem.get("name").getAsString(), 
-						ItemType.valueOf(curItem.get("type").getAsString()));
-				itemImages.put(curItem.get("name").getAsString(),
-						itemSprites.getSubImage(curItem.get("sx").getAsInt(),
-						curItem.get("sy").getAsInt())
-							.getScaledCopy(Misc.TARGET_SIZE, Misc.TARGET_SIZE));
+				itemTypes.put(curItem.get("name").getAsString(), ItemType.valueOf(curItem.get("type").getAsString()));
+				if (curItem.get("sx").getAsInt() < 0 || curItem.get("sx").getAsInt() > itemSprites.getHorizontalCount() || curItem.get("sy").getAsInt() < 0 || curItem.get("sy").getAsInt() > itemSprites.getVerticalCount()) {
+					System.out.println(curItem.get("name").getAsString() + " was out of the spritesheet's bounds, using placeholder.");
+					itemImages.put(curItem.get("name").getAsString(), Misc.miscImages.get("placeholder"));
+				} else {
+					itemImages.put(curItem.get("name").getAsString(), itemSprites.getSubImage(curItem.get("sx").getAsInt(), curItem.get("sy").getAsInt()).getScaledCopy(Misc.TARGET_SIZE, Misc.TARGET_SIZE));
+				}
+				
 				String wepType;
 				try {
 					wepType = curItem.get("type2").getAsString();

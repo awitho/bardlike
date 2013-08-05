@@ -1,9 +1,15 @@
 package me.bloodarowman.bardlike;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.ImageBuffer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
@@ -17,8 +23,37 @@ public class Misc {
 	public static final int TARGET_SIZE = 64;
 	public static final int MAX_INVENTORY = 110;
 	public static final int DUNGEON_SIZE = 50;
+	private static File errorLog;
+	private static FileWriter write;
 	
 	public static HashMap<String, Image> miscImages = new HashMap<String, Image>();
+	
+	
+	public static void init() {
+		initLogs();
+		fillMiscImages();
+	}
+	
+	private static void initLogs() {
+		try {
+			errorLog = new File("./error.txt");
+			System.out.println(errorLog.toString());
+			write = new FileWriter(errorLog);
+		} catch (IOException ex) {
+			System.out.println("Unable to create error log!");
+			System.exit(1);
+		}
+	}
+	
+	public static void logError(Object obj) {
+		try {
+			write.write(obj.toString() + "\n");
+			write.flush();
+		} catch (IOException ex) {
+			System.out.println("Unable to write to error log!");
+			System.exit(1);
+		}
+	}
 
 	/**
 	 * Pop-up dialog, replaces console println
@@ -31,8 +66,16 @@ public class Misc {
 	/**
 	 * This is a really hacky method to get images for misc ents.
 	 */
-	public static void fillMiscImages() throws SlickException {
-		miscImages.put("downladder", new SpriteSheet("./gfx/ents/hole.png", 32, 32).getSprite(0, 0).getScaledCopy(Misc.TARGET_SIZE, Misc.TARGET_SIZE));
+	private static void fillMiscImages() {
+		miscImages.put("downladder", ImageLoader.loadSpritesheet("./gfx/ents/hole.png", 32, 32).getScaledCopy(Misc.TARGET_SIZE, Misc.TARGET_SIZE));
+		
+		ImageBuffer placeholder = new ImageBuffer(Misc.TARGET_SIZE, Misc.TARGET_SIZE);
+		for (int x = 0; x < Misc.TARGET_SIZE; x++) {
+			for (int y = 0; y < Misc.TARGET_SIZE; y++) {
+				placeholder.setRGBA(x, y, 255, 0, 0, 255);
+			}
+		}
+		miscImages.put("placeholder", placeholder.getImage());
 	}
 
 	/**

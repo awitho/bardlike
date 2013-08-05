@@ -17,9 +17,11 @@ public class Main extends StateBasedGame {
 	public Main(String name) {
 		super(name);
 	}
+	
+	public static AppGameContainer game;
 
 	public static void main(String[] args) throws SlickException {
-		AppGameContainer game = new AppGameContainer(new Main("bardLIKE"));
+		game = new AppGameContainer(new Main("bardLIKE"));
 		
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		int width = (int) screenSize.getWidth();
