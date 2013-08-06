@@ -45,6 +45,34 @@ public class Misc {
 		}
 	}
 	
+	public static ArrayList<File> findFilesRecurse(String dir, String filter) {
+		ArrayList<File> finalFiles = new ArrayList<File>();
+		File folder = new File(dir);
+		File[] files = folder.listFiles();
+		if (files == null || files.length == 0) { return finalFiles; }
+		for (int i = 0; i < files.length; i++) {
+			if (files[i].isFile()) {
+				if (files[i].getName().matches(filter)) {
+					finalFiles.add(files[i]);
+				}
+			} else if (files[i].isDirectory()) {
+				ArrayList<File> newFiles = findFilesRecurse(files[i].getPath(), filter);
+				finalFiles.addAll(newFiles);
+			}
+		}
+		return finalFiles;
+	}
+	
+	public static void printArray(Object[] obj) {
+		if (obj == null || obj.length == 0) { return; }
+		System.out.print("[");
+		System.out.print(" l: " + obj.length + ", ");
+		for (int i = 0; i < obj.length; i++) {
+			System.out.print(obj.toString() + ", ");
+		}
+		System.out.println("]");
+	}
+	
 	public static void logError(Object obj) {
 		try {
 			write.write(obj.toString() + "\n");

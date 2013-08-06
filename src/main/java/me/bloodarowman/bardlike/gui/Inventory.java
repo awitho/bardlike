@@ -1,6 +1,11 @@
-package me.bloodarowman.bardlike;
+package me.bloodarowman.bardlike.gui;
 
 import java.util.HashMap;
+import me.bloodarowman.bardlike.GameConfig;
+import me.bloodarowman.bardlike.ItemDictionary;
+import me.bloodarowman.bardlike.ItemType;
+import me.bloodarowman.bardlike.Misc;
+import me.bloodarowman.bardlike.Player;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;

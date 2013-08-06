@@ -1,5 +1,8 @@
-package me.bloodarowman.bardlike;
+package me.bloodarowman.bardlike.gui;
 
+import me.bloodarowman.bardlike.Item;
+import me.bloodarowman.bardlike.ItemType;
+import me.bloodarowman.bardlike.Vector;
 import org.newdawn.slick.Graphics;
 
 

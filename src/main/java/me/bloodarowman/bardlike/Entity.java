@@ -1,5 +1,6 @@
 package me.bloodarowman.bardlike;
 
+import java.util.HashMap;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
@@ -10,7 +11,7 @@ import org.newdawn.slick.Image;
  * @author Alex
  */
 public class Entity {
-	private static int iid = 1;
+	private static int gId = 1; // global id
 	private int id;
 	private int x, y;
 	private boolean visible = false;
@@ -19,8 +20,8 @@ public class Entity {
 	private Tile curTile;
 
 	public Entity(Image img) {
-		id = iid;
-		iid++;
+		id = gId;
+		gId++;
 		this.img = img;
 	}
 

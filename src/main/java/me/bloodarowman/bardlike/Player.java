@@ -1,5 +1,6 @@
 package me.bloodarowman.bardlike;
 
+import me.bloodarowman.bardlike.gui.Log;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 
@@ -24,6 +25,7 @@ public class Player extends Entity {
 	private HashMap<String, Integer> godsFavor = new HashMap<String, Integer>();
 	private HashMap<String, Integer> stats = new HashMap<String, Integer>();
 	private HashMap<String, Integer> bonuses = new HashMap<String, Integer>();
+	private ArrayList<Buff> buffs = new ArrayList<Buff>();
 	private MainGameState mgs;
 	private JsonArray xpTable; // Required exp for each level.
 	private String plyClass, mainStat; // Would be part of stats, but it can't be.
@@ -193,6 +195,20 @@ public class Player extends Entity {
 		}
 	}
 	
+	public void updateBuffs() {
+		for (int i = 0; i < buffs.size(); i++) {
+			buffs.get(i).update();
+		}
+	}
+	
+	public void removeBuff(int id) {
+		for (int i = 0; i < buffs.size(); i++) {
+			if (buffs.get(i).getID() == id) {
+				buffs.set(i, null);
+			}
+		}
+	}
+	
 	public void clearInventory() {
 		equippedItems.clear();
 		inventoryItems.clear();
@@ -281,6 +297,7 @@ public class Player extends Entity {
 			//DungeonGenerator.placePlayerInFeasibleLocation(getMap(), this);
 			getMap().update(mgs);
 		}
+		updateBuffs();
 	//	if (container.getInput().isKeyPressed(Input.KEY_V)) {
 	//		DungeonGenerator.placePlayerInFeasibleLocation(mgs.setLevel(mgs.genNewLevel()), this);
 	//	}

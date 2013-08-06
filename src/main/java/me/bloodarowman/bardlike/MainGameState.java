@@ -1,6 +1,10 @@
 package me.bloodarowman.bardlike;
 
+import me.bloodarowman.bardlike.gui.Inventory;
+import me.bloodarowman.bardlike.gui.Log;
+import me.bloodarowman.bardlike.gui.HUD;
 import com.google.gson.JsonObject;
+import java.io.File;
 import java.util.ArrayList;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -20,6 +24,7 @@ import org.newdawn.slick.state.StateBasedGame;
 public class MainGameState extends BasicGameState {
 	private GameMap curMap;
 	private ArrayList<GameMap> levels = new ArrayList<GameMap>();
+	ArrayList<File> autorunScripts = Misc.findFilesRecurse("./scripts/autorun/", "(.*).lua");
 	private Player player;
 	private Camera cam;
 	private Inventory inventory;
@@ -86,6 +91,7 @@ public class MainGameState extends BasicGameState {
 	}
 	
 	public void restart() {
+		// Execute autorun folder
 		levels.clear();
 		setLevel(genNewLevel());
 		player.setXP(0);
@@ -121,5 +127,14 @@ public class MainGameState extends BasicGameState {
 		inventory = new Inventory(player);
 		cam = new Camera(player, curMap);
 		DungeonGenerator.placePlayerInFeasibleLocation(curMap, player);
+		
+		for (int i = 0; i < autorunScripts.size(); i++) {
+			try { 
+				//Main.L.load(scripts.get(i)., null);
+				Main.L.LdoFile(autorunScripts.get(i).toString());
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
 	}
 }

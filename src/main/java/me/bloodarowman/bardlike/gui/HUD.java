@@ -1,5 +1,7 @@
-package me.bloodarowman.bardlike;
+package me.bloodarowman.bardlike.gui;
 
+import me.bloodarowman.bardlike.Player;
+import me.bloodarowman.bardlike.TileDictionary;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 

@@ -1,4 +1,4 @@
-package me.bloodarowman.bardlike;
+package me.bloodarowman.bardlike.gui;
 
 import org.newdawn.slick.Graphics;
 

@@ -1,9 +1,12 @@
-package me.bloodarowman.bardlike;
+package me.bloodarowman.bardlike.gui;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import me.bloodarowman.bardlike.Main;
+import org.keplerproject.luajava.JavaFunction;
+import org.keplerproject.luajava.LuaException;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.TrueTypeFont;
@@ -18,8 +21,7 @@ import org.newdawn.slick.TrueTypeFont;
  * @author Alex
  */
 public class Log implements Menu {
-	public static TrueTypeFont LOG_FONT = 
-				new TrueTypeFont(new java.awt.Font("Arial", 1, 12), true);
+	public static TrueTypeFont LOG_FONT = new TrueTypeFont(new java.awt.Font("Arial", 1, 12), true);
 	private boolean visible = false;
 	private double curTime = 0.0;
 	private final int LOG_LENGTH = 8;
@@ -27,6 +29,28 @@ public class Log implements Menu {
 	private Color black = new Color(0, 0, 0, 255);
 	private ArrayList<String> lines = new ArrayList<String>();
 	private final DateFormat dateFormat = new SimpleDateFormat("h:mm:ss");
+	
+	public Log() {
+		Main.L.newTable();
+		Main.L.pushValue(-1);
+		Main.L.setGlobal("gLog");
+		Main.L.pushString("append");
+		
+		try {
+			Main.L.pushJavaFunction(new JavaFunction(Main.L) {
+				public int execute() {
+					if (L.getTop() > 1) {
+						append(getParam(2).getString());
+					}
+					return 0;
+				}
+			});
+		} catch (LuaException ex) {
+			System.out.println(ex.getStackTrace());
+		}
+
+		Main.L.setTable(-3);
+	}
 
 	@Override
 	public void setVisible(boolean b) {
