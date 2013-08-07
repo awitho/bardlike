@@ -5,13 +5,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.ImageBuffer;
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.SpriteSheet;
 
 /**
  * Purely static class that provides miscellaneous functions for the game.
@@ -42,6 +38,17 @@ public class Misc {
 		} catch (IOException ex) {
 			System.out.println("Unable to create error log!");
 			System.exit(1);
+		}
+	}
+	
+	public static void LuaExecFileList(ArrayList<File> files) {
+		for (int i = 0; i < files.size(); i++) {
+			try { 
+				//Main.L.load(scripts.get(i)., null);
+				Main.L.LdoFile(files.get(i).toString());
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
 		}
 	}
 	

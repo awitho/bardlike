@@ -1,4 +1,3 @@
-jDate = luajava.newInstance("java.util.Date")
-
 gLog.append("Hey, lua is calling you home!")
-gLog.append(math.abs(-1337) .. "")
+gLog.append("The moon doesn't like you very much!");
+player.die()

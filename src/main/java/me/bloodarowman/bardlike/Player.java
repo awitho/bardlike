@@ -11,8 +11,11 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SpriteSheet;
 import com.google.gson.JsonObject;
+import java.io.File;
 import java.util.Map;
 import java.util.Map.Entry;
+import org.keplerproject.luajava.JavaFunction;
+import org.keplerproject.luajava.LuaException;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
@@ -22,6 +25,8 @@ import org.newdawn.slick.Image;
  * @version 1
  */
 public class Player extends Entity {
+	private static ArrayList<File> moveHooks = Misc.findFilesRecurse("./scripts/hooks/playerMove/", "(.*).lua");
+	
 	private HashMap<String, Integer> godsFavor = new HashMap<String, Integer>();
 	private HashMap<String, Integer> stats = new HashMap<String, Integer>();
 	private HashMap<String, Integer> bonuses = new HashMap<String, Integer>();
@@ -57,10 +62,38 @@ public class Player extends Entity {
 		bonuses.put("dex", 0);
 		bonuses.put("str", 0);
 		revive();
+		
+		Main.L.newTable();
+		Main.L.pushValue(-1);
+		Main.L.setGlobal("player");
+		
+		try {
+			Main.L.pushString("revive");
+			Main.L.pushJavaFunction(new JavaFunction(Main.L) {
+				public int execute() {
+					revive();
+					return 0;
+				}
+			});
+			
+			Main.L.pushString("die");
+			Main.L.pushJavaFunction(new JavaFunction(Main.L) {
+				public int execute() {
+					die();
+					return 0;
+				}
+			});
+		} catch (LuaException ex) {
+			System.out.println(ex.getStackTrace());
+		}
+
+		Main.L.setTable(-5);
 		//addItem(new Item(new ItemDictionary(), getMap(), "Leather Helmet"));
 	}
 
 	public void move(Direction dir) {
+		Misc.LuaExecFileList(moveHooks);
+		
 		if(frozen || dead) { return; }
 		Tile curTile = getTile();
 		if (curTile == null) { log.append("The game has errored while generating the dungeon, please restart the game."); return; };

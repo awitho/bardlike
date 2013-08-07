@@ -22,6 +22,7 @@ public class Main extends StateBasedGame {
 	
 	public static AppGameContainer game;
 	public static LuaState L = LuaStateFactory.newLuaState();
+	public static double scale;
 
 	public static void main(String[] args) throws SlickException {
 		L.openLibs();
@@ -29,9 +30,13 @@ public class Main extends StateBasedGame {
 		game = new AppGameContainer(new Main("bardLIKE"));
 		
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		//int width = (int) screenSize.getWidth();
-		//int height = (int) screenSize.getHeight();
-		game.setDisplayMode(800, 600, false);
+		int width = (int) screenSize.getWidth();
+		int height = (int) screenSize.getHeight();
+		//int width =  800;
+		//int height = 600;
+		scale = (width + height) / 110;
+		System.out.println(scale);
+		game.setDisplayMode(width, height, true);
 
 		game.setVSync(true);
 		game.setTargetFrameRate(60);

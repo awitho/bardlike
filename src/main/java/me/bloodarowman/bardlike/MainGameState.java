@@ -128,13 +128,6 @@ public class MainGameState extends BasicGameState {
 		cam = new Camera(player, curMap);
 		DungeonGenerator.placePlayerInFeasibleLocation(curMap, player);
 		
-		for (int i = 0; i < autorunScripts.size(); i++) {
-			try { 
-				//Main.L.load(scripts.get(i)., null);
-				Main.L.LdoFile(autorunScripts.get(i).toString());
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
-		}
+		Misc.LuaExecFileList(autorunScripts);
 	}
 }
