@@ -139,6 +139,7 @@ public class Player extends Entity {
 		
 		if (!dead) {
 			if (mob != null && !mob.isDead()) {} else {
+                mgs.getCam().setTime(400);
 				setTile(tile);
 			}
 		}
@@ -363,6 +364,8 @@ public class Player extends Entity {
 	
 	public void draw(Graphics g, int x, int y) {
 		if (!getVisible()) { return; }
+        setX(x);
+        setY(y);
 		g.drawImage(getImage(), x, y);
 	}
 }

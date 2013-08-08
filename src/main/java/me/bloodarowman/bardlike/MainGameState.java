@@ -108,6 +108,10 @@ public class MainGameState extends BasicGameState {
 				Misc.DUNGEON_SIZE, mobDictionary));
 		return levels.size() - 1;
 	}
+
+    public Camera getCam() {
+        return cam;
+    }
 	
 	public GameMap setLevel (int l) {
 		if (l < 0 || l > levels.size()) { return null; }
@@ -126,6 +130,7 @@ public class MainGameState extends BasicGameState {
 		inventory = new Inventory(player);
 		cam = new Camera(player, curMap);
 		DungeonGenerator.placePlayerInFeasibleLocation(curMap, player);
+        cam.setXY(- curMap.getScaledWidth() / 2, - curMap.getScaledHeight() / 2);
 		
 		Misc.LuaExecFileList(autorunScripts);
 	}

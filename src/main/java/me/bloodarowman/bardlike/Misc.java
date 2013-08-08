@@ -82,6 +82,10 @@ public class Misc {
         }
 		System.out.println("]");
 	}
+
+    public static float easeInOut(float t,float b , float c, float d) {
+        return -c/2 * ((float)Math.cos(Math.PI*t/d) - 1) + b;
+    }
 	
 	public static void logError(Object obj) {
 		try {
