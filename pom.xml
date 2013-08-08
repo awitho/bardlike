@@ -37,6 +37,13 @@
 				  <include>**/*</include>
 			  </includes>
 		  </resource>
+          <resource>
+              <targetPath>scripts</targetPath>
+              <directory>${baseDir}/scripts</directory>
+              <includes>
+                  <include>**/*</include>
+              </includes>
+          </resource>
 		<!--  <resource>
 			  <targetPath>lib/native</targetPath>
 			  <directory>${basedir}/lib/native</directory>
