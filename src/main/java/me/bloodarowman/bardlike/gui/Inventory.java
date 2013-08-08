@@ -20,8 +20,7 @@ import org.newdawn.slick.geom.Rectangle;
  * @version 1
  */
 public class Inventory implements Menu {
-	private int width = 650, height = 400, reticleX, reticleY = 80,
-				equipLoc = 0;;
+	private int width = 650, height = 400, reticleX, reticleY = 80;
 	private int INV_OFFSET_X = width/2 - 85, INV_OFFSET_Y = height/2 - 30;
 	private int INV_WIDTH = 320;
 	private int EQUIP_OFFSET = 96;
@@ -76,15 +75,14 @@ public class Inventory implements Menu {
 					InventoryTile tile = inventoryTiles[x][y];
 					if(tile != null) {
 						if(tile.isEquipSlot()) {
-							tile.draw(g, ((x * 32) - 64) + screenX +
-									 EQUIP_OFFSET, ((y * 32) + 80) + screenY);
-						}else {
-							tile.draw(g, (x * 32) + screenX + EQUIP_OFFSET, 
-									((y * 32) + 80) + screenY);
-						} 
+							tile.draw(g, ((x * 32) - 64) + screenX + EQUIP_OFFSET, ((y * 32) + 80) + screenY); // Offset Equip slots to left.
+						} else {
+							tile.draw(g, (x * 32) + screenX + EQUIP_OFFSET, ((y * 32) + 80) + screenY);
+						}
 					}
 				}
 			}
+            curInvTile.drawTooltip(g);
 		}
 	}
 	
@@ -110,15 +108,10 @@ public class Inventory implements Menu {
 				ply.getStat("end") +""), (width - 170) + screenX, 230 + screenY);
 		g.drawString(invMenu.getValueAsString("#agi").replace("%n",
 				ply.getStat("agi") +""), (width - 170) + screenX, 280 + screenY);
-		if(curInvTile.getContainedItem() != null) {
-			g.drawString(curInvTile.getContainedItem().getName(),
-					screenX + 30, screenY + 50);
-		}
 		g.drawString("Equip", screenX + 30, 10 + screenY);
-		g.drawRect(screenX - EQUIP_OFFSET, screenY, width 
-				+ EQUIP_OFFSET, height);
+		g.drawRect(screenX - EQUIP_OFFSET, screenY, width + EQUIP_OFFSET, height);
 	}
-	
+
 	private void drawItems(Graphics g) {
 		int count = 0;
 		for(int x = 1; x < Misc.MAX_INVENTORY / 10; x++) {	
@@ -149,43 +142,43 @@ public class Inventory implements Menu {
 			if (container.getInput().isKeyPressed(Input.KEY_I)) {
 				this.setVisible(false);
 				ply.isFrozen(false);
-			} else if(container.getInput().isKeyPressed(Input.KEY_D)) {
-				ply.removeItem(curInvTile.getContainedItem());
-				inventoryTiles[lastItemX][lastItemY].setContainedItem(null);
-				//curInvTile.setContainedItem(null);
-				
-			} else if(container.getInput().isKeyPressed(Input.KEY_E)){
-				if(curInvTile.getContainedItem() != null) {
-					InventoryTile equipTile; 
-					for(int i = 0; i < inventoryTiles[0].length; i++) {
-						equipTile = inventoryTiles[0][i];
-						ItemType type = InventoryTile.indexToItemType(i);
-						if(type == null) { continue; }
-						if(curInvTile != null) {
-							if(curInvTile.getContainedItem().getType() == type) {
-								if(equipTile.getContainedItem() != null) {
-									return;
-								}
-								ply.removeItem(curInvTile.getContainedItem());
-								ply.equipItem(curInvTile.getContainedItem());
-								equipTile.setContainedItem(curInvTile
-										.getContainedItem());
-								inventoryTiles[lastItemX][lastItemY]
-										.setContainedItem(null);
-								curInvTile.setContainedItem(null);
-								return;
-							}
-						}
-					}
-				}
-			}else if(container.getInput().isKeyPressed(Input.KEY_U)) {
-				if(curInvTile != null) {
-					if(curInvTile.isEquipSlot()) {
-						ply.unequipItem(curInvTile.getContainedItem());
-						curInvTile.setContainedItem(null);
-					}
-				}
 			}
+            if (container.getInput().isKeyPressed(Input.KEY_D)) {
+                ply.removeItem(curInvTile.getContainedItem());
+                inventoryTiles[lastItemX][lastItemY].setContainedItem(null);
+                //curInvTile.setContainedItem(null);
+            } else if (container.getInput().isKeyPressed(Input.KEY_E)) {
+                if(curInvTile.getContainedItem() != null) {
+                    InventoryTile equipTile;
+                    for(int i = 0; i < inventoryTiles[0].length; i++) {
+                        equipTile = inventoryTiles[0][i];
+                        ItemType type = InventoryTile.indexToItemType(i);
+                        if(type == null) { continue; }
+                        if(curInvTile != null) {
+                            if(curInvTile.getContainedItem().getType() == type) {
+                                if(equipTile.getContainedItem() != null) {
+                                    return;
+                                }
+                                ply.removeItem(curInvTile.getContainedItem());
+                                ply.equipItem(curInvTile.getContainedItem());
+                                equipTile.setContainedItem(curInvTile
+                                        .getContainedItem());
+                                inventoryTiles[lastItemX][lastItemY]
+                                        .setContainedItem(null);
+                                curInvTile.setContainedItem(null);
+                                return;
+                            }
+                        }
+                    }
+                }
+            } else if(container.getInput().isKeyPressed(Input.KEY_U)) {
+                if(curInvTile != null) {
+                    if(curInvTile.isEquipSlot()) {
+                        ply.unequipItem(curInvTile.getContainedItem());
+                        curInvTile.setContainedItem(null);
+                    }
+                }
+            }
 			try {
 				if (container.getInput().isKeyDown(Input.KEY_UP)) {
 					newInvTile = 

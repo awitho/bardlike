@@ -17,7 +17,15 @@ public class NameGenerator {
 		String prefix = subnames.get("prefix").getAsJsonArray().get((int) (Math.random() * subnames.get("prefix").getAsJsonArray().size())).getAsString();
 		String midname = subnames.get("midname").getAsJsonArray().get((int) (Math.random() * subnames.get("midname").getAsJsonArray().size())).getAsString();
 		String suffix = subnames.get("suffix").getAsJsonArray().get((int) (Math.random() * subnames.get("suffix").getAsJsonArray().size())).getAsString();
-		return prefix + " " + midname + " " + suffix;
+        if (prefix.trim().equalsIgnoreCase("") && !suffix.trim().equalsIgnoreCase("")) {
+            return midname + " " + suffix;
+        } else if (!prefix.trim().equalsIgnoreCase("") && suffix.trim().equalsIgnoreCase("")) {
+            return prefix + " " + midname;
+        } else if (prefix.trim().equalsIgnoreCase("") && suffix.trim().equalsIgnoreCase("")) {
+            return midname;
+        } else {
+		    return prefix + " " + midname + " " + suffix;
+        }
 	}
 
 }
