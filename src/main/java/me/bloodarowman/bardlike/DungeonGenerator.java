@@ -1,7 +1,6 @@
 package me.bloodarowman.bardlike;
 
 import java.util.ArrayList;
-import org.newdawn.slick.SlickException;
 
 /**
  * A class for randomly generating coherent dungeons.
@@ -51,18 +50,18 @@ public class DungeonGenerator {
 			while (true) {
 				innerloop: // Loop label.
 				for (Direction dir : Direction.values()) { // Find adj tiles to starting point.
-					Vector vec = Misc.getLocFromDir(curLookingTile.x, curLookingTile.y, dir);
+					Vector vec = Misc.getLocFromDir(curLookingTile.getX(), curLookingTile.getY(), dir);
 					
 					if (vec.getX() == x2 && vec.getY() == y2) { closedList.add(new PathfindingTile(curLookingTile, x2, y2, 0, 0, 0)); break outerloop; }
 					
 					for (int i = 0; i < closedList.size(); i++) {
-						if (vec.getX() == closedList.get(i).x && vec.getY() == closedList.get(i).y) {
+						if (vec.getX() == closedList.get(i).getX() && vec.getY() == closedList.get(i).getY()) {
 							continue innerloop;
 						}
 					}
 					
 					for (int i = 0; i < openList.size(); i++) {
-						if (vec.getX() == openList.get(i).x && vec.getY() == openList.get(i).y) {
+						if (vec.getX() == openList.get(i).getX() && vec.getY() == openList.get(i).getY()) {
 							continue innerloop; // Possibly, might want to remove?
 						}
 					}
@@ -94,7 +93,7 @@ public class DungeonGenerator {
 				
 				int lowest = 0;
 				for (int i = 0; i < openList.size(); i++) { // Find lowest cost tile. (Will pick last tile if some are the same.)
-					if (openList.get(i).f < openList.get(lowest).f) {
+					if (openList.get(i).getF() < openList.get(lowest).getF()) {
 						lowest = i;
 					}
 				}
@@ -106,16 +105,16 @@ public class DungeonGenerator {
 			
 			PathfindingTile tile = closedList.get(closedList.size() - 1); // Get last tile in path.
 			while (true) {
-				DungeonGenerator.placeTile(tiles, new Tile(TileDictionary.getFloorForTheme(), tile.x, tile.y));
+				DungeonGenerator.placeTile(tiles, new Tile(TileDictionary.getFloorForTheme(), tile.getX(), tile.getY()));
 				for (Direction dir : Direction.values()) {
-					Vector vec = Misc.getLocFromDir(tile.x, tile.y, dir);
+					Vector vec = Misc.getLocFromDir(tile.getX(), tile.getY(), dir);
 					try {
 						Tile wall = tiles[vec.getX()][vec.getY()]; // Location of tobe wall, get tile there!
 					} catch (ArrayIndexOutOfBoundsException ex) { continue; }
 					wallsToBe.add(new Tile(TileDictionary.getWallForTheme(), vec.getX(), vec.getY()));
 				}
-				if (tile.parent == null) { break; }
-				tile = tile.parent; // This causes us to iterate backwards until we reach the root tile!
+				if (tile.getParent() == null) { break; }
+				tile = tile.getParent(); // This causes us to iterate backwards until we reach the root tile!
 			}
 			return true;
 	}
@@ -195,7 +194,7 @@ public class DungeonGenerator {
 		}
 	}
 	
-	public static void placeEntityRandomly(Tile[][] tiles, int w, int h, GameMap map, Entity ent) {
+	public static void placeEntityRandomly(Tile[][] tiles, int w, int h, Entity ent) {
 		if (ent == null) { return; }
 		boolean placed = false;
 		for (int x = 0; x < w; x++) {
@@ -209,7 +208,7 @@ public class DungeonGenerator {
 				}
 			}
 		}
-		if (!placed) { placeEntityRandomly(tiles, w, h, map, ent); }
+		if (!placed) { placeEntityRandomly(tiles, w, h, ent); }
 	}
 	
 	public static void placeMobs(Tile[][] tiles, int w, int h, GameMap map) {
@@ -253,7 +252,7 @@ public class DungeonGenerator {
 		placeItems(tiles, w, h, empty);
 		placeMobs(tiles, w, h, empty);
 		
-		placeEntityRandomly(tiles, Misc.DUNGEON_SIZE, Misc.DUNGEON_SIZE, empty, new DownLadder()); // Places a ladder to next floor down.
+		placeEntityRandomly(tiles, Misc.DUNGEON_SIZE, Misc.DUNGEON_SIZE, new DownLadder()); // Places a ladder to next floor down.
 		
 		empty.setTiles(tiles);
 		return empty;

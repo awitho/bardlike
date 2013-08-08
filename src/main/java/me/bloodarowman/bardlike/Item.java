@@ -11,13 +11,12 @@ import java.util.Map;
  * @version 1
  */
 public class Item extends Entity {
-	private ItemDictionary itemDictionary;
 	private String id;
 	private String name;
     private ItemType type;
 	private WeaponType weaponType;
 	private HashMap<String, Integer> stats = new HashMap<String, Integer>();
-	
+
 	public Item(String name) {
 		super(ItemDictionary.getImage(name));
 		this.id = name;
@@ -35,27 +34,27 @@ public class Item extends Entity {
 			stats.put(ele.getKey(), ele.getValue().getAsInt());
 		}
 	}
-	
+
 	public String getID() {
 		return id;
 	}
-	
+
 	public String getName() {
 		return name != null ? name : id;
 	}
-	
+
 	public HashMap<String, Integer> getStats() {
 		return stats;
 	}
-	
+
 	public boolean isNamed() {
 		return this.name != null;
 	}
-	
+
 	public ItemType getType() {
 		return type;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "(Item | name: " + getName() + ", stats: " + stats + ", image: "

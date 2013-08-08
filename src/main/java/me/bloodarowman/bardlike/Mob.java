@@ -69,8 +69,8 @@ public class Mob extends Entity {
 			if (tiles == null || tiles.size() == 1) { return; }
 			PathfindingTile tile = tiles.get(tiles.size() - 1); // Get last tile in path.
 			while (true) {
-				if (tile.parent.parent == null) {
-					Tile tile2 = getMap().getTile(tile.x, tile.y);
+				if (tile.getParent().getParent() == null) {
+					Tile tile2 = getMap().getTile(tile.getX(), tile.getY());
 					ArrayList<Entity> ents = tile2.findType(Player.class);
 					ArrayList<Entity> ents2 = tile2.findType(Mob.class);
 					if (ents != null || ents2 != null) { break; }
@@ -78,7 +78,7 @@ public class Mob extends Entity {
 					moved = true;
 					break;
 				}
-				tile = tile.parent; // This causes us to iterate backwards until we reach the root tile!
+				tile = tile.getParent(); // This causes us to iterate backwards until we reach the root tile!
 			}
 		}
 	}

@@ -17,7 +17,6 @@ import java.util.Map.Entry;
 import org.keplerproject.luajava.JavaFunction;
 import org.keplerproject.luajava.LuaException;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 
 /**
  * The Player that you control.
@@ -26,8 +25,9 @@ import org.newdawn.slick.Image;
  */
 public class Player extends Entity {
 	private static ArrayList<File> moveHooks = Misc.findFilesRecurse("./scripts/hooks/playerMove/", "(.*).lua");
-	
-	private HashMap<String, Integer> godsFavor = new HashMap<String, Integer>();
+
+    //TODO: Implement gods
+	// private HashMap<String, Integer> godsFavor = new HashMap<String, Integer>();
 	private HashMap<String, Integer> stats = new HashMap<String, Integer>();
 	private HashMap<String, Integer> bonuses = new HashMap<String, Integer>();
 	private ArrayList<Buff> buffs = new ArrayList<Buff>();
@@ -35,12 +35,10 @@ public class Player extends Entity {
 	private JsonArray xpTable; // Required exp for each level.
 	private String plyClass, mainStat; // Would be part of stats, but it can't be.
 	private ArrayList<Item> inventoryItems, equippedItems;
-	private int equipLoc;
-	private Log log;
+    private Log log;
 	private boolean frozen, dead;
-	private Image img;
 
-	public Player(SpriteSheet ss, JsonObject data, Log log, MainGameState mgs) {
+    public Player(SpriteSheet ss, JsonObject data, Log log, MainGameState mgs) {
 		super(ss.getSubImage(data.get("sx").getAsInt(), data.get("sy").getAsInt()));
 		this.log = log;
 		this.mgs = mgs;
@@ -48,56 +46,78 @@ public class Player extends Entity {
 		equippedItems = new ArrayList<Item>();
 		xpTable = new GameConfig("exp.json").getArray();
 		plyClass = data.get("name").getAsString();
+
 		try {
 			mainStat = data.get("mainstat").getAsString();
-		} catch (NullPointerException ex) {}
+		} catch (NullPointerException ignored) {}
+
 		for(Map.Entry<String, JsonElement> entry: data.get("stats").getAsJsonObject().entrySet()) {
 				stats.put(entry.getKey(), entry.getValue().getAsInt());
-		}
-		stats.put("xp", 0);
-		stats.put("level", 1);
-		bonuses.put("end", 0);
-		bonuses.put("agi", 0);
-		bonuses.put("int", 0);
-		bonuses.put("dex", 0);
-		bonuses.put("str", 0);
-		revive();
-		
-		Main.L.newTable();
-		Main.L.pushValue(-1);
-		Main.L.setGlobal("player");
-		
-		try {
-			Main.L.pushString("revive");
-			Main.L.pushJavaFunction(new JavaFunction(Main.L) {
-				public int execute() {
-					revive();
-					return 0;
-				}
-			});
-			
-			Main.L.pushString("die");
-			Main.L.pushJavaFunction(new JavaFunction(Main.L) {
-				public int execute() {
-					die();
-					return 0;
-				}
-			});
-		} catch (LuaException ex) {
-			System.out.println(ex.getStackTrace());
-		}
+        }
 
-		Main.L.setTable(-5);
-		//addItem(new Item(new ItemDictionary(), getMap(), "Leather Helmet"));
+        resetBonuses();
+        resetLevel();
+        revive();
+
+        hookLuaFuncs();
+
+        System.out.println(moveHooks);
 	}
+
+    public void hookLuaFuncs() {
+        Main.luaThread.getLuaState().newTable();
+        Main.luaThread.getLuaState().pushValue(-1);
+        Main.luaThread.getLuaState().setGlobal("player");
+
+        try {
+            Main.luaThread.getLuaState().pushString("revive");
+            Main.luaThread.getLuaState().pushJavaFunction(new JavaFunction(Main.luaThread.getLuaState()) {
+                public int execute() throws LuaException {
+                    revive();
+                    return 0;
+                }
+            });
+
+            Main.luaThread.getLuaState().pushString("die");
+            Main.luaThread.getLuaState().pushJavaFunction(new JavaFunction(Main.luaThread.getLuaState()) {
+                public int execute() throws LuaException {
+                    die();
+                    return 0;
+                }
+            });
+
+            Main.luaThread.getLuaState().pushString("levelUp");
+            Main.luaThread.getLuaState().pushJavaFunction(new JavaFunction(Main.luaThread.getLuaState()) {
+                @Override
+                public int execute() throws LuaException {
+                    levelUp();
+                    return 0;
+                }
+            });
+
+            Main.luaThread.getLuaState().pushString("setXp");
+            Main.luaThread.getLuaState().pushJavaFunction(new JavaFunction(Main.luaThread.getLuaState()) {
+                @Override
+                public int execute() throws LuaException {
+                    if (L.getTop() > 1) {
+                        setXp((int) Math.round(getParam(2).getNumber()));
+                    }
+                    return 0;
+                }
+            });
+        } catch (LuaException ex) {
+            ex.printStackTrace();
+        }
+
+        Main.luaThread.getLuaState().setTable(-9);
+    }
 
 	public void move(Direction dir) {
 		Misc.LuaExecFileList(moveHooks);
-		
+
 		if(frozen || dead) { return; }
 		Tile curTile = getTile();
-		if (curTile == null) { log.append("The game has errored while generating the dungeon, please restart the game."); return; };
-		//System.out.println("Player.move: Attempting to move in dir: " + dir);
+		if (curTile == null) { log.append("The game has errored while generating the dungeon, please restart the game."); return; }
 		Vector vec = Misc.getLocFromDir(curTile.getX(), curTile.getY(), dir);
 		Tile tile = getMap().getTile(vec.getX(), vec.getY());
 		if (tile == null || tile.isWall()) { return; }
@@ -215,11 +235,7 @@ public class Player extends Entity {
 	}
         
 	public void updateBonuses() {
-		bonuses.put("end", 0);
-		bonuses.put("agi", 0);
-		bonuses.put("int", 0);
-		bonuses.put("dex", 0);
-		bonuses.put("str", 0);
+		resetBonuses();
 		for (int i = 0; i < equippedItems.size(); i++) {
 			for (Entry<String, Integer> ele : getEquippedItems().get(i).getStats().entrySet()) {
 				System.out.println(ele);
@@ -246,12 +262,8 @@ public class Player extends Entity {
 		equippedItems.clear();
 		inventoryItems.clear();
 	}
-	
-	public int getEquipLoc() {
-		return equipLoc;
-	}
-	
-	public ArrayList<Item> getPlayerItems() {
+
+    public ArrayList<Item> getPlayerItems() {
 		return inventoryItems;
 	}
 	
@@ -266,6 +278,19 @@ public class Player extends Entity {
 	public HashMap getStats() {
 		return stats;
 	}
+
+    public void resetBonuses() {
+        bonuses.put("end", 0);
+        bonuses.put("agi", 0);
+        bonuses.put("int", 0);
+        bonuses.put("dex", 0);
+        bonuses.put("str", 0);
+    }
+
+    public void resetLevel() {
+        stats.put("xp", 0);
+        stats.put("level", 1);
+    }
 	
 	public void levelUp() {
 		stats.put("level", getLevel() + 1);
@@ -283,7 +308,7 @@ public class Player extends Entity {
 	}
 	
 	public void setLevel(int level) {
-		stats.put("level", 0);
+		stats.put("level", level);
 	}
 	
 	public int getLevel() {
@@ -299,15 +324,15 @@ public class Player extends Entity {
 	}
 	
 	public void addXP(int amount) {
-		setXP(getXP() + amount);
+		setXp(getXP() + amount);
 	}
 
-	public void setXP(int amount) {
+	public void setXp(int amount) {
 		if (getLevel() >= getMaxLevel()) { return; }
 		int requiredXP = xpTable.get(getLevel()).getAsInt();
 		if (amount > requiredXP) {
 			levelUp();
-			setXP(amount - requiredXP);
+			setXp(amount - requiredXP);
 			return;
 		}
 		stats.put("xp", amount);

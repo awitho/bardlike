@@ -40,16 +40,19 @@ public class Misc {
 			System.exit(1);
 		}
 	}
-	
+
+
+    //TODO: Grab errors from Lua Interpreter.
 	public static void LuaExecFileList(ArrayList<File> files) {
-		for (int i = 0; i < files.size(); i++) {
-			try { 
-				//Main.L.load(scripts.get(i)., null);
-				Main.L.LdoFile(files.get(i).toString());
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
-		}
+        for (File file : files) {
+            try {
+                //Main.L.load(scripts.get(i)., null);
+                //Main.L.LdoFile(files.get(i).toString());
+                Main.luaThread.addFile(file);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
 	}
 	
 	public static ArrayList<File> findFilesRecurse(String dir, String filter) {
@@ -57,16 +60,16 @@ public class Misc {
 		File folder = new File(dir);
 		File[] files = folder.listFiles();
 		if (files == null || files.length == 0) { return finalFiles; }
-		for (int i = 0; i < files.length; i++) {
-			if (files[i].isFile()) {
-				if (files[i].getName().matches(filter)) {
-					finalFiles.add(files[i]);
-				}
-			} else if (files[i].isDirectory()) {
-				ArrayList<File> newFiles = findFilesRecurse(files[i].getPath(), filter);
-				finalFiles.addAll(newFiles);
-			}
-		}
+        for (File file : files) {
+            if (file.isFile()) {
+                if (file.getName().matches(filter)) {
+                    finalFiles.add(file);
+                }
+            } else if (file.isDirectory()) {
+                ArrayList<File> newFiles = findFilesRecurse(file.getPath(), filter);
+                finalFiles.addAll(newFiles);
+            }
+        }
 		return finalFiles;
 	}
 	
@@ -74,9 +77,9 @@ public class Misc {
 		if (obj == null || obj.length == 0) { return; }
 		System.out.print("[");
 		System.out.print(" l: " + obj.length + ", ");
-		for (int i = 0; i < obj.length; i++) {
-			System.out.print(obj.toString() + ", ");
-		}
+        for (Object anObj : obj) {
+            System.out.print(obj.toString() + ", ");
+        }
 		System.out.println("]");
 	}
 	
@@ -171,11 +174,8 @@ public class Misc {
 	 * @return A random boolean.
 	 */
 	public static boolean randomBool() {
-		if ((int) (Math.random() * 2) == 0) {
-			return false;
-		}
-		return true;
-	}
+        return (int) (Math.random() * 2) != 0;
+    }
 	
 	public static int randomInt(int n, int m) {
 		return (int) (Math.random() * (m - n)) + n;
@@ -205,25 +205,25 @@ public class Misc {
 			while (true) {
 				innerloop: // Loop label.
 				for (Direction dir : Direction.values()) { // Find adj tiles to starting point.
-					Vector vec = Misc.getLocFromDir(curLookingTile.x, curLookingTile.y, dir);
+					Vector vec = Misc.getLocFromDir(curLookingTile.getX(), curLookingTile.getY(), dir);
 					
 					if (vec.getX() == x2 && vec.getY() == y2) { closedList.add(new PathfindingTile(curLookingTile, x2, y2, 0, 0, 0)); break outerloop; }
 					
 					for (int i = 0; i < closedList.size(); i++) {
-						if (vec.getX() == closedList.get(i).x && vec.getY() == closedList.get(i).y) {
+						if (vec.getX() == closedList.get(i).getX() && vec.getY() == closedList.get(i).getY()) {
 							continue innerloop;
 						}
 					}
 					
 					for (int i = 0; i < openList.size(); i++) {
-						if (vec.getX() == openList.get(i).x && vec.getY() == openList.get(i).y) {
+						if (vec.getX() == openList.get(i).getX() && vec.getY() == openList.get(i).getY()) {
 							continue innerloop; // Possibly, might want to remove?
 						}
 					}
 					
 					try {
 						if (vec.getX() < 0 || vec.getX() > tiles.length || vec.getY() < 0 || vec.getY() > tiles[0].length || (tiles[vec.getX()][vec.getY()].isWall() && tiles[vec.getX()][vec.getY()].isReal())) { continue; }
-					} catch (IndexOutOfBoundsException ex) { }
+					} catch (IndexOutOfBoundsException ignored) { }
 
 					//calculate f, g & h here.
 					double g = 10.0;
@@ -251,7 +251,7 @@ public class Misc {
 				
 				int lowest = 0;
 				for (int i = 0; i < openList.size(); i++) { // Find lowest cost tile. (Will pick last tile if some are the same.)
-					if (openList.get(i).f < openList.get(lowest).f) {
+					if (openList.get(i).getF() < openList.get(lowest).getF()) {
 						lowest = i;
 					}
 				}

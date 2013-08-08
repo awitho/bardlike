@@ -15,7 +15,7 @@ public class Tile {
 	private int ix, iy;
 	private String name;
 	private boolean inLos, playerSaw, isWall, isEmpty;
-	private ArrayList<Entity> containedEnts = new ArrayList<Entity>();;
+	private ArrayList<Entity> containedEnts = new ArrayList<Entity>();
 	private Image spr, overlay;
 
 	private static final Color overlayColor = new Color(0, 0, 0, 200);
@@ -114,7 +114,10 @@ public class Tile {
 			}
 		}
 		if (playerSaw && !inLos) {
+            Color old = g.getColor();
+            g.setColor(overlayColor);
 			g.drawImage(overlay, x, y);
+            g.setColor(old);
 		}
 	}
 

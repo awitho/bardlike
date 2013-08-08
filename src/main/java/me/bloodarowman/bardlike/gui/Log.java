@@ -1,44 +1,53 @@
 package me.bloodarowman.bardlike.gui;
 
-import java.awt.Toolkit;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+
 import me.bloodarowman.bardlike.Main;
 import org.keplerproject.luajava.JavaFunction;
 import org.keplerproject.luajava.LuaException;
+import org.newdawn.slick.*;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.TrueTypeFont;
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+import org.newdawn.slick.font.effects.ColorEffect;
 
 /**
  *
  * @author Alex
  */
 public class Log implements Menu {
-	public static TrueTypeFont LOG_FONT = new TrueTypeFont(new java.awt.Font("Arial", 1, (int) Main.scale), true);
+    public static UnicodeFont LOG_FONT;
+
+    static {
+        try {
+            LOG_FONT = new UnicodeFont("./gfx/fonts/OldLondon.ttf", (int) Main.scale, false, false);
+            LOG_FONT.getEffects().add(new ColorEffect(java.awt.Color.white));
+            LOG_FONT.addAsciiGlyphs();
+            LOG_FONT.loadGlyphs();
+        } catch (SlickException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //public static TrueTypeFont LOG_FONT = new TrueTypeFont(new java.awt.Font("Arial", Font.PLAIN, (int) Main.scale), true);
 	private boolean visible = false;
-	private double curTime = 0.0;
+	// private double curTime = 0.0;
 	private final int LOG_LENGTH = 8;
-	private Color white = new Color(0, 0, 0, 255);
-	private Color black = new Color(0, 0, 0, 255);
+	// private Color white = new Color(0, 0, 0, 255);
+	// private Color black = new Color(0, 0, 0, 255);
 	private ArrayList<Line> lines = new ArrayList<Line>();
 	private final DateFormat dateFormat = new SimpleDateFormat("h:mm:ss");
 	
 	public Log() {
-		Main.L.newTable();
-		Main.L.pushValue(-1);
-		Main.L.setGlobal("gLog");
-		Main.L.pushString("append");
+		Main.luaThread.getLuaState().newTable();
+		Main.luaThread.getLuaState().pushValue(-1);
+		Main.luaThread.getLuaState().setGlobal("gLog");
+		Main.luaThread.getLuaState().pushString("append");
 		
 		try {
-			Main.L.pushJavaFunction(new JavaFunction(Main.L) {
+			Main.luaThread.getLuaState().pushJavaFunction(new JavaFunction(Main.luaThread.getLuaState()) {
 				public int execute() {
 					if (L.getTop() > 1) {
 						append(getParam(2).getString());
@@ -47,10 +56,10 @@ public class Log implements Menu {
 				}
 			});
 		} catch (LuaException ex) {
-			System.out.println(ex.getStackTrace());
+			ex.printStackTrace();
 		}
 
-		Main.L.setTable(-3);
+		Main.luaThread.getLuaState().setTable(-3);
 	}
 
 	@Override
@@ -65,9 +74,9 @@ public class Log implements Menu {
 	
 	public void append(String str) {
 		lines.add(new Line("[" + dateFormat.format(Calendar.getInstance().getTime()) + "] " + str));
-		curTime = System.currentTimeMillis();
-		white = new Color(255, 255, 255, 255);
-		black = new Color(0, 0, 0, 255);
+	//	curTime = System.currentTimeMillis();
+	//	white = new Color(255, 255, 255, 255);
+	//	black = new Color(0, 0, 0, 255);
 	}
 	
 	public void clear() {

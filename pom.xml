@@ -20,7 +20,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
-  
+
   <build>
 	  <resources>
 		  <resource>
@@ -45,6 +45,20 @@
 			  </includes>
 		  </resource> -->
 	  </resources>
+      <plugins>
+          <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-jar-plugin</artifactId>
+              <configuration>
+                  <archive>
+                      <manifest>
+                          <mainClass>me.bloodarowman.bardlike.Main</mainClass>
+                          <packageName>me.bloodarowman.bardlike</packageName>
+                      </manifest>
+                  </archive>
+              </configuration>
+          </plugin>
+      </plugins>
   </build>
 
   <dependencies>

@@ -91,10 +91,9 @@ public class MainGameState extends BasicGameState {
 	}
 	
 	public void restart() {
-		// Execute autorun folder
 		levels.clear();
 		setLevel(genNewLevel());
-		player.setXP(0);
+		player.setXp(0);
 		player.clearInventory();
 		log.clear();
 		DungeonGenerator.placePlayerInFeasibleLocation(curMap, player);
