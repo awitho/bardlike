@@ -69,7 +69,7 @@ public class Inventory implements Menu {
 	public void draw(Graphics g, int screenX, int screenY) {
 		if(visible) {
 			drawBase(g, screenX, screenY);
-			drawItems(g);
+			drawItems();
 			for(int x = 0; x < inventoryTiles.length; x++) {
 				for(int y = 0; y < inventoryTiles[0].length; y++) {
 					InventoryTile tile = inventoryTiles[x][y];
@@ -112,13 +112,12 @@ public class Inventory implements Menu {
 		g.drawRect(screenX - EQUIP_OFFSET, screenY, width + EQUIP_OFFSET, height);
 	}
 
-	private void drawItems(Graphics g) {
+	private void drawItems() {
 		int count = 0;
 		for(int x = 1; x < Misc.MAX_INVENTORY / 10; x++) {	
 			for(int y = 0; y < Misc.MAX_INVENTORY / 10; y++) {
 				try{
-					inventoryTiles[x][y].setContainedItem(ply.getPlayerItems()
-							.get(count));
+					inventoryTiles[x][y].setContainedItem(ply.getPlayerItems().get(count));
 					if(inventoryTiles[x][y].containsItem()) {
 						lastItemX = x;
 						lastItemY = y;

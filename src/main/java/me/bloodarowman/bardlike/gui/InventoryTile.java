@@ -16,13 +16,14 @@ public class InventoryTile {
 	private boolean equipSlot = false;
 	private ItemType equipType;
     private String itemString = "";
+    private int itemStringWidth = 0;
 	private Item containedItem;
 	private boolean selected = false;
 	private boolean containsItem = false;
 
     private final int TILE_SIZE = 32;
-    private final int PADDING = 10;
     private final int HALF_TILE = TILE_SIZE / 2;
+    private final int PADDING = 10;
 	
 	public InventoryTile(int ix, int iy) {
 		this.ix = ix;
@@ -51,9 +52,9 @@ public class InventoryTile {
             Color c = g.getColor();
             g.setFont(Log.LOG_FONT);
             g.setColor(Color.black);
-            g.fillRect(curX + TILE_SIZE / 2, curY + TILE_SIZE / 2, g.getFont().getWidth(itemString) + PADDING, g.getFont().getHeight(itemString) + PADDING);
+            g.fillRect(curX + TILE_SIZE / 2, curY + TILE_SIZE / 2, itemStringWidth + PADDING, g.getFont().getHeight(itemString) + PADDING);
             g.setColor(Color.white);
-            g.drawRect(curX + TILE_SIZE / 2, curY + TILE_SIZE / 2, g.getFont().getWidth(itemString) + PADDING, g.getFont().getHeight(itemString) + PADDING);
+            g.drawRect(curX + TILE_SIZE / 2, curY + TILE_SIZE / 2, itemStringWidth + PADDING, g.getFont().getHeight(itemString) + PADDING);
             g.setColor(Color.white);
             g.drawString(itemString, curX + HALF_TILE + PADDING/2, curY + HALF_TILE);
             g.setFont(f);
@@ -67,15 +68,25 @@ public class InventoryTile {
 	
 	public void setContainedItem(Item i) {
 		containedItem = i;
-        if (i.isNamed()) {
-            itemString = "\"" + i.getName() + "\"\n";
-        } else {
-            itemString = i.getName() + "\n";
-        }
-        for (Map.Entry<String, Integer> ent : i.getStats().entrySet()) {
-            itemString += "· " + ent.getKey() + ": " + ent.getValue() + "\n";
-        }
-		containsItem = true;
+        if (i != null) {
+            if (i.isNamed()) {
+                itemString = "\"" + i.getName() + "\"\n";
+            } else {
+                itemString = i.getName() + "\n";
+            }
+            itemString += i.getDesc() + "\n";
+            for (Map.Entry<String, Integer> ent : i.getStats().entrySet()) {
+                itemString += "· " + ent.getKey() + ": " + ent.getValue() + "\n";
+            }
+            int l = 0;
+            for (String str : itemString.split("\n")) {
+                if (Log.LOG_FONT.getWidth(str) > l) {
+                    l = Log.LOG_FONT.getWidth(str);
+                }
+            }
+            itemStringWidth = l;
+		    containsItem = true;
+        } else { containsItem = false; }
 	}
 	
 	public Item getContainedItem() {

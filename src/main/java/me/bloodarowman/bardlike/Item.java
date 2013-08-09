@@ -13,23 +13,30 @@ import java.util.Map;
 public class Item extends Entity {
 	private String id;
 	private String name;
+    private boolean named = false;
+    private String desc;
     private ItemType type;
 	private WeaponType weaponType;
 	private HashMap<String, Integer> stats = new HashMap<String, Integer>();
 
-	public Item(String name) {
-		super(ItemDictionary.getImage(name));
-		this.id = name;
-		this.type = ItemDictionary.getType(name);
-		this.weaponType = ItemDictionary.getWeaponType(name);
+	public Item(String id) {
+		super(ItemDictionary.getImage(id));
+		this.id = id;
+        this.name = ItemDictionary.getName(id);
+        this.desc = ItemDictionary.getDesc(id);
+		this.type = ItemDictionary.getType(id);
+		this.weaponType = ItemDictionary.getWeaponType(id);
+
 		if ((int) (Math.random() * 100) <=45) {
 			if (weaponType != null) {
+                this.named = true;
 				this.name = NameGenerator.generateName(weaponType.toString());
 			} else {
+                this.named = true;
 				this.name = NameGenerator.generateName(type.toString());
 			}
 		}
-		for (Map.Entry<String, JsonElement> ele : ItemDictionary.getStats(name)
+		for (Map.Entry<String, JsonElement> ele : ItemDictionary.getStats(id)
 					.entrySet()) {
 			stats.put(ele.getKey(), ele.getValue().getAsInt());
 		}
@@ -40,16 +47,23 @@ public class Item extends Entity {
 	}
 
 	public String getName() {
-		return name != null ? name : id;
+		return name;
 	}
+
+    public String getDesc() {
+        if (desc.trim().equalsIgnoreCase("")) {
+            return "A description would be here, but we don't like you.";
+        }
+        return desc;
+    }
 
 	public HashMap<String, Integer> getStats() {
 		return stats;
 	}
 
 	public boolean isNamed() {
-		return this.name != null;
-	}
+		return named;
+    }
 
 	public ItemType getType() {
 		return type;

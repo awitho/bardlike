@@ -17,6 +17,8 @@ import java.util.Map.Entry;
 public class ItemDictionary {
 	private static HashMap<String, Image> itemImages;
 	private static HashMap<String, ItemType> itemTypes;
+    private static HashMap<String, String> itemNames;
+    private static HashMap<String, String> itemDescs;
 	private static HashMap<String, WeaponType> weaponTypes;
 	private static HashMap<Integer, HashMap<String, Image>> scaledImages;
 	private static JsonArray items;
@@ -26,35 +28,53 @@ public class ItemDictionary {
 		itemImages = new HashMap<String, Image>();
 		scaledImages = new HashMap<Integer, HashMap<String, Image>>();
 		itemTypes = new HashMap<String, ItemType>();
+        itemNames = new HashMap<String, String>();
+        itemDescs = new HashMap<String, String>();
 		weaponTypes = new HashMap<String, WeaponType>();
 		
 		try {
 			items = new GameConfig("items.json").getArray();
+
+            GameConfig itemNamesJSON = new GameConfig("loc/items_en.json");
 			SpriteSheet itemSprites = ImageLoader.loadSpritesheet("./gfx/ents/items.png", 32, 32);
 			for(int i = 0; i < items.size(); i++) {
 				curItem = items.get(i).getAsJsonObject();
-				itemTypes.put(curItem.get("name").getAsString(), ItemType.valueOf(curItem.get("type").getAsString()));
+
+				itemTypes.put(curItem.get("id").getAsString(), ItemType.valueOf(curItem.get("type").getAsString()));
+
 				if (curItem.get("sx").getAsInt() < 0 || curItem.get("sx").getAsInt() > itemSprites.getHorizontalCount() || curItem.get("sy").getAsInt() < 0 || curItem.get("sy").getAsInt() > itemSprites.getVerticalCount()) {
-					System.out.println(curItem.get("name").getAsString() + " was out of the spritesheet's bounds, using placeholder.");
-					itemImages.put(curItem.get("name").getAsString(), Misc.miscImages.get("placeholder"));
+					Misc.logError(curItem.get("id").getAsString() + " was out of the spritesheet's bounds, using placeholder.");
+					itemImages.put(curItem.get("id").getAsString(), Misc.miscImages.get("placeholder"));
 				} else {
-					itemImages.put(curItem.get("name").getAsString(), itemSprites.getSubImage(curItem.get("sx").getAsInt(), curItem.get("sy").getAsInt()).getScaledCopy(Misc.TARGET_SIZE, Misc.TARGET_SIZE));
+					itemImages.put(curItem.get("id").getAsString(), itemSprites.getSubImage(curItem.get("sx").getAsInt(), curItem.get("sy").getAsInt()).getScaledCopy(Misc.TARGET_SIZE, Misc.TARGET_SIZE));
 				}
-				
-				String wepType;
+
+                itemNames.put(curItem.get("id").getAsString(), itemNamesJSON.getObject().get(curItem.get("id").getAsString()).getAsJsonObject().get("name").getAsString());
+                itemDescs.put(curItem.get("id").getAsString(), itemNamesJSON.getObject().get(curItem.get("id").getAsString()).getAsJsonObject().get("desc").getAsString());
+
+                String wepType;
 				try {
 					wepType = curItem.get("type2").getAsString();
 				} catch (NullPointerException ex) { continue; }
 				if(wepType != null) {
-					weaponTypes.put(curItem.get("name").getAsString(), 
+					weaponTypes.put(curItem.get("id").getAsString(),
 							WeaponType.valueOf(wepType));
 				}
 			}
 		} catch (Exception e) {
 			Misc.showDialog(e);
 		}
+       // System.out.println(itemImages + "\n" + scaledImages + "\n" + itemTypes + "\n" + itemNames + "\n" + weaponTypes);
 		NameGenerator.setNames(new GameConfig("names.json").getObject());
-	}
+    }
+
+    public static String getName(String id) {
+        return itemNames.get(id);
+    }
+
+    public static String getDesc(String id) {
+        return itemDescs.get(id);
+    }
 	
 	public static ItemType getType(String name) {
 		return itemTypes.get(name);
@@ -85,7 +105,7 @@ public class ItemDictionary {
 		for(int i = 0; i < items.size(); i++) {
 			JsonObject item =  items.get(i).getAsJsonObject();
 			//System.out.println(item);
-			if(item.get("name").getAsString().equalsIgnoreCase(name)) {
+			if(item.get("id").getAsString().equalsIgnoreCase(name)) {
 				return item.get("stats").getAsJsonObject();
 			}
 		}
@@ -102,6 +122,6 @@ public class ItemDictionary {
 	
 	public static Item getRandomItem() {
 		return new Item(items.get((int) (Math.random() * 
-				items.size())).getAsJsonObject().get("name").getAsString());
+				items.size())).getAsJsonObject().get("id").getAsString());
 	}
 }
