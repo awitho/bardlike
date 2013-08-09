@@ -1,27 +1,27 @@
 [
-	{
-		"name":"Crystal Staff",
-		"type": "WEAPON",
-		"type2": "STAFF",
-		"sx": 1,
-		"sy": 9,
-		"stats": {
-			"str": 1,
-			"int": 3
-		}
-	},
-	{
-		"name":"Steel Claymore",
-		"type": "WEAPON",
-		"type2": "SWORD",
-		"sx": 0,
-		"sy": 0,
-		"stats": {
-			"str": 4
-		}
-	},
     {
-        "name": "Steel Sword",
+        "id": "crystal_staff",
+        "type": "WEAPON",
+        "type2": "STAFF",
+        "sx": 1,
+        "sy": 9,
+        "stats": {
+            "str": 1,
+            "int": 3
+        }
+    },
+    {
+        "id": "steel_claymore",
+        "type": "WEAPON",
+        "type2": "SWORD",
+        "sx": 0,
+        "sy": 0,
+        "stats": {
+            "str": 4
+        }
+    },
+    {
+        "id": "steel_sword",
         "type": "WEAPON",
         "type2": "SWORD",
         "sx": 1,
@@ -31,7 +31,7 @@
         }
     },
     {
-        "name": "Leather Helmet",
+        "id": "leather_helmet",
         "type": "HEADGEAR",
         "sx": 1,
         "sy": 11,
@@ -39,477 +39,477 @@
             "end": 3
         }
     },
-	{
-		"name": "Iron Shortsword",
-		"type": "WEAPON",
-		"type2": "SWORD",
-		"sx": 0,
-		"sy": 1,
-		"stats": {
-			"str": 3
-		}
-	},
-	{
-		"name": "Double-edged sword",
-		"type": "WEAPON",
-		"type2": "SWORD",
-		"sx": 1,
-		"sy": 1,
-		"stats": {
-			"str": 3
-		}
-	},
-	{
-		"name": "Rapier",
-		"type": "WEAPON",
-		"type2": "SWORD",
-		"sx": 2,
-		"sy": 1,
-		"stats": {
-			"str": 3
-		}
-	},
-	{
-		"name": "Butter Knife",
-		"type": "WEAPON",
-		"type2": "DAGGER",
-		"sx": 0,
-		"sy": 2,
-		"stats": {
-			"str": 1
-		}
-	},
-	{
-		"name": "Iron Dagger",
-		"type": "WEAPON",
-		"type2": "DAGGER",
-		"sx": 1,
-		"sy": 2,
-		"stats": {
-			"str": 2
-		}
-	},
-	{
-		"name": "Iron Spear",
-		"type": "WEAPON",
-		"type2": "SPEAR",
-		"sx": 0,
-		"sy": 3,
-		"stats": {
-			"str": 4
-		}
-	},
-	{
-		"name": "Steel Spear",
-		"type": "WEAPON",
-		"type2": "SPEAR",
-		"sx": 1,
-		"sy": 3,
-		"stats": {
-			"str": 5
-		}
-	},
-	{
-		"name": "Iron Hammer",
-		"type": "WEAPON",
-		"type2": "HAMMER",
-		"sx": 0,
-		"sy": 4,
-		"stats": {
-			"str": 5
-		}
-	},
-	{
-		"name": "Brass Hammer",
-		"type": "WEAPON",
-		"type2": "HAMMER",
-		"sx": 1,
-		"sy": 4,
-		"stats": {
-			"str": 4
-		}
-	},
-	{
-		"name": "Steel GreatHammer",
-		"type": "WEAPON",
-		"type2": "HAMMER",
-		"sx": 2,
-		"sy": 4,
-		"stats": {
-			"str": 6
-		}
-	},
-	{
-		"name": "Wooden Club",
-		"type": "WEAPON",
-		"type2": "MACE",
-		"sx": 0,
-		"sy": 5,
-		"stats": {
-			"str": 3
-		}
-	},
-	{
-		"name": "Iron Mace",
-		"type": "WEAPON",
-		"type2": "MACE",
-		"sx": 1,
-		"sy": 5,
-		"stats": {
-			"str": 4
-		}
-	},
-	{
-		"name": "Steel Mace",
-		"type": "WEAPON",
-		"type2": "MACE",
-		"sx": 2,
-		"sy": 5,
-		"stats": {
-			"str": 5
-		}
-	},
-	{
-		"name": "Iron Flail",
-		"type": "WEAPON",
-		"type2": "FLAIL",
-		"sx": 0,
-		"sy": 6,
-		"stats": {
-			"str": 5
-		}
-	},
-	{
-		"name": "Steel Flail",
-		"type": "WEAPON",
-		"type2": "FLAIL",
-		"sx": 1,
-		"sy": 6,
-		"stats": {
-			"str": 6
-		}
-	},
-	{
-		"name": "Bard's Flute",
-		"type": "WEAPON",
-		"type2": "INSTRUMENT",
-		"sx": 0,
-		"sy": 7,
-		"stats": {
-			"str": 3
-		}
-	},
-	{
-		"name": "Bard's Lute",
-		"type": "WEAPON",
-		"type2": "INSTRUMENT",
-		"sx": 1,
-		"sy": 7,
-		"stats": {
-			"str": 5
-		}
-	},
-	{
-		"name": "Iron Halberd",
-		"type": "WEAPON",
-		"type2": "HALBERD",
-		"sx": 0,
-		"sy": 8,
-		"stats": {
-			"str": 5
-		}
-	},
-	{
-		"name": "Steel Halberd",
-		"type": "WEAPON",
-		"type2": "HALBERD",
-		"sx": 1,
-		"sy": 8,
-		"stats": {
-			"str": 6
-		}
-	},
-	{
-		"name": "Steel Greataxe",
-		"type": "WEAPON",
-		"type2": "HALBERD",
-		"sx": 2,
-		"sy": 8,
-		"stats": {
-			"str": 7
-		}
-	},
-	{
-		"name": "Wood Staff",
-		"type": "WEAPON",
-		"type2": "STAFF",
-		"sx": 0,
-		"sy": 9,
-		"stats": {
-			"str": 2
-		}
-	},
-	{
-		"name": "Wood Wand",
-		"type": "WEAPON",
-		"type2": "WAND",
-		"sx": 0,
-		"sy": 10,
-		"stats": {
-			"str": 1
-		}
-	},
-	{
-		"name": "Crystal Wand",
-		"type": "WEAPON",
-		"type2": "WAND",
-		"sx": 1,
-		"sy": 10,
-		"stats": {
-			"str": 5
-		}
-	},
-	{
-		"name": "Cloth Hood",
-		"type": "HEADGEAR",
-		"sx": 0,
-		"sy": 11,
-		"stats": {
-			"end": 3
-		}
-	},
-	{
-		"name": "Iron Hood",
-		"type": "HEADGEAR",
-		"sx": 2,
-		"sy": 11,
-		"stats": {
-			"end": 4
-		}
-	},
-	{
-		"name": "Iron Helmet",
-		"type": "HEADGEAR",
-		"sx": 3,
-		"sy": 11,
-		"stats": {
-			"end": 6
-		}
-	},
-	{
-		"name": "Leather Pauldrons",
-		"type": "PAULDRONS",
-		"sx": 1,
-		"sy": 12,
-		"stats": {
-			"end": 4
-		}
-	},
-	{
-		"name": "Iron Pauldrons",
-		"type": "PAULDRONS",
-		"sx": 3,
-		"sy": 12,
-		"stats": {
-			"end": 5
-		}
-	},
-	{
-		"name": "Brown Cloak",
-		"type": "CLOAK",
-		"sx": 0,
-		"sy": 13,
-		"stats": {
-			"end": 1
-		}
-	},
-	{
-		"name": "White Cloak",
-		"type": "CLOAK",
-		"sx": 1,
-		"sy": 13,
-		"stats": {
-			"end": 2
-		}
-	},
-	{
-		"name": "Red Cloak",
-		"type": "CLOAK",
-		"sx": 2,
-		"sy": 13,
-		"stats": {
-			"end": 3
-		}
-	},
-	{
-		"name": "Diamond Cloak",
-		"type": "CLOAK",
-		"sx": 3,
-		"sy": 13,
-		"stats": {
-			"end": 4
-		}
-	},
-	{
-		"name": "Leather Shirt",
-		"type": "TORSO",
-		"sx": 0,
-		"sy": 14,
-		"stats": {
-			"end": 3
-		}
-	},
-	{
-		"name": "Leather Armor",
-		"type": "TORSO",
-		"sx": 1,
-		"sy": 14,
-		"stats": {
-			"end": 4
-		}
-	},
-	{
-		"name": "Mail Armor",
-		"type": "TORSO",
-		"sx": 2,
-		"sy": 14,
-		"stats": {
-			"end": 5
-		}
-	},
-	{
-		"name": "Iron Chestplate",
-		"type": "TORSO",
-		"sx": 3,
-		"sy": 14,
-		"stats": {
-			"end": 6
-		}
-	},
-	{
-		"name": "Leather Gauntlets",
-		"type": "GAUNTLETS",
-		"sx": 1,
-		"sy": 15,
-		"stats": {
-			"end": 3
-		}
-	},
-	{
-		"name": "Mail Gauntlets",
-		"type": "GAUNTLETS",
-		"sx": 2,
-		"sy": 15,
-		"stats": {
-			"end": 4
-		}
-	},
-	{
-		"name": "Iron Gauntlets",
-		"type": "GAUNTLETS",
-		"sx": 3,
-		"sy": 15,
-		"stats": {
-			"end": 5
-		}
-	},
-	{
-		"name": "Leather Belt",
-		"type": "WAIST",
-		"sx": 0,
-		"sy": 16,
-		"stats": {
-			"end": 3
-		}
-	},
-	{
-		"name": "Leather Pants",
-		"type": "LEGS",
-		"sx": 0,
-		"sy": 17,
-		"stats": {
-			"end": 2
-		}
-	},
-	{
-		"name": "Leather Leggings",
-		"type": "LEGS",
-		"sx": 1,
-		"sy": 17,
-		"stats": {
-			"end": 3
-		}
-	},
-	{
-		"name": "Mail Leggings",
-		"type": "LEGS",
-		"sx": 2,
-		"sy": 17,
-		"stats": {
-			"end": 4
-		}
-	},
-	{
-		"name": "Iron Leggings",
-		"type": "LEGS",
-		"sx": 3,
-		"sy": 17,
-		"stats": {
-			"end": 5
-		}
-	},
-	{
-		"name": "Leather Shoes",
-		"type": "FEET",
-		"sx": 1,
-		"sy": 18,
-		"stats": {
-			"end": 3
-		}
-	},
-	{
-		"name": "Iron Boots",
-		"type": "FEET",
-		"sx": 3,
-		"sy": 18,
-		"stats": {
-			"end": 4
-		}
-	},
-	{
-		"name": "Silver Ring",
-		"type": "RING",
-		"sx": 0,
-		"sy": 19,
-		"stats": {
-			"end": 1
-		}
-	},
-	{
-		"name": "Silver-Diamond Ring",
-		"type": "RING",
-		"sx": 1,
-		"sy": 19,
-		"stats": {
-			"end": 2
-		}
-	},
-	{
-		"name": "Gold Ring",
-		"type": "RING",
-		"sx": 2,
-		"sy": 19,
-		"stats": {
-			"end": 1
-		}
-	},
-	{
-		"name": "Gold-Diamond Ring",
-		"type": "RING",
-		"sx": 3,
-		"sy": 19,
-		"stats": {
-			"end": 2
-		}
-	}
+    {
+        "id": "iron_shortsword",
+        "type": "WEAPON",
+        "type2": "SWORD",
+        "sx": 0,
+        "sy": 1,
+        "stats": {
+            "str": 3
+        }
+    },
+    {
+        "id": "de_sword",
+        "type": "WEAPON",
+        "type2": "SWORD",
+        "sx": 1,
+        "sy": 1,
+        "stats": {
+            "str": 3
+        }
+    },
+    {
+        "id": "rapier",
+        "type": "WEAPON",
+        "type2": "SWORD",
+        "sx": 2,
+        "sy": 1,
+        "stats": {
+            "str": 3
+        }
+    },
+    {
+        "id": "butter_knife",
+        "type": "WEAPON",
+        "type2": "DAGGER",
+        "sx": 0,
+        "sy": 2,
+        "stats": {
+            "str": 1
+        }
+    },
+    {
+        "id": "iron_dagger",
+        "type": "WEAPON",
+        "type2": "DAGGER",
+        "sx": 1,
+        "sy": 2,
+        "stats": {
+            "str": 2
+        }
+    },
+    {
+        "id": "iron_spear",
+        "type": "WEAPON",
+        "type2": "SPEAR",
+        "sx": 0,
+        "sy": 3,
+        "stats": {
+            "str": 4
+        }
+    },
+    {
+        "id": "steel_spear",
+        "type": "WEAPON",
+        "type2": "SPEAR",
+        "sx": 1,
+        "sy": 3,
+        "stats": {
+            "str": 5
+        }
+    },
+    {
+        "id": "iron_hammer",
+        "type": "WEAPON",
+        "type2": "HAMMER",
+        "sx": 0,
+        "sy": 4,
+        "stats": {
+            "str": 5
+        }
+    },
+    {
+        "id": "brass_hammer",
+        "type": "WEAPON",
+        "type2": "HAMMER",
+        "sx": 1,
+        "sy": 4,
+        "stats": {
+            "str": 4
+        }
+    },
+    {
+        "id": "steel_greathammer",
+        "type": "WEAPON",
+        "type2": "HAMMER",
+        "sx": 2,
+        "sy": 4,
+        "stats": {
+            "str": 6
+        }
+    },
+    {
+        "id": "wooden_club",
+        "type": "WEAPON",
+        "type2": "MACE",
+        "sx": 0,
+        "sy": 5,
+        "stats": {
+            "str": 3
+        }
+    },
+    {
+        "id": "iron_mace",
+        "type": "WEAPON",
+        "type2": "MACE",
+        "sx": 1,
+        "sy": 5,
+        "stats": {
+            "str": 4
+        }
+    },
+    {
+        "id": "steel_mace",
+        "type": "WEAPON",
+        "type2": "MACE",
+        "sx": 2,
+        "sy": 5,
+        "stats": {
+            "str": 5
+        }
+    },
+    {
+        "id": "iron_flail",
+        "type": "WEAPON",
+        "type2": "FLAIL",
+        "sx": 0,
+        "sy": 6,
+        "stats": {
+            "str": 5
+        }
+    },
+    {
+        "id": "steel_flail",
+        "type": "WEAPON",
+        "type2": "FLAIL",
+        "sx": 1,
+        "sy": 6,
+        "stats": {
+            "str": 6
+        }
+    },
+    {
+        "id": "bards_flute",
+        "type": "WEAPON",
+        "type2": "INSTRUMENT",
+        "sx": 0,
+        "sy": 7,
+        "stats": {
+            "str": 3
+        }
+    },
+    {
+        "id": "bards_lute",
+        "type": "WEAPON",
+        "type2": "INSTRUMENT",
+        "sx": 1,
+        "sy": 7,
+        "stats": {
+            "str": 5
+        }
+    },
+    {
+        "id": "iron_halberd",
+        "type": "WEAPON",
+        "type2": "HALBERD",
+        "sx": 0,
+        "sy": 8,
+        "stats": {
+            "str": 5
+        }
+    },
+    {
+        "id": "steel_halberd",
+        "type": "WEAPON",
+        "type2": "HALBERD",
+        "sx": 1,
+        "sy": 8,
+        "stats": {
+            "str": 6
+        }
+    },
+    {
+        "id": "steel_greataxe",
+        "type": "WEAPON",
+        "type2": "HALBERD",
+        "sx": 2,
+        "sy": 8,
+        "stats": {
+            "str": 7
+        }
+    },
+    {
+        "id": "wood_staff",
+        "type": "WEAPON",
+        "type2": "STAFF",
+        "sx": 0,
+        "sy": 9,
+        "stats": {
+            "str": 2
+        }
+    },
+    {
+        "id": "wood_wand",
+        "type": "WEAPON",
+        "type2": "WAND",
+        "sx": 0,
+        "sy": 10,
+        "stats": {
+            "str": 1
+        }
+    },
+    {
+        "id": "crystal_wand",
+        "type": "WEAPON",
+        "type2": "WAND",
+        "sx": 1,
+        "sy": 10,
+        "stats": {
+            "str": 5
+        }
+    },
+    {
+        "id": "cloth_hood",
+        "type": "HEADGEAR",
+        "sx": 0,
+        "sy": 11,
+        "stats": {
+            "end": 3
+        }
+    },
+    {
+        "id": "iron_hood",
+        "type": "HEADGEAR",
+        "sx": 2,
+        "sy": 11,
+        "stats": {
+            "end": 4
+        }
+    },
+    {
+        "id": "iron_helmet",
+        "type": "HEADGEAR",
+        "sx": 3,
+        "sy": 11,
+        "stats": {
+            "end": 6
+        }
+    },
+    {
+        "id": "leather_pauldrons",
+        "type": "PAULDRONS",
+        "sx": 1,
+        "sy": 12,
+        "stats": {
+            "end": 4
+        }
+    },
+    {
+        "id": "iron_pauldrons",
+        "type": "PAULDRONS",
+        "sx": 3,
+        "sy": 12,
+        "stats": {
+            "end": 5
+        }
+    },
+    {
+        "id": "brown_cloak",
+        "type": "CLOAK",
+        "sx": 0,
+        "sy": 13,
+        "stats": {
+            "end": 1
+        }
+    },
+    {
+        "id": "white_cloak",
+        "type": "CLOAK",
+        "sx": 1,
+        "sy": 13,
+        "stats": {
+            "end": 2
+        }
+    },
+    {
+        "id": "red_cloak",
+        "type": "CLOAK",
+        "sx": 2,
+        "sy": 13,
+        "stats": {
+            "end": 3
+        }
+    },
+    {
+        "id": "diamond_cloak",
+        "type": "CLOAK",
+        "sx": 3,
+        "sy": 13,
+        "stats": {
+            "end": 4
+        }
+    },
+    {
+        "id": "leather_shirt",
+        "type": "TORSO",
+        "sx": 0,
+        "sy": 14,
+        "stats": {
+            "end": 3
+        }
+    },
+    {
+        "id": "leather_armor",
+        "type": "TORSO",
+        "sx": 1,
+        "sy": 14,
+        "stats": {
+            "end": 4
+        }
+    },
+    {
+        "id": "mail_armor",
+        "type": "TORSO",
+        "sx": 2,
+        "sy": 14,
+        "stats": {
+            "end": 5
+        }
+    },
+    {
+        "id": "iron_chestplate",
+        "type": "TORSO",
+        "sx": 3,
+        "sy": 14,
+        "stats": {
+            "end": 6
+        }
+    },
+    {
+        "id": "leather_gauntlets",
+        "type": "GAUNTLETS",
+        "sx": 1,
+        "sy": 15,
+        "stats": {
+            "end": 3
+        }
+    },
+    {
+        "id": "mail_gauntlets",
+        "type": "GAUNTLETS",
+        "sx": 2,
+        "sy": 15,
+        "stats": {
+            "end": 4
+        }
+    },
+    {
+        "id": "iron_gauntlets",
+        "type": "GAUNTLETS",
+        "sx": 3,
+        "sy": 15,
+        "stats": {
+            "end": 5
+        }
+    },
+    {
+        "id": "leather_belt",
+        "type": "WAIST",
+        "sx": 0,
+        "sy": 16,
+        "stats": {
+            "end": 3
+        }
+    },
+    {
+        "id": "leather_pants",
+        "type": "LEGS",
+        "sx": 0,
+        "sy": 17,
+        "stats": {
+            "end": 2
+        }
+    },
+    {
+        "id": "leather_leggings",
+        "type": "LEGS",
+        "sx": 1,
+        "sy": 17,
+        "stats": {
+            "end": 3
+        }
+    },
+    {
+        "id": "mail_leggings",
+        "type": "LEGS",
+        "sx": 2,
+        "sy": 17,
+        "stats": {
+            "end": 4
+        }
+    },
+    {
+        "id": "iron_leggings",
+        "type": "LEGS",
+        "sx": 3,
+        "sy": 17,
+        "stats": {
+            "end": 5
+        }
+    },
+    {
+        "id": "leather_shoes",
+        "type": "FEET",
+        "sx": 1,
+        "sy": 18,
+        "stats": {
+            "end": 3
+        }
+    },
+    {
+        "id": "iron_boots",
+        "type": "FEET",
+        "sx": 3,
+        "sy": 18,
+        "stats": {
+            "end": 4
+        }
+    },
+    {
+        "id": "silver_ring",
+        "type": "RING",
+        "sx": 0,
+        "sy": 19,
+        "stats": {
+            "end": 1
+        }
+    },
+    {
+        "id": "silver_diamond_ring",
+        "type": "RING",
+        "sx": 1,
+        "sy": 19,
+        "stats": {
+            "end": 2
+        }
+    },
+    {
+        "id": "gold_ring",
+        "type": "RING",
+        "sx": 2,
+        "sy": 19,
+        "stats": {
+            "end": 1
+        }
+    },
+    {
+        "id": "gold_diamond_ring",
+        "type": "RING",
+        "sx": 3,
+        "sy": 19,
+        "stats": {
+            "end": 2
+        }
+    }
 ]

@@ -1,0 +1,218 @@
+{
+    "crystal_staff": {
+        "name": "Crystal Staff",
+        "desc": "A staff tipped with crystal, giving boosts to magical abilities."
+    },
+    "steel_claymore": {
+        "name": "Steel Claymore",
+        "desc": "More steel than clay!"
+    },
+    "steel_sword": {
+        "name": "Steel Sword",
+        "desc": ""
+    },
+    "leather_helmet": {
+        "name": "Leather Helmet",
+        "desc": ""
+    },
+    "iron_shortsword": {
+        "name": "Iron Shortsword",
+        "desc": "An iron sword with a slightly dull edge."
+    },
+    "de_sword": {
+        "name": "Double-edged sword",
+        "desc": "Two edges are better than one."
+    },
+    "rapier": {
+        "name": "Rapier",
+        "desc": ""
+    },
+    "butter_knife": {
+        "name": "Butter Knife",
+        "desc": "For cutting all of your buttery desires."
+    },
+    "iron_dagger": {
+        "name": "Iron Dagger",
+        "desc": ""
+    },
+    "iron_spear": {
+        "name": "Iron Spear",
+        "desc": ""
+    },
+    "steel_spear": {
+        "name": "Steel Spear",
+        "desc": ""
+    },
+    "iron_hammer": {
+        "name": "Iron Hammer",
+        "desc": ""
+    },
+    "brass_hammer": {
+        "name": "Brass Hammer",
+        "desc": ""
+    },
+    "steel_greathammer": {
+        "name": "Steel Greathammer",
+        "desc": ""
+    },
+    "wooden_club": {
+        "name": "Wooden Club",
+        "desc": "It's a club of wood, deal?"
+    },
+    "iron_mace": {
+        "name": "Iron Mace",
+        "desc": ""
+    },
+    "steel_mace": {
+        "name": "Steel Mace",
+        "desc": ""
+    },
+    "iron_flail": {
+        "name": "Iron Flail",
+        "desc": ""
+    },
+	"steel_flail": {
+        "name": "Steel Flail",
+        "desc": ""
+    },
+    "bards_flute": {
+        "name": "Bard’s Flute",
+        "desc": ""
+    },
+    "bards_lute": {
+        "name": "Bard’s Lute",
+        "desc": ""
+    },
+    "iron_halberd": {
+        "name": "Iron Halberd",
+        "desc": ""
+    },
+    "steel_halberd": {
+        "name": "Steel Halberd",
+        "desc": ""
+    },
+    "steel_greataxe": {
+        "name": "Steel Greataxe",
+        "desc": ""
+    },
+    "wood_staff": {
+        "name": "Wood Staff",
+        "desc": ""
+    },
+    "wood_wand": {
+        "name": "Wood Wand",
+        "desc": ""
+    },
+    "crystal_wand": {
+        "name": "Crystal Wand",
+        "desc": ""
+    },
+    "cloth_hood": {
+        "name": "Cloth Hood",
+        "desc": "Atleast it keeps you warm."
+    },
+    "iron_hood": {
+        "name": "Iron Chain Hood",
+        "desc": ""
+    },
+    "iron_helmet": {
+        "name": "Iron Plate Helmet",
+        "desc": ""
+    },
+    "leather_pauldrons": {
+        "name": "Iron Pauldrons",
+        "desc": ""
+    },
+    "iron_pauldrons": {
+        "name": "Iron Pauldrons",
+        "desc": ""
+    },
+    "brown_cloak": {
+        "name": "Brown Cloak",
+        "desc": ""
+    },
+    "white_cloak": {
+        "name": "White Cloak",
+        "desc": ""
+    },
+    "red_cloak": {
+        "name": "Red Cloak",
+        "desc": ""
+    },
+    "diamond_cloak": {
+        "name": "Diamond Cloak",
+        "desc": ""
+    },
+    "leather_shirt": {
+        "name": "Leather Shirt",
+        "desc": ""
+    },
+    "leather_armor": {
+        "name": "Leather Chest",
+        "desc": ""
+    },
+    "mail_armor": {
+        "name": "Iron Chain Chest",
+        "desc": ""
+    },
+    "iron_chestplate": {
+        "name": "Iron Chest",
+        "desc": ""
+    },
+    "leather_gauntlets": {
+        "name": "Leather Gauntlets",
+        "desc": ""
+    },
+    "mail_gauntlets": {
+        "name": "Iron Chain Gauntlets",
+        "desc": ""
+    },
+    "iron_gauntlets": {
+        "name": "Iron Gauntlets",
+        "desc": ""
+    },
+    "leather_belt": {
+        "name": "Leather Belt",
+        "desc": "4 strength, 4 stam"
+    },
+    "leather_pants": {
+        "name": "Leather Pants",
+        "desc": ""
+    },
+    "leather_leggings": {
+        "name": "Hardened Leather Pants",
+        "desc": ""
+    },
+    "mail_leggings": {
+        "name": "Iron Chain Pants",
+        "desc": ""
+    },
+    "iron_leggings": {
+        "name": "Iron Pants",
+        "desc": ""
+    },
+    "leather_shoes": {
+        "name": "Leather Shoes",
+        "desc": ""
+    },
+    "iron_boots": {
+        "name": "Iron Boots",
+        "desc": ""
+    },
+    "silver_ring": {
+        "name": "Silver Ring",
+        "desc": ""
+    },
+    "silver_diamond_ring": {
+        "name": "Diamond Silver Ring",
+        "desc": ""
+    },
+    "gold_ring": {
+        "name": "Gold Ring",
+        "desc": ""
+    },
+    "gold_diamond_ring": {
+        "name": "Diamond Gold Ring",
+        "desc": ""
+    }
+}
