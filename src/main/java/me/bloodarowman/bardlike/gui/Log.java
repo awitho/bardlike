@@ -1,5 +1,7 @@
 package me.bloodarowman.bardlike.gui;
 
+import java.awt.*;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -8,11 +10,10 @@ import java.util.Calendar;
 import me.bloodarowman.bardlike.Main;
 import org.keplerproject.luajava.JavaFunction;
 import org.keplerproject.luajava.LuaException;
-import org.newdawn.slick.*;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
-
 /**
  *
  * @author Alex
@@ -22,12 +23,13 @@ public class Log implements Menu {
 
     static {
         try {
-            LOG_FONT = new UnicodeFont("./gfx/fonts/OldLondon.ttf", (int) Main.scale, false, false);
+            Font fon = Font.createFont(Font.TRUETYPE_FONT, Log.class.getResourceAsStream("/gfx/fonts/OldLondon.ttf")); // This is so we can load the font when it's in a jar
+            LOG_FONT = new UnicodeFont(fon, (int) Main.scale, false, false);
             LOG_FONT.getEffects().add(new ColorEffect(java.awt.Color.white));
             LOG_FONT.addAsciiGlyphs();
             LOG_FONT.loadGlyphs();
-        } catch (SlickException e) {
-            e.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 

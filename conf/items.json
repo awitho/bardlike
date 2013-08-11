@@ -3,6 +3,7 @@
         "id": "crystal_staff",
         "type": "WEAPON",
         "type2": "STAFF",
+        "spawnchance": 10,
         "sx": 1,
         "sy": 9,
         "stats": {

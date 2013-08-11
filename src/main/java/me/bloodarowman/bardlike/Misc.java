@@ -3,9 +3,14 @@ package me.bloodarowman.bardlike;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.zip.ZipInputStream;
 import javax.swing.JOptionPane;
+
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.ImageBuffer;
 
@@ -30,7 +35,7 @@ public class Misc {
 		fillMiscImages();
 	}
 	
-	private static void initLogs() {
+	public static void initLogs() {
 		try {
 			errorLog = new File("./error.txt");
 			System.out.println(errorLog.toString());
@@ -59,7 +64,7 @@ public class Misc {
 		ArrayList<File> finalFiles = new ArrayList<File>();
 		File folder = new File(dir);
 		File[] files = folder.listFiles();
-		if (files == null || files.length == 0) { return finalFiles; }
+        if (files == null || files.length == 0) { return finalFiles; }
         for (File file : files) {
             if (file.isFile()) {
                 if (file.getName().matches(filter)) {
@@ -108,8 +113,8 @@ public class Misc {
 	/**
 	 * This is a really hacky method to get images for misc ents.
 	 */
-	private static void fillMiscImages() {
-		miscImages.put("downladder", ImageLoader.loadSpritesheet("./gfx/ents/hole.png", 32, 32).getScaledCopy(Misc.TARGET_SIZE, Misc.TARGET_SIZE));
+	public static void fillMiscImages() {
+		miscImages.put("downladder", ImageLoader.loadSpritesheet("ents/hole.png", 32, 32).getScaledCopy(Misc.TARGET_SIZE, Misc.TARGET_SIZE));
 		
 		ImageBuffer placeholder = new ImageBuffer(Misc.TARGET_SIZE, Misc.TARGET_SIZE);
 		for (int x = 0; x < Misc.TARGET_SIZE; x++) {
@@ -267,4 +272,27 @@ public class Misc {
             }
 			return closedList;
 	}
+
+    public static Color statsToQLColor(int stTotal) {
+        if (stTotal < 10) {
+            return Color.gray;
+        } else if (stTotal < 20) {
+            return Color.white;
+        } else if (stTotal < 30) {
+            return Color.green;
+        } else if (stTotal < 40) {
+            return new Color(127, 0, 212);
+        } else if (stTotal < 50) {
+            return Color.orange;
+        } else if (stTotal < 60) {
+            return Color.yellow;
+        }
+        return null;  //To change body of created methods use File | Settings | File Templates.
+    }
+
+    public static void drawTableString(Graphics g, Object[] a) {
+        for (int i = 0; i < a.length; i++) {
+
+        }
+    }
 }

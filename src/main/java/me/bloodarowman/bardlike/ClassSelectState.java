@@ -1,5 +1,9 @@
 package me.bloodarowman.bardlike;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -32,10 +36,14 @@ public class ClassSelectState extends BasicGameState {
 	public void init(GameContainer container, StateBasedGame s) throws SlickException {
 		charSprite = new ArrayList<Image>();
 		charNames = new ArrayList<String>();
-		classes = new GameConfig("classes.json").getArray();
-		classSprites = new SpriteSheet("./gfx/ents/chars.png", 64, 64);
+        try {
+            classes = new GameConfig("classes.json").getArray();
+        } catch (Exception ex) {
+            Misc.logError(ex);
+        }
+        classSprites = ImageLoader.loadSpritesheet("ents/chars.png", 64, 64); // new SpriteSheet(new URL("file:///gfx/ents/chars.png"), 64, 64);
 
-		for(int i = 0; i < classes.size(); i++) {
+        for(int i = 0; i < classes.size(); i++) {
 			JsonObject character = classes.get(i).getAsJsonObject();
 			charSprite.add(classSprites.getSubImage(character.get("sx")
 					.getAsInt(), character.get("sy").getAsInt()));
@@ -87,7 +95,7 @@ public class ClassSelectState extends BasicGameState {
 		container.getInput().clearKeyPressedRecord();
 	}
 	
-	public void finishLoading(MainGameState main, StateBasedGame s) {
+	public void finishLoading(MainGameState main, StateBasedGame s) throws MalformedURLException, URISyntaxException {
 		main.setPlayer(classSprites, classes.get(chosen).getAsJsonObject());
                 chosen = -1;
                 loading = false;
@@ -114,7 +122,12 @@ public class ClassSelectState extends BasicGameState {
 		public void run() {
 			state.clearMaps();
 			state.setLevel(state.genNewLevel());
-			css.finishLoading(state, s);
-		}
+            try {
+                css.finishLoading(state, s);
+            } catch (Exception ex) {
+                Misc.logError(ex);
+                System.exit(1);
+            }
+        }
 	}
 }

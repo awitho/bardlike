@@ -1,6 +1,8 @@
 package me.bloodarowman.bardlike;
 
 import com.google.gson.JsonElement;
+import org.newdawn.slick.Color;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,6 +16,7 @@ public class Item extends Entity {
 	private String id;
 	private String name;
     private boolean named = false;
+    private Color color;
     private String desc;
     private ItemType type;
 	private WeaponType weaponType;
@@ -36,10 +39,12 @@ public class Item extends Entity {
 				this.name = NameGenerator.generateName(type.toString());
 			}
 		}
-		for (Map.Entry<String, JsonElement> ele : ItemDictionary.getStats(id)
-					.entrySet()) {
+        int stTotal = 0;
+		for (Map.Entry<String, JsonElement> ele : ItemDictionary.getStats(id).entrySet()) {
 			stats.put(ele.getKey(), ele.getValue().getAsInt());
+            stTotal += ele.getValue().getAsInt();
 		}
+        color = Misc.statsToQLColor(stTotal);
 	}
 
 	public String getID() {
@@ -63,6 +68,10 @@ public class Item extends Entity {
 
 	public boolean isNamed() {
 		return named;
+    }
+
+    public Color getQLColor() {
+        return color;
     }
 
 	public ItemType getType() {

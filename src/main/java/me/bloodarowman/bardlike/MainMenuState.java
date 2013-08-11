@@ -20,16 +20,15 @@ public class MainMenuState extends BasicGameState {
 	private String menu;
 	private Image titleImg;
 	private Image backImg;
-	public static TrueTypeFont font = 
-			new TrueTypeFont(new java.awt.Font("Arial", 1, 20), true);
+	public static TrueTypeFont font = new TrueTypeFont(new java.awt.Font("Arial", 1, 20), true);
 
 	@Override
 	public void init(GameContainer container, StateBasedGame s) {
 		container.setShowFPS(false);
 		this.menu = "What Do? [ (P)lay | (H)elp | (Esc)ape ]";
 		try {
-			this.titleImg = new Image("./gfx/title.png");
-			this.backImg = new Image("./gfx/mainback.png")
+			this.titleImg = ImageLoader.loadImage("title.png"); //new Image("./gfx/title.png");
+			this.backImg = ImageLoader.loadImage("mainback.png") //new Image("./gfx/mainback.png")
 					.getScaledCopy(container.getWidth(), container.getHeight());
 		} catch (Exception e) {
 			Misc.showDialog(e);

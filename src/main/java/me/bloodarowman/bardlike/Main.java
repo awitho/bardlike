@@ -3,7 +3,9 @@ package me.bloodarowman.bardlike;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.File;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+
 import org.keplerproject.luajava.LuaState;
 import org.keplerproject.luajava.LuaStateFactory;
 import org.newdawn.slick.AppGameContainer;
@@ -26,7 +28,7 @@ public class Main extends StateBasedGame {
     public static LuaStateRunnable luaThread;
 	public static double scale;
 
-	public static void main(String[] args) throws SlickException {
+	public static void main() throws SlickException {
         luaThread = new LuaStateRunnable();
         Thread lua = new Thread(luaThread);
         lua.start();
@@ -36,16 +38,18 @@ public class Main extends StateBasedGame {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		int width = (int) screenSize.getWidth();
 		int height = (int) screenSize.getHeight();
-		//int width =  800;
-		//int height = 600;
+        width = 1024;
+        height = 768;
 		scale = (width + height) / 110;
-		game.setDisplayMode(width, height, true);
+		game.setDisplayMode(width, height, false);
 
 		game.setVSync(true);
 		game.setTargetFrameRate(60);
 		game.setMaximumLogicUpdateInterval(10);
 		game.setSmoothDeltas(true);
-	
+
+        Misc.initLogs();
+
 		game.start();
 	}
 

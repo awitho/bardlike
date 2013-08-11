@@ -4,8 +4,12 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import java.io.BufferedReader;
-import java.io.FileReader;
+
+import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 
 /**
  * Generic configuration file the game, basically just a wrapper.
@@ -14,22 +18,21 @@ import java.io.FileReader;
  * @author alex
  */
 public class GameConfig {
-	public final static String pathPrefix = "conf/"; // Since everything is 
+	public final static String pathPrefix = "/conf/"; // Since everything is
 						//going to be in the same directory, static this!
 	public final static Gson json = new Gson(); // Since we don't 
 		//need multiple copies of this, make one static one to parse everything!
 
-	private String filePath = "";
 	private JsonObject data;
 	private JsonArray aData;
 
-	public GameConfig(String confPath) {
-		filePath = pathPrefix + confPath;
+	public GameConfig(String confPath) throws MalformedURLException, URISyntaxException {
+        InputStream is = getClass().getResourceAsStream(pathPrefix + confPath);
 		BufferedReader reader;
 		String str = "";
 
 		try {
-			reader = new BufferedReader(new FileReader(filePath));
+			reader = new BufferedReader(new InputStreamReader(is));
 			while (reader.ready()) {
 				str += reader.readLine();
 			}

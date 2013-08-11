@@ -29,7 +29,7 @@ public class TileDictionary {
 		themesWalls = new LinkedHashMap<Integer, String>();
 		themesFloors = new LinkedHashMap<Integer, String>();
 		try {
-			SpriteSheet sprites = new SpriteSheet("./gfx/tiles.png", 32, 32);
+			SpriteSheet sprites = ImageLoader.loadSpritesheet("tiles.png", 32, 32); // new SpriteSheet("./gfx/tiles.png", 32, 32);
 			JsonArray tiles = new GameConfig("tiles.json").getArray();
 			JsonObject themes = new GameConfig("themes.json").getObject();
 			for (Entry<String, JsonElement> ele : themes.entrySet()) {

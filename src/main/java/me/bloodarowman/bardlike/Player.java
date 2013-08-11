@@ -4,6 +4,8 @@ import me.bloodarowman.bardlike.gui.Log;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -38,7 +40,7 @@ public class Player extends Entity {
     private Log log;
 	private boolean frozen, dead;
 
-    public Player(SpriteSheet ss, JsonObject data, Log log, MainGameState mgs) {
+    public Player(SpriteSheet ss, JsonObject data, Log log, MainGameState mgs) throws MalformedURLException, URISyntaxException {
 		super(ss.getSubImage(data.get("sx").getAsInt(), data.get("sy").getAsInt()));
 		this.log = log;
 		this.mgs = mgs;

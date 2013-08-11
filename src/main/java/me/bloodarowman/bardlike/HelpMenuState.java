@@ -10,6 +10,9 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+
 /**
  * The help menu of the game.
  * @since 5/26/13
@@ -23,8 +26,12 @@ public class HelpMenuState extends BasicGameState {
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg)
 					throws SlickException {
-		help = new GameConfig("loc/help_en.json").getArray();
-	}
+        try {
+            help = new GameConfig("loc/help_en.json").getArray();
+        } catch (Exception ex) {
+            Misc.logError(ex);
+        }
+    }
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)

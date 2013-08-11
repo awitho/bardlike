@@ -1,5 +1,7 @@
 package me.bloodarowman.bardlike.gui;
 
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import me.bloodarowman.bardlike.GameConfig;
 import me.bloodarowman.bardlike.ItemDictionary;
@@ -35,7 +37,7 @@ public class Inventory implements Menu {
 	private InventoryTile newInvTile;
 	private InventoryTile curInvTile;
 
-	public Inventory(Player p) {
+	public Inventory(Player p) throws MalformedURLException, URISyntaxException {
 		ply = p;
 		invMenu = new GameConfig("loc/inv_en.json");
 		ItemDictionary.scaleImages(32); // We need thumbnails at 32x32 here,

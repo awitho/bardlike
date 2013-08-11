@@ -1,5 +1,7 @@
 package me.bloodarowman.bardlike;
 
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 
 import org.newdawn.slick.Image;
@@ -24,16 +26,12 @@ public class MobDictionary {
 	private HashMap<String, HashMap<String, Integer>> stats;
 	private JsonArray mobArray;
 	
-	public MobDictionary() {
+	public MobDictionary() throws MalformedURLException, URISyntaxException {
 		mobImages = new HashMap<String, Image>();
 		mobMaxHP = new HashMap<String, Integer>();
 		stats = new HashMap<String, HashMap<String, Integer>>();
-		try {
-			mobSprites = new SpriteSheet("./gfx/ents/mobs.png", 32, 32);
-			mobArray = new GameConfig("mobs.json").getArray();
-		} catch (SlickException e) {
-			Misc.showDialog(e);
-		}
+	    mobSprites = ImageLoader.loadSpritesheet("ents/mobs.png", 32, 32); // new SpriteSheet("./gfx/ents/mobs.png", 32, 32);
+		mobArray = new GameConfig("mobs.json").getArray();
 		
 		for(int i = 0; i < mobArray.size(); i++) {
 			JsonObject mob = mobArray.get(i).getAsJsonObject();

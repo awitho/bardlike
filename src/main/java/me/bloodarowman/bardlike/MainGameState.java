@@ -5,6 +5,8 @@ import me.bloodarowman.bardlike.gui.Log;
 import me.bloodarowman.bardlike.gui.HUD;
 import com.google.gson.JsonObject;
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -24,7 +26,7 @@ import org.newdawn.slick.state.StateBasedGame;
 public class MainGameState extends BasicGameState {
 	private GameMap curMap;
 	private ArrayList<GameMap> levels = new ArrayList<GameMap>();
-	ArrayList<File> autorunScripts = Misc.findFilesRecurse("./scripts/autorun/", "(.*).lua");
+	ArrayList<File> autorunScripts = Misc.findFilesRecurse("/scripts/autorun/", "(.*).lua");
 	private Player player;
 	private Camera cam;
 	private Inventory inventory;
@@ -35,12 +37,21 @@ public class MainGameState extends BasicGameState {
 	@Override
 	public void init(GameContainer container, StateBasedGame s) 
 			throws SlickException {
-		Misc.init();
-		ItemDictionary.initItemDictionary(); // Needed as itemdicionary
-					//is static, also so we can on-demand load.
+        Misc.fillMiscImages();
+        try {
+            ItemDictionary.initItemDictionary(); // Needed as itemdicionary
+        } catch (Exception ex) {
+            Misc.logError(ex);
+            System.exit(1);
+        }
+        //is static, also so we can on-demand load.
 		TileDictionary.initTileDictionary();
-		mobDictionary = new MobDictionary();
-		log = new Log();
+        try {
+            mobDictionary = new MobDictionary();
+        } catch (Exception ex) {
+            Misc.logError(ex);
+        }
+        log = new Log();
 	}
 	
 	@Override
@@ -124,7 +135,7 @@ public class MainGameState extends BasicGameState {
 		return player;
 	}
 
-	public void setPlayer(SpriteSheet sprite, JsonObject data) {
+	public void setPlayer(SpriteSheet sprite, JsonObject data) throws MalformedURLException, URISyntaxException {
 		player = new Player(sprite, data, log, this);
 		hud = new HUD(player);
 		inventory = new Inventory(player);

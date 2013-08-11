@@ -1,5 +1,7 @@
 package me.bloodarowman.bardlike;
 
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 
 import org.newdawn.slick.Image;
@@ -15,28 +17,21 @@ import java.util.Map.Entry;
  * @version 1
  */
 public class ItemDictionary {
-	private static HashMap<String, Image> itemImages;
-	private static HashMap<String, ItemType> itemTypes;
-    private static HashMap<String, String> itemNames;
-    private static HashMap<String, String> itemDescs;
-	private static HashMap<String, WeaponType> weaponTypes;
-	private static HashMap<Integer, HashMap<String, Image>> scaledImages;
+	private static HashMap<String, Image> itemImages = new HashMap<String, Image>();
+	private static HashMap<String, ItemType> itemTypes = new HashMap<String, ItemType>();
+    private static HashMap<String, String> itemNames = new HashMap<String, String>();
+    private static HashMap<String, String> itemDescs = new HashMap<String, String>();
+	private static HashMap<String, WeaponType> weaponTypes = new HashMap<String, WeaponType>();
+	private static HashMap<Integer, HashMap<String, Image>> scaledImages = new HashMap<Integer, HashMap<String, Image>>();
 	private static JsonArray items;
 	private static JsonObject curItem;
 	
-	public static void initItemDictionary() {
-		itemImages = new HashMap<String, Image>();
-		scaledImages = new HashMap<Integer, HashMap<String, Image>>();
-		itemTypes = new HashMap<String, ItemType>();
-        itemNames = new HashMap<String, String>();
-        itemDescs = new HashMap<String, String>();
-		weaponTypes = new HashMap<String, WeaponType>();
-		
-		try {
+	public static void initItemDictionary() throws MalformedURLException, URISyntaxException {
+        try {
 			items = new GameConfig("items.json").getArray();
 
             GameConfig itemNamesJSON = new GameConfig("loc/items_en.json");
-			SpriteSheet itemSprites = ImageLoader.loadSpritesheet("./gfx/ents/items.png", 32, 32);
+			SpriteSheet itemSprites = ImageLoader.loadSpritesheet("ents/items.png", 32, 32);
 			for(int i = 0; i < items.size(); i++) {
 				curItem = items.get(i).getAsJsonObject();
 
@@ -101,10 +96,8 @@ public class ItemDictionary {
 	}
 	
 	public static JsonObject getStats(String name) {
-		
 		for(int i = 0; i < items.size(); i++) {
 			JsonObject item =  items.get(i).getAsJsonObject();
-			//System.out.println(item);
 			if(item.get("id").getAsString().equalsIgnoreCase(name)) {
 				return item.get("stats").getAsJsonObject();
 			}
@@ -121,7 +114,6 @@ public class ItemDictionary {
 	}
 	
 	public static Item getRandomItem() {
-		return new Item(items.get((int) (Math.random() * 
-				items.size())).getAsJsonObject().get("id").getAsString());
+		return new Item(items.get((int) (Math.random() * items.size())).getAsJsonObject().get("id").getAsString());
 	}
 }
