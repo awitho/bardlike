@@ -9,6 +9,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import me.bloodarowman.bardlike.gui.LogEffect;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SpriteSheet;
@@ -193,14 +194,14 @@ public class Player extends Entity {
 	
 	public void die() {
 		dead = true;
-		log.append("You have died!");
+		log.append("You have died!", LogEffect.RED_WHITE_FLASH);
 		// Goto game over/menu. && delete save.
 	}
 
 	public void revive() {
 		dead = false;
 		stats.put("curhp", stats.get("end")*10);
-		log.append("You have been revived from the dead!");
+		log.append("You have been revived from the dead!", LogEffect.BLUE_WHITE_FLASH);
 	}
 	
 	public void isFrozen(boolean b) {
@@ -297,7 +298,7 @@ public class Player extends Entity {
 	
 	public void levelUp() {
 		stats.put("level", getLevel() + 1);
-		log.append("You leveled up to level " + getLevel() + "!");
+		log.append("You leveled up to level " + getLevel() + "!", LogEffect.RAINBOW_FLASH);
 		for (Entry<String, Integer> ele : stats.entrySet()) {
 			if (ele.getKey().equalsIgnoreCase("level") || ele.getKey().equalsIgnoreCase("xp") || ele.getKey().equalsIgnoreCase("curhp")) { continue; }
 			if (mainStat != null && ele.getKey().equalsIgnoreCase(mainStat)) {
@@ -305,7 +306,7 @@ public class Player extends Entity {
 			} else {
 				ele.setValue(ele.getValue() + (int) (Math.random() * 2) + 1);
 			}
-			log.append(ele.getKey() + " went up to " + ele.getValue());
+			log.append(ele.getKey() + " went up to " + ele.getValue(), LogEffect.GREEN_WHITE_FLASH);
 		}
 		stats.put("curhp", getStat("end") * 10);
 	}

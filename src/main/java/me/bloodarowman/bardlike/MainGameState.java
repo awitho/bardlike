@@ -25,6 +25,7 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public class MainGameState extends BasicGameState {
 	private GameMap curMap;
+    private int loops = 0;
 	private ArrayList<GameMap> levels = new ArrayList<GameMap>();
 	ArrayList<File> autorunScripts = Misc.findFilesRecurse("/scripts/autorun/", "(.*).lua");
 	private Player player;
@@ -88,11 +89,12 @@ public class MainGameState extends BasicGameState {
 		inventory.update(container);
 		log.update();
 		
-		if (player.isDead()) {
+		if (player.isDead() && loops%100 == 0) {
 			s.enterState(5);
 		}
 
 		container.getInput().clearKeyPressedRecord();
+        loops++;
 	}
 
 	@Override
@@ -122,6 +124,10 @@ public class MainGameState extends BasicGameState {
 
     public Camera getCam() {
         return cam;
+    }
+
+    public Log getLog() {
+        return log;
     }
 	
 	public GameMap setLevel (int l) {

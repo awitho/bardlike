@@ -122,6 +122,7 @@ public class ClassSelectState extends BasicGameState {
 		public void run() {
 			state.clearMaps();
 			state.setLevel(state.genNewLevel());
+            state.getLog().clear();
             try {
                 css.finishLoading(state, s);
             } catch (Exception ex) {
