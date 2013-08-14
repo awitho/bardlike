@@ -12,7 +12,7 @@ import org.newdawn.slick.Image;
  * @author alex
  */
 public class Tile {
-	private int ix, iy;
+	private int ix, iy, w, h; // Width and height are stored as they were taking up a lot of time in the callstack.
 	private String name;
 	private boolean inLos, playerSaw, isWall, isEmpty;
 	private ArrayList<Entity> containedEnts = new ArrayList<Entity>();
@@ -28,15 +28,17 @@ public class Tile {
 		overlay = TileDictionary.getTileImageByName("Overlay");
 		isWall = TileDictionary.getTileIsWall(tile); // Ditto.
 		spr = TileDictionary.getTileImageByName(tile); // Grab a reference for the tile image from the tile dictionary, no need to make our own copy!
+        w = spr.getWidth();
+        h = spr.getHeight();
 		isEmpty = !tile.equalsIgnoreCase("Empty");
 	}
 
 	public int getWidth() {
-		return spr.getWidth();
+		return w;
 	}
 
 	public int getHeight() {
-		return spr.getHeight();
+		return h;
 	}
 
 	public Tile setSeen(boolean bool) {
