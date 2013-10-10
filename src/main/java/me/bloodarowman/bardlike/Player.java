@@ -39,7 +39,7 @@ public class Player extends Entity {
 	private String plyClass, mainStat; // Would be part of stats, but it can't be.
 	private ArrayList<Item> inventoryItems, equippedItems;
     private Log log;
-	private boolean frozen, dead;
+	private boolean frozen, dead, attacked;
 
     public Player(SpriteSheet ss, JsonObject data, Log log, MainGameState mgs) throws MalformedURLException, URISyntaxException {
 		super(ss.getSubImage(data.get("sx").getAsInt(), data.get("sy").getAsInt()));
@@ -130,23 +130,23 @@ public class Player extends Entity {
 			DungeonGenerator.placePlayerInFeasibleLocation(mgs.setLevel(mgs.genNewLevel()), this);
 			return;
 		}
-		
-		getMap().update(mgs);
-		
+
 		ArrayList<Entity> foundMobs = tile.findType(Mob.class);
 		Mob mob = null;
 		if (foundMobs != null) {
 			mob = (Mob) foundMobs.get(0);
 			mob.use(this, getStat("str"));
+			attacked = true;
 		}
 		
-		if (!dead) {
+		if (!dead && !attacked) {
 			if (mob != null && !mob.isDead()) {} else {
                 mgs.getCam().setTime(400);
 				setTile(tile);
 			}
 		}
-		
+
+		getMap().update(mgs);
 		getMap().updateAttacks();
 		
 		ArrayList<Entity> foundItems = tile.findType(Item.class);
@@ -155,6 +155,8 @@ public class Player extends Entity {
 				addItem((Item) foundItems.get(i));
 			}
 		}
+
+		attacked = false;
 	}
 	
 	public void setLog(Log log) {

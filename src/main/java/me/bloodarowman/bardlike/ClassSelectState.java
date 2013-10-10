@@ -41,7 +41,7 @@ public class ClassSelectState extends BasicGameState {
         } catch (Exception ex) {
             Misc.logError(ex);
         }
-        classSprites = ImageLoader.loadSpritesheet("ents/chars.png", 64, 64); // new SpriteSheet(new URL("file:///gfx/ents/chars.png"), 64, 64);
+        classSprites = ImageLoader.loadSpritesheet("ents/chars_lofi.png", 64, 64); // new SpriteSheet(new URL("file:///gfx/ents/chars.png"), 64, 64);
 
         for(int i = 0; i < classes.size(); i++) {
 			JsonObject character = classes.get(i).getAsJsonObject();

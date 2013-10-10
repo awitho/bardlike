@@ -85,6 +85,7 @@ public class Mob extends Entity {
 
 	@Override
 	public void updateAttacks() {
+		if (moved) { return; }
 		for (Direction dir : Direction.values()) {
 			Vector vec = Misc.getLocFromDir(getTile().getX(), getTile().getY(), dir);
 			Tile tile = getMap().getTile(vec.getX(), vec.getY());

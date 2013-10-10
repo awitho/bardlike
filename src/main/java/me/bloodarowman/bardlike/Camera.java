@@ -29,8 +29,10 @@ public class Camera {
 
 	public void translate(Graphics g, GameContainer gc) {
 		if (ply == null || map == null) { return; }
+
 		tX = -(ply.getX() - gc.getWidth()/2) - 32; // Gets the player into the middle of the screen, it's negative as it translate opposite of the x and y.
 		tY = -(ply.getY() - gc.getHeight()/2) - 32;
+
         x = (int) Misc.easeInOut(curTime, x, tX - x, curTime + 500);
         y = (int) Misc.easeInOut(curTime, y, tY - y, curTime + 500);
 		g.translate(x, y); // This offsets drawing, essentially like moving a camera.
