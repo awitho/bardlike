@@ -132,7 +132,7 @@ public class Misc {
 	 * @param percent Percent between.
 	 * @return Lerped value.
 	 */
-	public static float lerp(float start, float end, float percent) {
+	public static double lerp(double start, double end, double percent) {
 		return (start + percent*(end - start));
 	}
 

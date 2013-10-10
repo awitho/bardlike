@@ -48,11 +48,8 @@ public class MainMenuState extends BasicGameState {
 		g.drawImage(backImg, 0, 0);
 
 		// Icon
-		titleImg.setRotation(Misc.lerp(titleImg.getRotation(), 
-				(float) Math.sin(System.currentTimeMillis()/750)*20, 0.01f));
-		g.drawImage(titleImg, container.getWidth()/2 - 
-				titleImg.getWidth()/2, container.getHeight()/2 - 
-				titleImg.getHeight()/2);
+		titleImg.setRotation((float) Misc.lerp((double) titleImg.getRotation(), Math.sin(System.currentTimeMillis()/750)*20, 0.01));
+		g.drawImage(titleImg, container.getWidth()/2 - titleImg.getWidth()/2, container.getHeight()/2 - titleImg.getHeight()/2);
 
 		// Main menu text
 		g.setFont(font);
