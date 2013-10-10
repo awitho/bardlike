@@ -86,7 +86,7 @@ public class Mob extends Entity {
 	private ArrayList<Tile> togo = new ArrayList<Tile>();
 	@Override
 	public void update(MainGameState mgs) {
-		if (moved) { moved = false; return; }
+		if (moved) { return; }
 		if ((Math.abs(getTile().getX() - mgs.getPlayer().getTile().getX()) + Math.abs(getTile().getY() - mgs.getPlayer().getTile().getY())) <= 8) {
 			ArrayList<PathfindingTile> tiles = Misc.pathfindTo(getMap(), getTile().getX(), getTile().getY(), mgs.getPlayer().getTile().getX(), mgs.getPlayer().getTile().getY());
 			if (tiles == null || tiles.size() == 1) { return; }
