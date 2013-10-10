@@ -82,7 +82,8 @@ public class Mob extends Entity {
 		g.fillRect(x + 1, y - (this.getImage().getHeight()/2)+1, (float) (bar_per * this.getImage().getWidth() - 2), 10 - 2); //Bar FG
 		g.setColor(col);
 	}
-        
+
+	private ArrayList<Tile> togo = new ArrayList<Tile>();
 	@Override
 	public void update(MainGameState mgs) {
 		if (moved) { return; }
@@ -102,9 +103,15 @@ public class Mob extends Entity {
 				}
 				tile = tile.getParent(); // This causes us to iterate backwards until we reach the root tile!
 			}
-		} // else {
-		// TODO: do random movement
-		//}
+		} else {
+			for (Direction dir : Direction.values()) {
+				Tile tile = this.getMap().getTile(Misc.getLocFromDir(this.getTile().getX(), this.getTile().getY(), dir));
+				if (tile == null || tile.isWall() || !tile.isReal()) { continue; }
+				togo.add(tile);
+			}
+			setTile(togo.get((int) (Math.random() * togo.size())));
+			togo.clear();
+		}
 	}
 
 	@Override

@@ -72,6 +72,13 @@ public class GameMap {
 		}
 		return tiles[x][y];
 	}
+
+	public Tile getTile(Vector v) {
+		if (v.getX() < 0 || v.getY() < 0 || v.getX() >= tiles.length || v.getY() >= tiles[0].length) {
+			return null;
+		}
+		return tiles[v.getX()][v.getY()];
+	}
 	
 	public Tile[][] getTiles() {
 		return tiles;
