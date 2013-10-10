@@ -41,6 +41,7 @@ public class GameMap {
 				}
 			}
 		}
+		/*
 		for (int x = 0; x < tiles.length; x++) {
 			for (int y = 0; y < tiles[0].length; y++) {
 				Tile tile = tiles[x][y];
@@ -48,11 +49,11 @@ public class GameMap {
 					ArrayList<Entity> mobs = tile.findType(Mob.class);
 					if (mobs != null) { 
 						Mob mob = (Mob) mobs.get(0);
-						mob.setMoved(false);
+						//mob.setMoved(false);
 					}
 				}
 			}
-		}
+		}*/
 	}
 	
 	public void updateAttacks() { // This is where all the mobs attack.
