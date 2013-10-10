@@ -9,11 +9,11 @@
     },
     "steel_sword": {
         "name": "Steel Sword",
-        "desc": ""
+        "desc": "Probably made of steel, we're not entirely sure."
     },
     "leather_helmet": {
         "name": "Leather Helmet",
-        "desc": ""
+        "desc": "This lovely animal used to have a family and dreams, now only your cold, greasy head to sit on."
     },
     "iron_shortsword": {
         "name": "Iron Shortsword",
@@ -49,7 +49,7 @@
     },
     "brass_hammer": {
         "name": "Brass Hammer",
-        "desc": ""
+        "desc": "Kinda useless, somewhat, I mean it's made of brass."
     },
     "steel_greathammer": {
         "name": "Steel Greathammer",
@@ -113,7 +113,7 @@
     },
     "iron_hood": {
         "name": "Iron Chain Hood",
-        "desc": ""
+        "desc": "Atleast it keeps you cold."
     },
     "iron_helmet": {
         "name": "Iron Plate Helmet",
@@ -121,7 +121,7 @@
     },
     "leather_pauldrons": {
         "name": "Iron Pauldrons",
-        "desc": ""
+        "desc": "Be thankful we didn't provide you with only ONE shoulder."
     },
     "iron_pauldrons": {
         "name": "Iron Pauldrons",
