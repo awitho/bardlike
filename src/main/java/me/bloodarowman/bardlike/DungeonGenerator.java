@@ -121,7 +121,7 @@ public class DungeonGenerator {
 	
 	public static void generateHallwayWalls(Tile[][] tiles) {
 		for (Tile tile : wallsToBe) {
-			Tile wall = tiles[tile.getX()][tile.getY()];
+			Tile wall = tiles[tile.getTileX()][tile.getTileY()];
 			if (wall.isReal()) { continue; }
 			DungeonGenerator.placeTile(tiles, tile);
 		}
@@ -227,8 +227,8 @@ public class DungeonGenerator {
 	}
 	
 	public static void placeTile(Tile[][] tiles, Tile tile) {
-			if (tile.getX() < 0 || tile.getY() < 0 || tile.getName().trim().equalsIgnoreCase("") || tile.getX() >= tiles.length || tile.getY() >= tiles[0].length) { return; }
-			tiles[tile.getX()][tile.getY()] = tile;
+			if (tile.getTileX() < 0 || tile.getTileY() < 0 || tile.getName().trim().equalsIgnoreCase("") || tile.getTileX() >= tiles.length || tile.getTileY() >= tiles[0].length) { return; }
+			tiles[tile.getTileX()][tile.getTileY()] = tile;
 	}
 
 	public static GameMap generateDungeon(int w, int h, MobDictionary mobDictionary) {

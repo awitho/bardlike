@@ -27,7 +27,9 @@ public class Entity {
 
 	public void draw(Graphics g, int x, int y) {
 		if(!visible) { return; }
-		g.drawImage(img, x, y);
+		setPos(x, y);
+		//setPos((int) Misc.lerp(this.x, curTile.getTileX() * Misc.TARGET_SIZE, 0.1), (int) Misc.lerp(this.y, curTile.getTileY() * Misc.TARGET_SIZE, 0.1));
+		g.drawImage(img, this.x, this.y);
 	}
 
 	public void update(MainGameState mgs) {}
@@ -46,9 +48,7 @@ public class Entity {
 		
 		curTile = tile; // Set our current tile.
 		tile.addEnt(this); // Add to new tile.
-		x = tile.getX() * Misc.TARGET_SIZE; // Translate from tile index,
-												//to actual world coords.
-		y = tile.getY() * Misc.TARGET_SIZE;
+		//setPos(tile.getTileX() * Misc.TARGET_SIZE, tile.getTileY() * Misc.TARGET_SIZE);
 	}
 
 	public Tile getTile() {
@@ -88,8 +88,8 @@ public class Entity {
 	}
 
 	public void setPos(int x, int y){
-		this.x = x;
-		this.y = y;
+		setX(x);
+		setY(y);
 	}
 	
 	public boolean getVisible() {

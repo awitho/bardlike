@@ -121,7 +121,7 @@ public class Player extends Entity {
 		if(frozen || dead) { return; }
 		Tile curTile = getTile();
 		if (curTile == null) { log.append("The game has errored while generating the dungeon, please restart the game."); return; }
-		Vector vec = Misc.getLocFromDir(curTile.getX(), curTile.getY(), dir);
+		Vector vec = Misc.getLocFromDir(curTile.getTileX(), curTile.getTileY(), dir);
 		Tile tile = getMap().getTile(vec.getX(), vec.getY());
 		if (tile == null || tile.isWall()) { return; }
 		
@@ -344,33 +344,34 @@ public class Player extends Entity {
 		stats.put("xp", amount);
 	}
 
+	private int stepping = 0;
 	public void update(GameContainer container) {
-		if (container.getInput().isKeyPressed(Input.KEY_LEFT)) {
+		updateBuffs();
+		if (stepping > 0) { stepping--; return; }
+		if (container.getInput().isKeyDown(Input.KEY_LEFT)) {
+			stepping = 13;
 			this.move(Direction.LEFT);
 		}
-		if (container.getInput().isKeyPressed(Input.KEY_RIGHT)) {
+		if (container.getInput().isKeyDown(Input.KEY_RIGHT)) {
+			stepping = 13;
 			this.move(Direction.RIGHT);
 		}
-		if (container.getInput().isKeyPressed(Input.KEY_DOWN)) {
+		if (container.getInput().isKeyDown(Input.KEY_DOWN)) {
+			stepping = 13;
 			this.move(Direction.DOWN);
 		}
-		if (container.getInput().isKeyPressed(Input.KEY_UP)) {
+		if (container.getInput().isKeyDown(Input.KEY_UP)) {
+			stepping = 13;
 			this.move(Direction.UP);
 		}
-		if (container.getInput().isKeyPressed(Input.KEY_SPACE)) {
+		if (container.getInput().isKeyDown(Input.KEY_SPACE)) {
+			stepping = 13;
 			//DungeonGenerator.placePlayerInFeasibleLocation(getMap(), this);
 			getMap().update(mgs);
 		}
-		updateBuffs();
 	//	if (container.getInput().isKeyPressed(Input.KEY_V)) {
 	//		DungeonGenerator.placePlayerInFeasibleLocation(mgs.setLevel(mgs.genNewLevel()), this);
 	//	}
 	}
-	
-	public void draw(Graphics g, int x, int y) {
-		if (!getVisible()) { return; }
-        setX(x);
-        setY(y);
-		g.drawImage(getImage(), x, y);
-	}
+
 }

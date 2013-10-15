@@ -1,6 +1,5 @@
 package me.bloodarowman.bardlike;
 
-import java.util.ArrayList;
 import org.newdawn.slick.Graphics;
 
 /**
@@ -27,6 +26,14 @@ public class GameMap {
 				Tile tile = tiles[x][y];
 				if (tile != null) {
 					tile.draw(g, x * tile.getWidth(), y * tile.getHeight());
+				}
+			}
+		}
+		for (int x = 0; x < tiles.length; x++) {
+			for (int y = 0; y < tiles[0].length; y++) {
+				Tile tile = tiles[x][y];
+				if (tile != null) {
+					tile.drawEnts(g, x * tile.getWidth(), y * tile.getHeight());
 				}
 			}
 		}

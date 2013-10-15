@@ -72,11 +72,11 @@ public class Tile {
 		containedEnts.remove(ent);
 	}
 
-	public int getX() {
+	public int getTileX() {
 		return ix;
 	}
 
-	public int getY() {
+	public int getTileY() {
 		return iy;
 	}
 
@@ -110,16 +110,19 @@ public class Tile {
 
 	public void draw(Graphics g, int x, int y) {
 		g.drawImage(spr, x, y);
-		if (containedEnts != null) {
-			for (int i = 0; i < containedEnts.size(); i++) {
-				containedEnts.get(i).draw(g, x, y);
-			}
-		}
 		if (playerSaw && !inLos) {
             Color old = g.getColor();
             g.setColor(overlayColor);
 			g.drawImage(overlay, x, y);
             g.setColor(old);
+		}
+	}
+
+	public void drawEnts(Graphics g, int x, int y) {
+		if (containedEnts != null) {
+			for (int i = 0; i < containedEnts.size(); i++) {
+				containedEnts.get(i).draw(g, x, y);
+			}
 		}
 	}
 

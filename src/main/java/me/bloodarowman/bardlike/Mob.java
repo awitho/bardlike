@@ -87,8 +87,8 @@ public class Mob extends Entity {
 	@Override
 	public void update(MainGameState mgs) {
 		if (moved) { return; }
-		if ((Math.abs(getTile().getX() - mgs.getPlayer().getTile().getX()) + Math.abs(getTile().getY() - mgs.getPlayer().getTile().getY())) <= 8) {
-			ArrayList<PathfindingTile> tiles = Misc.pathfindTo(getMap(), getTile().getX(), getTile().getY(), mgs.getPlayer().getTile().getX(), mgs.getPlayer().getTile().getY());
+		if ((Math.abs(getTile().getTileX() - mgs.getPlayer().getTile().getTileX()) + Math.abs(getTile().getTileY() - mgs.getPlayer().getTile().getTileY())) <= 8) {
+			ArrayList<PathfindingTile> tiles = Misc.pathfindTo(getMap(), getTile().getTileX(), getTile().getTileY(), mgs.getPlayer().getTile().getTileX(), mgs.getPlayer().getTile().getTileY());
 			if (tiles == null || tiles.size() == 1) { return; }
 			PathfindingTile tile = tiles.get(tiles.size() - 1); // Get last tile in path.
 			while (true) {
@@ -105,7 +105,7 @@ public class Mob extends Entity {
 			}
 		} else {
 			for (Direction dir : Direction.values()) {
-				Tile tile = this.getMap().getTile(Misc.getLocFromDir(this.getTile().getX(), this.getTile().getY(), dir));
+				Tile tile = this.getMap().getTile(Misc.getLocFromDir(this.getTile().getTileX(), this.getTile().getTileY(), dir));
 				if (tile == null || tile.isWall() || !tile.isReal()) { continue; }
 				togo.add(tile);
 			}
@@ -118,7 +118,7 @@ public class Mob extends Entity {
 	public void updateAttacks() {
 		if (moved) { moved = false; return; }
 		for (Direction dir : Direction.values()) {
-			Vector vec = Misc.getLocFromDir(getTile().getX(), getTile().getY(), dir);
+			Vector vec = Misc.getLocFromDir(getTile().getTileX(), getTile().getTileY(), dir);
 			Tile tile = getMap().getTile(vec.getX(), vec.getY());
 			if (tile == null) { continue; }
 			ArrayList<Entity> players = tile.findType(Player.class);
