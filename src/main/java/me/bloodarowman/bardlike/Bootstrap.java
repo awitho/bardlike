@@ -59,24 +59,25 @@ public class Bootstrap {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.setProperty("java.library.path", "lib/native/" + System.getProperty("sun.desktop"));
+        System.setProperty("java.library.path", "lib/native/" + System.getProperty("os.name").toLowerCase());
+        System.out.println(System.getProperty("java.library.path"));
         Field fieldSysPath = null;
         try {
             fieldSysPath = ClassLoader.class.getDeclaredField( "sys_paths" );
         } catch (NoSuchFieldException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         }
         fieldSysPath.setAccessible( true );
         try {
             fieldSysPath.set(null, null);
         } catch (IllegalAccessException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         }
 
         try {
             Main.main();
         } catch (Exception e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         }
     }
 }

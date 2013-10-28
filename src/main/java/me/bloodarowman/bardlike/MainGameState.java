@@ -24,6 +24,8 @@ import org.newdawn.slick.state.StateBasedGame;
  * @author alex
  */
 public class MainGameState extends BasicGameState {
+    public static MainGameState current;
+
 	private GameMap curMap;
     private int loops = 0;
 	private ArrayList<GameMap> levels = new ArrayList<GameMap>();
@@ -38,6 +40,8 @@ public class MainGameState extends BasicGameState {
 	@Override
 	public void init(GameContainer container, StateBasedGame s) 
 			throws SlickException {
+        current = this;
+
         Misc.fillMiscImages();
         try {
             ItemDictionary.initItemDictionary(); // Needed as itemdicionary
@@ -85,7 +89,7 @@ public class MainGameState extends BasicGameState {
 			s.enterState(1);
 		}
 
-		player.update(container);
+		player.update(container, s, delta);
 		inventory.update(container);
 		log.update();
 		

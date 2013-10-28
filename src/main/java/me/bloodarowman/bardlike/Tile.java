@@ -2,8 +2,10 @@ package me.bloodarowman.bardlike;
 
 import java.util.ArrayList;
 import org.newdawn.slick.Color;
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.state.StateBasedGame;
 
 /**
  * A single tile for multiple entities to occupy at a single time.
@@ -126,15 +128,18 @@ public class Tile {
 		}
 	}
 
-	public void update(MainGameState mgs) {
+	public void update(GameContainer container, StateBasedGame s, int delta) {
 		for (int i = 0; i < containedEnts.size(); i++) {
-			containedEnts.get(i).update(mgs);
+			containedEnts.get(i).update(container, s, delta);
 		}
 	}
 	
 	public void updateAttacks() {
 		for (int i = 0; i < containedEnts.size(); i++) {
-			containedEnts.get(i).updateAttacks();
+            if (containedEnts.get(i).getClass().equals(Mob.class)) {
+			    Mob mob = (Mob) containedEnts.get(i);
+                mob.updateAttacks();
+            }
 		}
 	}
 	

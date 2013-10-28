@@ -31,15 +31,15 @@ public class Main extends StateBasedGame {
 	public static void main() throws SlickException {
         luaThread = new LuaStateRunnable();
         Thread lua = new Thread(luaThread);
-        lua.start();
+       // lua.start();
 
 		game = new AppGameContainer(new Main("bardLIKE"));
 		
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		int width = (int) screenSize.getWidth();
 		int height = (int) screenSize.getHeight();
-        width = 1024;
-        height = 768;
+     //   width = 1024;
+      //  height = 768;
 		scale = (width + height) / 110;
 		game.setDisplayMode(width, height, false);
 

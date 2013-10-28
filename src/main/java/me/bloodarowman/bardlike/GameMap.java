@@ -1,6 +1,10 @@
 package me.bloodarowman.bardlike;
 
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.state.StateBasedGame;
+
+import java.util.ArrayList;
 
 /**
  * A class representing an entire dungeon level of the game.
@@ -10,10 +14,13 @@ import org.newdawn.slick.Graphics;
  */
 public class GameMap {
 	private MobDictionary mobDictionary;
-	private int width, height, level;
+    private boolean act = false;
+	private int width, height, level, drawW, drawH;
 	private Tile[][] tiles;
 
 	public GameMap(int w, int h, int level, MobDictionary mobDictionary) {
+        drawW = (int) (Math.ceil(Main.game.getScreenWidth()/64) + 1.0) / 2;
+        drawH = (int) (Math.ceil(Main.game.getScreenHeight()/64) + 1.0) / 2;
 		this.mobDictionary = mobDictionary;
 		width = w;
 		height = h;
@@ -21,16 +28,16 @@ public class GameMap {
 	}
 
 	public void draw(Graphics g, Player ply, Camera cam) {
-		for (int x = 0; x < tiles.length; x++) {
-			for (int y = 0; y < tiles[0].length; y++) {
+		for (int x = Misc.clamp(ply.getTile().getTileX() - drawW, 0, this.getWidth()); x < Misc.clamp(ply.getTile().getTileX() + (drawW + 1), 0, this.getWidth()); x++) {
+			for (int y = Misc.clamp(ply.getTile().getTileY() - drawH, 0, this.getHeight()); y < Misc.clamp(ply.getTile().getTileY() + (drawH + 2), 0, this.getHeight()); y++) {
 				Tile tile = tiles[x][y];
 				if (tile != null) {
 					tile.draw(g, x * tile.getWidth(), y * tile.getHeight());
 				}
 			}
 		}
-		for (int x = 0; x < tiles.length; x++) {
-			for (int y = 0; y < tiles[0].length; y++) {
+        for (int x = Misc.clamp(ply.getTile().getTileX() - drawW, 0, this.getWidth()); x < Misc.clamp(ply.getTile().getTileX() + drawW, 0, this.getWidth()); x++) {
+            for (int y = Misc.clamp(ply.getTile().getTileY() - drawH, 0, this.getHeight()); y < Misc.clamp(ply.getTile().getTileY() + drawH, 0, this.getHeight()); y++) {
 				Tile tile = tiles[x][y];
 				if (tile != null) {
 					tile.drawEnts(g, x * tile.getWidth(), y * tile.getHeight());
@@ -38,17 +45,28 @@ public class GameMap {
 			}
 		}
 	}
+
+    public void setAct(boolean bool) {
+        this.act = bool;
+    }
+
+    public boolean isActing() {
+        return act;
+    }
 	
-	public void update(MainGameState mgs) { // This is where all the mobs move
+	public void update(GameContainer container, StateBasedGame s, int delta) { // This is where all the mobs move
+        if (!act) return;
+        act = false;
 		for (int x = 0; x < tiles.length; x++) {
 			for (int y = 0; y < tiles[0].length; y++) {
 				Tile tile = tiles[x][y];
 				if (tile != null) {
-					tile.update(mgs);
+					tile.update(container, s, delta);
+                    tile.updateAttacks();
 				}
 			}
 		}
-		/*
+        /*
 		for (int x = 0; x < tiles.length; x++) {
 			for (int y = 0; y < tiles[0].length; y++) {
 				Tile tile = tiles[x][y];
@@ -56,7 +74,7 @@ public class GameMap {
 					ArrayList<Entity> mobs = tile.findType(Mob.class);
 					if (mobs != null) { 
 						Mob mob = (Mob) mobs.get(0);
-						//mob.setMoved(false);
+						mob.setMoved(false);
 					}
 				}
 			}
@@ -100,9 +118,17 @@ public class GameMap {
 		return width * 64;
 	}
 
+    public int getWidth() {
+        return width;
+    }
+
 	public int getScaledHeight() {
 		return height * 64;
 	}
+
+    public int getHeight() {
+        return height;
+    }
 	
 	public void regen() {
 		tiles = DungeonGenerator.generateDungeon(Misc.DUNGEON_SIZE,

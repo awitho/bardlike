@@ -1,7 +1,9 @@
 package me.bloodarowman.bardlike;
 
 import org.newdawn.slick.Color;
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.state.StateBasedGame;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,8 +48,6 @@ public class Mob extends Entity {
 		Player ply = (Player) ent;
 		ply.log("You hit " + getName() + " for " + amt + " damage.");
 		stats.put("curhp", stats.get("curhp") - amt);
-		System.out.print(stats.get("curhp") + "/" + stats.get("maxhp") + "=");
-		System.out.println(((float)stats.get("curhp") / stats.get("maxhp")));
 		if (stats.get("curhp") <= 0) {
 			die(ent);
 		}
@@ -85,10 +85,10 @@ public class Mob extends Entity {
 
 	private ArrayList<Tile> togo = new ArrayList<Tile>();
 	@Override
-	public void update(MainGameState mgs) {
+	public void update(GameContainer container, StateBasedGame gc, int delta) {
 		if (moved) { return; }
-		if ((Math.abs(getTile().getTileX() - mgs.getPlayer().getTile().getTileX()) + Math.abs(getTile().getTileY() - mgs.getPlayer().getTile().getTileY())) <= 8) {
-			ArrayList<PathfindingTile> tiles = Misc.pathfindTo(getMap(), getTile().getTileX(), getTile().getTileY(), mgs.getPlayer().getTile().getTileX(), mgs.getPlayer().getTile().getTileY());
+		if ((Math.abs(getTile().getTileX() - MainGameState.current.getPlayer().getTile().getTileX()) + Math.abs(getTile().getTileY() - MainGameState.current.getPlayer().getTile().getTileY())) <= 8) {
+            ArrayList<PathfindingTile> tiles = Misc.pathfindTo(getMap(), getTile().getTileX(), getTile().getTileY(), MainGameState.current.getPlayer().getTile().getTileX(), MainGameState.current.getPlayer().getTile().getTileY());
 			if (tiles == null || tiles.size() == 1) { return; }
 			PathfindingTile tile = tiles.get(tiles.size() - 1); // Get last tile in path.
 			while (true) {
@@ -114,7 +114,6 @@ public class Mob extends Entity {
 		}
 	}
 
-	@Override
 	public void updateAttacks() {
 		if (moved) { moved = false; return; }
 		for (Direction dir : Direction.values()) {

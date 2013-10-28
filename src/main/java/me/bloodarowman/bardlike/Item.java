@@ -2,6 +2,8 @@ package me.bloodarowman.bardlike;
 
 import com.google.gson.JsonElement;
 import org.newdawn.slick.Color;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.state.StateBasedGame;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -78,7 +80,10 @@ public class Item extends Entity {
 		return type;
 	}
 
-	@Override
+    @Override
+    public void update(GameContainer container, StateBasedGame s, int delta) {return;}
+
+    @Override
 	public String toString() {
 		return "(Item | name: " + getName() + ", stats: " + stats + ", image: "
 				+ getImage() + ", type: " + type + ")";

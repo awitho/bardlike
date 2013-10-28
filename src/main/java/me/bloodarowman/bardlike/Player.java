@@ -20,6 +20,7 @@ import java.util.Map.Entry;
 import org.keplerproject.luajava.JavaFunction;
 import org.keplerproject.luajava.LuaException;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.state.StateBasedGame;
 
 /**
  * The Player that you control.
@@ -146,8 +147,8 @@ public class Player extends Entity {
 			}
 		}
 
-		getMap().update(mgs);
-		getMap().updateAttacks();
+        getMap().setAct(true);
+		//getMap().updateAttacks();
 		
 		ArrayList<Entity> foundItems = tile.findType(Item.class);
 		if (foundItems != null) { 
@@ -345,33 +346,35 @@ public class Player extends Entity {
 	}
 
 	private int stepping = 0;
-	public void update(GameContainer container) {
-		updateBuffs();
-		if (stepping > 0) { stepping--; return; }
-		if (container.getInput().isKeyDown(Input.KEY_LEFT)) {
-			stepping = 13;
-			this.move(Direction.LEFT);
-		}
-		if (container.getInput().isKeyDown(Input.KEY_RIGHT)) {
-			stepping = 13;
-			this.move(Direction.RIGHT);
-		}
-		if (container.getInput().isKeyDown(Input.KEY_DOWN)) {
-			stepping = 13;
-			this.move(Direction.DOWN);
-		}
-		if (container.getInput().isKeyDown(Input.KEY_UP)) {
-			stepping = 13;
-			this.move(Direction.UP);
-		}
-		if (container.getInput().isKeyDown(Input.KEY_SPACE)) {
-			stepping = 13;
-			//DungeonGenerator.placePlayerInFeasibleLocation(getMap(), this);
-			getMap().update(mgs);
-		}
+	public void update(GameContainer container, StateBasedGame s, int delta) {
+        if (!getMap().isActing()) {
+            updateBuffs();
+            if (stepping > 0) { stepping--; return; }
+            if (container.getInput().isKeyDown(Input.KEY_LEFT)) {
+                stepping = 13;
+                this.move(Direction.LEFT);
+            }
+            if (container.getInput().isKeyDown(Input.KEY_RIGHT)) {
+                stepping = 13;
+                this.move(Direction.RIGHT);
+            }
+            if (container.getInput().isKeyDown(Input.KEY_DOWN)) {
+                stepping = 13;
+                this.move(Direction.DOWN);
+            }
+            if (container.getInput().isKeyDown(Input.KEY_UP)) {
+                stepping = 13;
+                this.move(Direction.UP);
+            }
+            if (container.getInput().isKeyDown(Input.KEY_SPACE)) {
+                stepping = 13;
+                getMap().setAct(true);
+                //DungeonGenerator.placePlayerInFeasibleLocation(getMap(), this);
+            }
+        }
+        getMap().update(container, s, delta);
 	//	if (container.getInput().isKeyPressed(Input.KEY_V)) {
 	//		DungeonGenerator.placePlayerInFeasibleLocation(mgs.setLevel(mgs.genNewLevel()), this);
 	//	}
 	}
-
 }

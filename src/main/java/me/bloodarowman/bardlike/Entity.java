@@ -1,16 +1,19 @@
 package me.bloodarowman.bardlike;
 
 import java.util.HashMap;
+
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.state.StateBasedGame;
 
 /**
  * A generic entity class, represents everything that's not a tile.
- * @sicne 5/26/13
+ * @since 5/26/13
  * @version 1
  * @author Alex
  */
-public class Entity {
+public abstract class Entity {
 	private static int gId = 1; // global id
 	private int id;
 	private int x, y;
@@ -32,8 +35,8 @@ public class Entity {
 		g.drawImage(img, this.x, this.y);
 	}
 
-	public void update(MainGameState mgs) {}
-	public void updateAttacks() {}
+	public abstract void update(GameContainer container, StateBasedGame s, int delta);
+	//public abstract void updateAttacks();
 
 	public void setTile(Tile tile) {
 		if (curTile != null) { getTile().removeEnt(this); } 
