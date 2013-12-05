@@ -78,6 +78,7 @@ public class InventoryTile {
             for (Map.Entry<String, Integer> ent : i.getStats().entrySet()) {
                 itemString += "· " + ent.getKey() + ": " + ent.getValue() + "\n";
             }
+	        itemString += ("durability: " + i.getDurability());
             int l = 0;
             for (String str : itemString.split("\n")) {
                 if (Log.LOG_FONT.getWidth(str) > l) {

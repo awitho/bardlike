@@ -20,8 +20,14 @@ import java.net.URISyntaxException;
  * @author alex
  */
 public class HelpMenuState extends BasicGameState {
+	public static final int STATE_ID = 3;
 	private JsonArray help;
 	private Image backImg;
+
+	@Override
+	public int getID() {
+		return STATE_ID;
+	}
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg)
@@ -58,10 +64,5 @@ public class HelpMenuState extends BasicGameState {
 	
 	public void setBackImg(Image img) {
 		this.backImg = img;
-	}
-
-	@Override
-	public int getID() {
-		return 3;
 	}
 }

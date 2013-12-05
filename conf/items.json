@@ -3,9 +3,9 @@
         "id": "crystal_staff",
         "type": "WEAPON",
         "type2": "STAFF",
-        "spawnchance": 10,
         "sx": 1,
         "sy": 9,
+        "decay": 200,
         "stats": {
             "str": 1,
             "int": 3
@@ -15,6 +15,7 @@
         "id": "steel_claymore",
         "type": "WEAPON",
         "type2": "SWORD",
+        "decay": 800,
         "sx": 0,
         "sy": 0,
         "stats": {
@@ -25,6 +26,7 @@
         "id": "steel_sword",
         "type": "WEAPON",
         "type2": "SWORD",
+        "decay": 800,
         "sx": 1,
         "sy": 0,
         "stats": {
@@ -34,6 +36,7 @@
     {
         "id": "leather_helmet",
         "type": "HEADGEAR",
+        "decay": 500,
         "sx": 1,
         "sy": 11,
         "stats": {
@@ -44,6 +47,7 @@
         "id": "iron_shortsword",
         "type": "WEAPON",
         "type2": "SWORD",
+        "decay": 600,
         "sx": 0,
         "sy": 1,
         "stats": {
@@ -54,6 +58,7 @@
         "id": "de_sword",
         "type": "WEAPON",
         "type2": "SWORD",
+        "decay": 800,
         "sx": 1,
         "sy": 1,
         "stats": {
@@ -64,6 +69,7 @@
         "id": "rapier",
         "type": "WEAPON",
         "type2": "SWORD",
+        "decay": 400,
         "sx": 2,
         "sy": 1,
         "stats": {
@@ -74,6 +80,7 @@
         "id": "butter_knife",
         "type": "WEAPON",
         "type2": "DAGGER",
+        "decay": 0,
         "sx": 0,
         "sy": 2,
         "stats": {
@@ -84,6 +91,7 @@
         "id": "iron_dagger",
         "type": "WEAPON",
         "type2": "DAGGER",
+        "decay": 600,
         "sx": 1,
         "sy": 2,
         "stats": {
@@ -94,6 +102,7 @@
         "id": "iron_spear",
         "type": "WEAPON",
         "type2": "SPEAR",
+        "decay": 600,
         "sx": 0,
         "sy": 3,
         "stats": {
@@ -104,6 +113,7 @@
         "id": "steel_spear",
         "type": "WEAPON",
         "type2": "SPEAR",
+        "decay": 800,
         "sx": 1,
         "sy": 3,
         "stats": {
@@ -114,6 +124,7 @@
         "id": "iron_hammer",
         "type": "WEAPON",
         "type2": "HAMMER",
+        "decay": 600,
         "sx": 0,
         "sy": 4,
         "stats": {
@@ -124,6 +135,7 @@
         "id": "brass_hammer",
         "type": "WEAPON",
         "type2": "HAMMER",
+        "decay": 300,
         "sx": 1,
         "sy": 4,
         "stats": {
@@ -134,6 +146,7 @@
         "id": "steel_greathammer",
         "type": "WEAPON",
         "type2": "HAMMER",
+        "decay": 800,
         "sx": 2,
         "sy": 4,
         "stats": {
@@ -144,6 +157,7 @@
         "id": "wooden_club",
         "type": "WEAPON",
         "type2": "MACE",
+        "decay": 200,
         "sx": 0,
         "sy": 5,
         "stats": {
@@ -154,6 +168,7 @@
         "id": "iron_mace",
         "type": "WEAPON",
         "type2": "MACE",
+        "decay": 600,
         "sx": 1,
         "sy": 5,
         "stats": {
@@ -164,6 +179,7 @@
         "id": "steel_mace",
         "type": "WEAPON",
         "type2": "MACE",
+        "decay": 800,
         "sx": 2,
         "sy": 5,
         "stats": {
@@ -174,6 +190,7 @@
         "id": "iron_flail",
         "type": "WEAPON",
         "type2": "FLAIL",
+        "decay": 600,
         "sx": 0,
         "sy": 6,
         "stats": {
@@ -184,6 +201,7 @@
         "id": "steel_flail",
         "type": "WEAPON",
         "type2": "FLAIL",
+        "decay": 800,
         "sx": 1,
         "sy": 6,
         "stats": {
@@ -194,6 +212,7 @@
         "id": "bards_flute",
         "type": "WEAPON",
         "type2": "INSTRUMENT",
+        "decay": 400,
         "sx": 0,
         "sy": 7,
         "stats": {
@@ -204,6 +223,7 @@
         "id": "bards_lute",
         "type": "WEAPON",
         "type2": "INSTRUMENT",
+        "decay": 400,
         "sx": 1,
         "sy": 7,
         "stats": {
@@ -214,6 +234,7 @@
         "id": "iron_halberd",
         "type": "WEAPON",
         "type2": "HALBERD",
+        "decay": 600,
         "sx": 0,
         "sy": 8,
         "stats": {
@@ -224,6 +245,7 @@
         "id": "steel_halberd",
         "type": "WEAPON",
         "type2": "HALBERD",
+        "decay": 800,
         "sx": 1,
         "sy": 8,
         "stats": {
@@ -234,6 +256,7 @@
         "id": "steel_greataxe",
         "type": "WEAPON",
         "type2": "HALBERD",
+        "decay": 800,
         "sx": 2,
         "sy": 8,
         "stats": {
@@ -244,6 +267,7 @@
         "id": "wood_staff",
         "type": "WEAPON",
         "type2": "STAFF",
+        "decay": 200,
         "sx": 0,
         "sy": 9,
         "stats": {
@@ -254,6 +278,7 @@
         "id": "wood_wand",
         "type": "WEAPON",
         "type2": "WAND",
+        "decay": 200,
         "sx": 0,
         "sy": 10,
         "stats": {
@@ -264,6 +289,7 @@
         "id": "crystal_wand",
         "type": "WEAPON",
         "type2": "WAND",
+        "decay": 900,
         "sx": 1,
         "sy": 10,
         "stats": {
@@ -273,6 +299,7 @@
     {
         "id": "cloth_hood",
         "type": "HEADGEAR",
+        "decay": 100,
         "sx": 0,
         "sy": 11,
         "stats": {
@@ -282,6 +309,7 @@
     {
         "id": "iron_hood",
         "type": "HEADGEAR",
+        "decay": 500,
         "sx": 2,
         "sy": 11,
         "stats": {
@@ -291,6 +319,7 @@
     {
         "id": "iron_helmet",
         "type": "HEADGEAR",
+        "decay": 600,
         "sx": 3,
         "sy": 11,
         "stats": {
@@ -300,6 +329,7 @@
     {
         "id": "leather_pauldrons",
         "type": "PAULDRONS",
+        "decay": 500,
         "sx": 1,
         "sy": 12,
         "stats": {
@@ -309,6 +339,7 @@
     {
         "id": "iron_pauldrons",
         "type": "PAULDRONS",
+        "decay": 600,
         "sx": 3,
         "sy": 12,
         "stats": {
@@ -318,6 +349,7 @@
     {
         "id": "brown_cloak",
         "type": "CLOAK",
+        "decay": 100,
         "sx": 0,
         "sy": 13,
         "stats": {
@@ -327,6 +359,7 @@
     {
         "id": "white_cloak",
         "type": "CLOAK",
+        "decay": 100,
         "sx": 1,
         "sy": 13,
         "stats": {
@@ -336,6 +369,7 @@
     {
         "id": "red_cloak",
         "type": "CLOAK",
+        "decay": 100,
         "sx": 2,
         "sy": 13,
         "stats": {
@@ -345,6 +379,7 @@
     {
         "id": "diamond_cloak",
         "type": "CLOAK",
+        "decay": 9001,
         "sx": 3,
         "sy": 13,
         "stats": {
@@ -354,6 +389,7 @@
     {
         "id": "leather_shirt",
         "type": "TORSO",
+        "decay": 500,
         "sx": 0,
         "sy": 14,
         "stats": {
@@ -363,6 +399,7 @@
     {
         "id": "leather_armor",
         "type": "TORSO",
+        "decay": 500,
         "sx": 1,
         "sy": 14,
         "stats": {
@@ -372,6 +409,7 @@
     {
         "id": "mail_armor",
         "type": "TORSO",
+        "decay": 550,
         "sx": 2,
         "sy": 14,
         "stats": {
@@ -381,6 +419,7 @@
     {
         "id": "iron_chestplate",
         "type": "TORSO",
+        "decay": 600,
         "sx": 3,
         "sy": 14,
         "stats": {
@@ -390,6 +429,7 @@
     {
         "id": "leather_gauntlets",
         "type": "GAUNTLETS",
+        "decay": 500,
         "sx": 1,
         "sy": 15,
         "stats": {
@@ -399,6 +439,7 @@
     {
         "id": "mail_gauntlets",
         "type": "GAUNTLETS",
+        "decay": 550,
         "sx": 2,
         "sy": 15,
         "stats": {
@@ -408,6 +449,7 @@
     {
         "id": "iron_gauntlets",
         "type": "GAUNTLETS",
+        "decay": 600,
         "sx": 3,
         "sy": 15,
         "stats": {
@@ -417,6 +459,7 @@
     {
         "id": "leather_belt",
         "type": "WAIST",
+        "decay": 500,
         "sx": 0,
         "sy": 16,
         "stats": {
@@ -426,6 +469,7 @@
     {
         "id": "leather_pants",
         "type": "LEGS",
+        "decay": 500,
         "sx": 0,
         "sy": 17,
         "stats": {
@@ -435,6 +479,7 @@
     {
         "id": "leather_leggings",
         "type": "LEGS",
+        "decay": 500,
         "sx": 1,
         "sy": 17,
         "stats": {
@@ -444,6 +489,7 @@
     {
         "id": "mail_leggings",
         "type": "LEGS",
+        "decay": 550,
         "sx": 2,
         "sy": 17,
         "stats": {
@@ -453,6 +499,7 @@
     {
         "id": "iron_leggings",
         "type": "LEGS",
+        "decay": 600,
         "sx": 3,
         "sy": 17,
         "stats": {
@@ -462,6 +509,7 @@
     {
         "id": "leather_shoes",
         "type": "FEET",
+        "decay": 500,
         "sx": 1,
         "sy": 18,
         "stats": {
@@ -471,6 +519,7 @@
     {
         "id": "iron_boots",
         "type": "FEET",
+        "decay": 600,
         "sx": 3,
         "sy": 18,
         "stats": {
@@ -480,6 +529,7 @@
     {
         "id": "silver_ring",
         "type": "RING",
+        "decay": 1600,
         "sx": 0,
         "sy": 19,
         "stats": {
@@ -489,6 +539,7 @@
     {
         "id": "silver_diamond_ring",
         "type": "RING",
+        "decay": 1600,
         "sx": 1,
         "sy": 19,
         "stats": {
@@ -498,6 +549,7 @@
     {
         "id": "gold_ring",
         "type": "RING",
+        "decay": 1600,
         "sx": 2,
         "sy": 19,
         "stats": {
@@ -507,6 +559,7 @@
     {
         "id": "gold_diamond_ring",
         "type": "RING",
+        "decay": 1600,
         "sx": 3,
         "sy": 19,
         "stats": {

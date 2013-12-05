@@ -38,7 +38,7 @@ public class Player extends Entity {
 	private MainGameState mgs;
 	private JsonArray xpTable; // Required exp for each level.
 	private String plyClass, mainStat; // Would be part of stats, but it can't be.
-	private ArrayList<Item> inventoryItems, equippedItems;
+	private ArrayList<Item> inventoryItems, equippedItems, removeItems;
     private Log log;
 	private boolean frozen, dead, attacked;
 
@@ -48,6 +48,7 @@ public class Player extends Entity {
 		this.mgs = mgs;
 		inventoryItems = new ArrayList<Item>();
 		equippedItems = new ArrayList<Item>();
+	    removeItems = new ArrayList<Item>();
 		xpTable = new GameConfig("exp.json").getArray();
 		plyClass = data.get("name").getAsString();
 
@@ -149,7 +150,9 @@ public class Player extends Entity {
 
         getMap().setAct(true);
 		//getMap().updateAttacks();
-		
+
+		updateInventory();
+
 		ArrayList<Entity> foundItems = tile.findType(Item.class);
 		if (foundItems != null) { 
 			for(int i = 0; i < foundItems.size(); i++) {
@@ -343,6 +346,24 @@ public class Player extends Entity {
 			return;
 		}
 		stats.put("xp", amount);
+	}
+
+	public void planRemoveItem(Item item) {
+		removeItems.add(item);
+	}
+
+	public void updateInventory() {
+		for (Item item : inventoryItems) {
+			item.decay();
+		}
+		for (Item item : equippedItems) {
+			item.decay();
+		}
+		for (Item item : removeItems) {
+			equippedItems.remove(item);
+			inventoryItems.remove(item);
+		}
+		removeItems.clear();
 	}
 
 	private int stepping = 0;

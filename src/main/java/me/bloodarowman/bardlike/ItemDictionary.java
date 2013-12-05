@@ -22,6 +22,7 @@ public class ItemDictionary {
     private static HashMap<String, String> itemNames = new HashMap<String, String>();
     private static HashMap<String, String> itemDescs = new HashMap<String, String>();
 	private static HashMap<String, WeaponType> weaponTypes = new HashMap<String, WeaponType>();
+	private static HashMap<String, Double> itemDecays = new HashMap<String, Double>();
 	private static HashMap<Integer, HashMap<String, Image>> scaledImages = new HashMap<Integer, HashMap<String, Image>>();
 	private static JsonArray items;
 	private static JsonObject curItem;
@@ -35,8 +36,10 @@ public class ItemDictionary {
 			for(int i = 0; i < items.size(); i++) {
 				curItem = items.get(i).getAsJsonObject();
 
+				//Get item's type.
 				itemTypes.put(curItem.get("id").getAsString(), ItemType.valueOf(curItem.get("type").getAsString()));
 
+				//Get item's sprite
 				if (curItem.get("sx").getAsInt() < 0 || curItem.get("sx").getAsInt() > itemSprites.getHorizontalCount() || curItem.get("sy").getAsInt() < 0 || curItem.get("sy").getAsInt() > itemSprites.getVerticalCount()) {
 					Misc.logError(curItem.get("id").getAsString() + " was out of the spritesheet's bounds, using placeholder.");
 					itemImages.put(curItem.get("id").getAsString(), Misc.miscImages.get("placeholder"));
@@ -44,9 +47,17 @@ public class ItemDictionary {
 					itemImages.put(curItem.get("id").getAsString(), itemSprites.getSubImage(curItem.get("sx").getAsInt(), curItem.get("sy").getAsInt()).getScaledCopy(Misc.TARGET_SIZE, Misc.TARGET_SIZE));
 				}
 
+				//Get item's name, description and decay rate
                 itemNames.put(curItem.get("id").getAsString(), itemNamesJSON.getObject().get(curItem.get("id").getAsString()).getAsJsonObject().get("name").getAsString());
                 itemDescs.put(curItem.get("id").getAsString(), itemNamesJSON.getObject().get(curItem.get("id").getAsString()).getAsJsonObject().get("desc").getAsString());
+				if (curItem.get("decay").getAsInt() > 0) {
+					itemDecays.put(curItem.get("id").getAsString(), 100.0/curItem.get("decay").getAsDouble());
+				} else {
+					itemDecays.put(curItem.get("id").getAsString(), curItem.get("decay").getAsDouble());
+				}
 
+
+				//Get weapon type if item is weapon.
                 String wepType;
 				try {
 					wepType = curItem.get("type2").getAsString();
@@ -107,6 +118,10 @@ public class ItemDictionary {
 	
 	public static Image getImage(String name) {
 		return itemImages.get(name);
+	}
+
+	public static Double getDecayRate(String name) {
+		return itemDecays.get(name);
 	}
 	
 	public static int size() {

@@ -20,7 +20,7 @@ public class GameMap {
 
 	public GameMap(int w, int h, int level, MobDictionary mobDictionary) {
         drawW = (int) (Math.ceil(Main.game.getScreenWidth()/64) + 1.0) / 2;
-        drawH = (int) (Math.ceil(Main.game.getScreenHeight()/64) + 1.0) / 2;
+        drawH = (int) (Math.ceil(Main.game.getScreenHeight()/64) + 2.0) / 2;
 		this.mobDictionary = mobDictionary;
 		width = w;
 		height = h;

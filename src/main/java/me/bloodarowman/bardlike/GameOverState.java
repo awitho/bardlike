@@ -13,11 +13,12 @@ import org.newdawn.slick.state.StateBasedGame;
  * @author Alex
  */
 public class GameOverState extends BasicGameState {
+	public static final int STATE_ID = 5;
 	private Image backImg;
 
 	@Override
 	public int getID() {
-		return 5;
+		return STATE_ID;
 	}
 
 	@Override

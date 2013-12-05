@@ -1,6 +1,7 @@
 package me.bloodarowman.bardlike;
 
 import com.google.gson.JsonElement;
+import me.bloodarowman.bardlike.gui.LogEffect;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;
@@ -21,6 +22,8 @@ public class Item extends Entity {
     private Color color;
     private String desc;
     private ItemType type;
+	private double decayRate;
+	private double durability = 100.0;
 	private WeaponType weaponType;
 	private HashMap<String, Integer> stats = new HashMap<String, Integer>();
 
@@ -30,6 +33,7 @@ public class Item extends Entity {
         this.name = ItemDictionary.getName(id);
         this.desc = ItemDictionary.getDesc(id);
 		this.type = ItemDictionary.getType(id);
+		this.decayRate = ItemDictionary.getDecayRate(id);
 		this.weaponType = ItemDictionary.getWeaponType(id);
 
 		if ((int) (Math.random() * 100) <=45) {
@@ -78,6 +82,16 @@ public class Item extends Entity {
 
 	public ItemType getType() {
 		return type;
+	}
+
+	public Double getDurability() { return durability; }
+
+	public void decay() {
+		this.durability -= this.decayRate;
+		if (this.durability <= 0.0) {
+			MainGameState.current.getLog().append(this.name + " has decayed!", LogEffect.RED_WHITE_FLASH);
+			MainGameState.current.getPlayer().planRemoveItem(this);
+		}
 	}
 
     @Override

@@ -28,16 +28,15 @@ public class MainMenuState extends BasicGameState {
 		this.menu = "What Do? [ (P)lay | (H)elp | (Esc)ape ]";
 		try {
 			this.titleImg = ImageLoader.loadImage("title.png"); //new Image("./gfx/title.png");
-			this.backImg = ImageLoader.loadImage("mainback.png") //new Image("./gfx/mainback.png")
-					.getScaledCopy(container.getWidth(), container.getHeight());
+			this.backImg = ImageLoader.loadImage("mainback.png").getScaledCopy(container.getWidth(), container.getHeight()); //new Image("./gfx/mainback.png")
 		} catch (Exception e) {
 			Misc.showDialog(e);
 			return;
 		}
 		
-		GameOverState g = (GameOverState) s.getState(5);
+		GameOverState g = (GameOverState) s.getState(GameOverState.STATE_ID);
 		g.setBackImg(backImg);
-		HelpMenuState h = (HelpMenuState) s.getState(3);
+		HelpMenuState h = (HelpMenuState) s.getState(HelpMenuState.STATE_ID);
 		h.setBackImg(backImg);
 	}
 

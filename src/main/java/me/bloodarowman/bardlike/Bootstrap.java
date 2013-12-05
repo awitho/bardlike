@@ -59,7 +59,7 @@ public class Bootstrap {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.setProperty("java.library.path", "lib/native/" + System.getProperty("os.name").toLowerCase());
+       /* System.setProperty("java.library.path", "lib/native/" + System.getProperty("os.name").toLowerCase());
         System.out.println(System.getProperty("java.library.path"));
         Field fieldSysPath = null;
         try {
@@ -72,7 +72,7 @@ public class Bootstrap {
             fieldSysPath.set(null, null);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
-        }
+        } */
 
         try {
             Main.main();
