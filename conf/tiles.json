@@ -1,26 +1,38 @@
 [
 	{
 		"name":"Stone",
-		"sx":0,
+		"sx":1,
 		"sy":0,
 		"wall":true
 	},
 	{
 		"name":"Wood",
-		"sx":1,
+		"sx":0,
 		"sy":0,
 		"wall":false
 	},
 	{
 		"name":"Obsidian",
-		"sx":0,
+		"sx":1,
 		"sy":1,
 		"wall":"true"
 	},
 	{
 		"name":"Glass",
-		"sx":1,
+		"sx":0,
 		"sy":1,
 		"wall":false
+	},
+	{
+		"name":"Water",
+		"sx":2,
+		"sy":0,
+		"wall": false
+	},
+	{
+		"name":"Lava",
+		"sx":2,
+		"sy":1,
+		"wall": false
 	}
 ]
