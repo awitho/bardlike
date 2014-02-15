@@ -5,6 +5,9 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Map;
+
+import com.google.gson.JsonElement;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -24,45 +27,46 @@ import com.google.gson.JsonObject;
  * @author Bobby Henley
  */
 public class ClassSelectState extends BasicGameState {
+	public static final int STATE_ID = 2;
+
 	private SpriteSheet classSprites;
-	private JsonArray classes;
+	private JsonObject classes;
 	private ArrayList<String> charNames;
 	private ArrayList<Image> charSprite;
 	private MouseOverArea mouseOver;
 	private boolean loading = false;
-	private int chosen = -1;
+	private PlayerClass chosen;
 
 	@Override
 	public void init(GameContainer container, StateBasedGame s) throws SlickException {
 		charSprite = new ArrayList<Image>();
 		charNames = new ArrayList<String>();
         try {
-            classes = new GameConfig("classes.json").getArray();
+            classes = new GameConfig("classes.json").getObject();
         } catch (Exception ex) {
             Misc.logError(ex);
         }
-        classSprites = ImageLoader.loadSpritesheet("ents/chars_lofi.png", 64, 64); // new SpriteSheet(new URL("file:///gfx/ents/chars.png"), 64, 64);
+        classSprites = ImageLoader.loadSpritesheet("ents/chars_lofi.png", 32, 32); // new SpriteSheet(new URL("file:///gfx/ents/chars.png"), 64, 64);
 
-        for(int i = 0; i < classes.size(); i++) {
-			JsonObject character = classes.get(i).getAsJsonObject();
-			charSprite.add(classSprites.getSubImage(character.get("sx")
-					.getAsInt(), character.get("sy").getAsInt()));
-			charNames.add("(" + character.get("hotkey").getAsString() + ")" 
-					+ character.get("name").getAsString().substring(1));
+		for (Map.Entry<String, JsonElement> ele : classes.entrySet()) {
+			JsonObject character = ele.getValue().getAsJsonObject();
+			charSprite.add(classSprites.getSubImage(character.get("sx").getAsInt(), character.get("sy").getAsInt()));
+			charNames.add("(" + character.get("hotkey").getAsString() + ")" + character.get("name").getAsString().substring(1));
 		}
+		//	for(int i = 0; i < classes.size(); i++) {
+		//	JsonObject character = classes.get(i).getAsJsonObject();
+		//	charSprite.add(classSprites.getSubImage(character.get("sx").getAsInt(), character.get("sy").getAsInt()));
+		//	charNames.add("(" + character.get("hotkey").getAsString() + ")" + character.get("name").getAsString().substring(1));
+		//}
 	}
 
 	@Override
-	public void render(GameContainer container, StateBasedGame s, Graphics g) 
-			throws SlickException {
+	public void render(GameContainer container, StateBasedGame s, Graphics g) throws SlickException {
 		if (loading) {
-			g.drawString("Loading...", container.getWidth()/2 - g.getFont()
-					.getWidth("Loading...")/2, container.getHeight()/2
-					- g.getFont().getHeight("Loading...")/2);
+			g.drawString("Loading...", container.getWidth()/2 - g.getFont().getWidth("Loading...")/2, container.getHeight()/2 - g.getFont().getHeight("Loading...")/2);
 			return;
 		}
-		g.drawString("Choose Your Character!", container.getWidth()/2 - 
-				100, 50);
+		g.drawString("Choose Your Character!", container.getWidth()/2 - 100, 50);
 		int locY = container.getHeight() / 2 - 130;
 		for(int i = 0; i < charSprite.size(); i++) {
 			g.drawImage(charSprite.get(i), container.getWidth() / 2 + 50, locY);
@@ -71,24 +75,27 @@ public class ClassSelectState extends BasicGameState {
 		}
 	}
 
+	public enum PlayerClass {
+		BARD, MAGE, PALADIN, WARRIOR, ROGUE
+	}
+
 	@Override
-	public void update(GameContainer container, StateBasedGame s, int delta)
-			throws SlickException {
+	public void update(GameContainer container, StateBasedGame s, int delta) throws SlickException {
 		if (loading) { return; }
 		//add buttons eventually.
 		MainGameState main = (MainGameState) s.getState(4);
 		if (container.getInput().isKeyPressed(Input.KEY_B)) {
-			chosen = 0;
+			chosen = PlayerClass.BARD;
 		} else if(container.getInput().isKeyPressed(Input.KEY_M)) {
-			chosen = 1;
+			chosen = PlayerClass.MAGE;
 		} else if(container.getInput().isKeyPressed(Input.KEY_P)) {
-			chosen = 2;
+			chosen = PlayerClass.PALADIN;
 		} else if(container.getInput().isKeyPressed(Input.KEY_W)) {
-			chosen = 3;
+			chosen = PlayerClass.WARRIOR;
 		} else if(container.getInput().isKeyPressed(Input.KEY_R)) {
-			chosen = 4;
+			chosen = PlayerClass.ROGUE;
 		}
-		if (chosen > -1) {
+		if (chosen != null) {
 			(new LevelLoader(s, this, main)).start();
 			loading = true;
 		}
@@ -96,15 +103,15 @@ public class ClassSelectState extends BasicGameState {
 	}
 	
 	public void finishLoading(MainGameState main, StateBasedGame s) throws MalformedURLException, URISyntaxException {
-		main.setPlayer(classSprites, classes.get(chosen).getAsJsonObject());
-                chosen = -1;
-                loading = false;
-		s.enterState(4);
+		main.setPlayer(classSprites, classes.get(chosen.toString()).getAsJsonObject());
+			chosen = null;
+			loading = false;
+		s.enterState(MainGameState.STATE_ID);
 	}
 
 	@Override
 	public int getID() {
-		return 2;
+		return STATE_ID;
 	}
 	
 	private class LevelLoader extends Thread {
@@ -112,8 +119,7 @@ public class ClassSelectState extends BasicGameState {
 		private ClassSelectState css;
 		private StateBasedGame s;
 		
-		public LevelLoader(StateBasedGame s, ClassSelectState css, 
-				MainGameState state) {
+		public LevelLoader(StateBasedGame s, ClassSelectState css, MainGameState state) {
 			this.state = state;
 			this.css = css;
 			this.s = s;

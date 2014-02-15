@@ -14,12 +14,12 @@ import java.util.ArrayList;
  */
 public class GameMap {
 	private MobDictionary mobDictionary;
-    private boolean act = false;
+    private boolean act = false, filtered = false;
 	private int width, height, level, drawW, drawH;
 	private Tile[][] tiles;
 
 	public GameMap(int w, int h, int level, MobDictionary mobDictionary) {
-        drawW = (int) (Math.ceil(Main.game.getScreenWidth()/64) + 1.0) / 2;
+        drawW = (int) (Math.ceil(Main.game.getScreenWidth()/64) + 2.0) / 2;
         drawH = (int) (Math.ceil(Main.game.getScreenHeight()/64) + 2.0) / 2;
 		this.mobDictionary = mobDictionary;
 		width = w;
@@ -27,20 +27,38 @@ public class GameMap {
 		this.level = level;
 	}
 
-	public void draw(Graphics g, Player ply, Camera cam) {
-		for (int x = Misc.clamp(ply.getTile().getTileX() - drawW, 0, this.getWidth()); x < Misc.clamp(ply.getTile().getTileX() + (drawW + 1), 0, this.getWidth()); x++) {
-			for (int y = Misc.clamp(ply.getTile().getTileY() - drawH, 0, this.getHeight()); y < Misc.clamp(ply.getTile().getTileY() + (drawH + 2), 0, this.getHeight()); y++) {
+	public void draw(GameContainer container, StateBasedGame s, Graphics g, Vector v, float scale) {
+		for (int x = Misc.clamp(Math.round(v.getX() - drawW*scale), 0, this.getWidth()); x < Misc.clamp(Math.round(v.getX() + (drawW*scale + 1)), 0, this.getWidth()); x++) {
+			for (int y = Misc.clamp(Math.round(v.getY() - drawH*scale), 0, this.getHeight()); y < Misc.clamp(Math.round(v.getY() + (drawH*scale + 2)), 0, this.getHeight()); y++) {
 				Tile tile = tiles[x][y];
 				if (tile != null) {
-					tile.draw(g, x * tile.getWidth(), y * tile.getHeight());
+					g.pushTransform();
+					g.translate(x * tile.getWidth(), y * tile.getHeight());
+					tile.draw(container, s, g);
+					g.popTransform();
 				}
 			}
 		}
-        for (int x = Misc.clamp(ply.getTile().getTileX() - drawW, 0, this.getWidth()); x < Misc.clamp(ply.getTile().getTileX() + drawW, 0, this.getWidth()); x++) {
-            for (int y = Misc.clamp(ply.getTile().getTileY() - drawH, 0, this.getHeight()); y < Misc.clamp(ply.getTile().getTileY() + drawH, 0, this.getHeight()); y++) {
+        for (int x = Misc.clamp(Math.round(v.getX() - drawW*scale), 0, this.getWidth()); x < Misc.clamp(Math.round(v.getX() + drawW*scale), 0, this.getWidth()); x++) {
+            for (int y = Misc.clamp(Math.round(v.getY() - drawH*scale), 0, this.getHeight()); y < Misc.clamp(Math.round(v.getY() + drawH*scale), 0, this.getHeight()); y++) {
 				Tile tile = tiles[x][y];
 				if (tile != null) {
-					tile.drawEnts(g, x * tile.getWidth(), y * tile.getHeight());
+					g.pushTransform();
+					g.translate(x * tile.getWidth(), y * tile.getHeight());
+					tile.drawEnts(container, s, g);
+					g.popTransform();
+				}
+			}
+		}
+	}
+
+	public void filter(boolean filter) {
+		if (filtered != filter) {
+			filtered = filter;
+			for (int x = 0; x < this.getWidth(); x++) {
+				for (int y = 0; y < this.getHeight(); y++) {
+					Tile tile = tiles[x][y];
+					tile.filter(filter);
 				}
 			}
 		}

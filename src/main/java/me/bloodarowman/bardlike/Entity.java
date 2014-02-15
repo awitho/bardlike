@@ -5,6 +5,7 @@ import java.util.HashMap;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.state.StateBasedGame;
 
 /**
@@ -28,11 +29,18 @@ public abstract class Entity {
 		this.img = img;
 	}
 
-	public void draw(Graphics g, int x, int y) {
+	public void filter(boolean filter) {
+		if (filter) {
+			img.setFilter(SpriteSheet.FILTER_LINEAR);
+		} else {
+			img.setFilter(SpriteSheet.FILTER_NEAREST);
+		}
+	}
+
+	public void draw(GameContainer container, StateBasedGame s, Graphics g) {
 		if(!visible) { return; }
-		setPos(x, y);
 		//setPos((int) Misc.lerp(this.x, curTile.getTileX() * Misc.TARGET_SIZE, 0.1), (int) Misc.lerp(this.y, curTile.getTileY() * Misc.TARGET_SIZE, 0.1));
-		g.drawImage(img, this.x, this.y);
+		g.drawImage(img, 0, 0);
 	}
 
 	public abstract void update(GameContainer container, StateBasedGame s, int delta);
@@ -75,24 +83,11 @@ public abstract class Entity {
 	}
 
 	public int getX() {
-		return x;
+		return curTile.getX();
 	}
 
 	public int getY() {
-		return y;
-	}
-
-	public void setX(int x) {
-		this.x = x;
-	}
-
-	public void setY(int y) {
-		this.y = y;
-	}
-
-	public void setPos(int x, int y){
-		setX(x);
-		setY(y);
+		return curTile.getY();
 	}
 	
 	public boolean getVisible() {

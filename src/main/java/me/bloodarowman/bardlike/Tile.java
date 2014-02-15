@@ -1,10 +1,8 @@
 package me.bloodarowman.bardlike;
 
 import java.util.ArrayList;
-import org.newdawn.slick.Color;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
+
+import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
 
 /**
@@ -74,6 +72,14 @@ public class Tile {
 		containedEnts.remove(ent);
 	}
 
+	public int getX() {
+		return ix * spr.getWidth();
+	}
+
+	public int getY() {
+		return iy * spr.getHeight();
+	}
+
 	public int getTileX() {
 		return ix;
 	}
@@ -98,6 +104,17 @@ public class Tile {
 		}
 		return false;
 	}
+
+	public void filter(boolean filter) {
+		if (filter) {
+			spr.setFilter(SpriteSheet.FILTER_LINEAR);
+		} else {
+			spr.setFilter(SpriteSheet.FILTER_NEAREST);
+		}
+		for (Entity ent : containedEnts) {
+			ent.filter(filter);
+		}
+	}
 	
 	public ArrayList<Entity> findType(Class<?> cls) {
 		ArrayList<Entity> foundEnts = new ArrayList<Entity>();
@@ -110,20 +127,20 @@ public class Tile {
 		return foundEnts;
 	}
 
-	public void draw(Graphics g, int x, int y) {
-		g.drawImage(spr, x, y);
+	public void draw(GameContainer container, StateBasedGame s, Graphics g) {
+		g.drawImage(spr, 0, 0);
 		if (playerSaw && !inLos) {
             Color old = g.getColor();
             g.setColor(overlayColor);
-			g.drawImage(overlay, x, y);
+			g.drawImage(overlay, 0, 0);
             g.setColor(old);
 		}
 	}
 
-	public void drawEnts(Graphics g, int x, int y) {
+	public void drawEnts(GameContainer container, StateBasedGame s, Graphics g) {
 		if (containedEnts != null) {
 			for (int i = 0; i < containedEnts.size(); i++) {
-				containedEnts.get(i).draw(g, x, y);
+				containedEnts.get(i).draw(container, s, g);
 			}
 		}
 	}

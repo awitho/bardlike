@@ -71,15 +71,17 @@ public class Mob extends Entity {
 
 	private double bar_per = 1.0;
 	@Override
-	public void draw(Graphics g, int x, int y) {
-		super.draw(g, x, y);
+	public void draw(GameContainer container, StateBasedGame s, Graphics g) {
+		super.draw(container, s, g);
+
 		if (stats.get("curhp") == stats.get("maxhp")) { return; } // Don't bother if hp is full.
+
 		Color col = g.getColor();
 		g.setColor(HP_BAR_BG);
-		g.fillRect(x, y - (this.getImage().getHeight() / 2), this.getImage().getWidth(), 10); // Bar BG
+		g.fillRect(0, 0, this.getImage().getWidth(), 5); // Bar BG
 		g.setColor(HP_BAR_FG);
 		bar_per = Misc.lerp(bar_per, ((double)stats.get("curhp")/stats.get("maxhp")), 0.2);
-		g.fillRect(x + 1, y - (this.getImage().getHeight()/2)+1, (float) (bar_per * this.getImage().getWidth() - 2), 10 - 2); //Bar FG
+		g.fillRect(1, 1, (float) (bar_per * this.getImage().getWidth() - 1), 5 - 1); //Bar FG
 		g.setColor(col);
 	}
 

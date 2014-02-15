@@ -14,6 +14,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.state.StateBasedGame;
 
 /**
  * A class that handles the players inventory.
@@ -62,56 +63,45 @@ public class Inventory implements Menu {
 	public boolean isOpen() {
 		return visible;
 	}
-	
-	@Override
-	public void draw(Graphics g) {
-		draw(g, 0, 0);
-	}
-	
-	public void draw(Graphics g, int screenX, int screenY) {
+
+	public void draw(GameContainer container, StateBasedGame s, Graphics g) {
 		if(visible) {
-			drawBase(g, screenX, screenY);
+			g.pushTransform();
+			g.translate(container.getWidth()/2 - width/2, container.getHeight()/2 - height/2);
+			drawBase(g);
 			drawItems();
 			for(int x = 0; x < inventoryTiles.length; x++) {
 				for(int y = 0; y < inventoryTiles[0].length; y++) {
 					InventoryTile tile = inventoryTiles[x][y];
 					if(tile != null) {
 						if(tile.isEquipSlot()) {
-							tile.draw(g, ((x * 32) - 64) + screenX + EQUIP_OFFSET, ((y * 32) + 80) + screenY); // Offset Equip slots to left.
+							tile.draw(g, ((x * 32) - 64) + EQUIP_OFFSET, ((y * 32) + 80)); // Offset Equip slots to left.
 						} else {
-							tile.draw(g, (x * 32) + screenX + EQUIP_OFFSET, ((y * 32) + 80) + screenY);
+							tile.draw(g, (x * 32) + EQUIP_OFFSET, ((y * 32) + 80));
 						}
 					}
 				}
 			}
             curInvTile.drawTooltip(g);
+			g.popTransform();
 		}
 	}
 	
-	private void drawBase(Graphics g, int screenX, int screenY) {
+	private void drawBase(Graphics g) {
 		g.setColor(Color.black);
-		g.fillRect(screenX + EQUIP_OFFSET, screenY, EQUIP_OFFSET, height);
-		g.fillRect(screenX, screenY, width, height);
+		g.fillRect(EQUIP_OFFSET, 0, EQUIP_OFFSET, height);
+		g.fillRect(0, 0, width, height);
 		
 		g.setColor(Color.white);
-		
-		
-		g.drawString(invMenu.getValueAsString("#title"), INV_WIDTH/2 +
-					EQUIP_OFFSET + screenX, 10 + screenY);
-		g.drawString(invMenu.getValueAsString("#stat"), (width - 130) +
-					screenX, 10 + screenY);
-		g.drawString(invMenu.getValueAsString("#str").replace("%n",
-				ply.getStat("str") +""), (width - 170) + screenX, 80 + screenY);
-		g.drawString(invMenu.getValueAsString("#int").replace("%n",
-				ply.getStat("int") +""), (width - 170) + screenX, 130 + screenY);
-		g.drawString(invMenu.getValueAsString("#dex").replace("%n",
-				ply.getStat("dex") +""), (width - 170) + screenX, 180 + screenY);
-		g.drawString(invMenu.getValueAsString("#end").replace("%n",
-				ply.getStat("end") +""), (width - 170) + screenX, 230 + screenY);
-		g.drawString(invMenu.getValueAsString("#agi").replace("%n",
-				ply.getStat("agi") +""), (width - 170) + screenX, 280 + screenY);
-		g.drawString("Equip", screenX + 30, 10 + screenY);
-		g.drawRect(screenX - EQUIP_OFFSET, screenY, width + EQUIP_OFFSET, height);
+		g.drawString(invMenu.getValueAsString("#title"), INV_WIDTH/2 + EQUIP_OFFSET, 10);
+		g.drawString(invMenu.getValueAsString("#stat"), (width - 130) + 0, 10);
+		g.drawString(invMenu.getValueAsString("#str").replace("%n", ply.getStat("str") +""), (width - 170), 80);
+		g.drawString(invMenu.getValueAsString("#int").replace("%n", ply.getStat("int") +""), (width - 170), 130);
+		g.drawString(invMenu.getValueAsString("#dex").replace("%n", ply.getStat("dex") +""), (width - 170), 180);
+		g.drawString(invMenu.getValueAsString("#end").replace("%n", ply.getStat("end") +""), (width - 170), 230);
+		g.drawString(invMenu.getValueAsString("#agi").replace("%n", ply.getStat("agi") +""), (width - 170), 280);
+		g.drawString("Equip", 30, 10);
+		g.drawRect(0, 0, width, height);
 	}
 
 	private void drawItems() {

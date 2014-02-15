@@ -17,6 +17,7 @@ public class DungeonGenerator {
 	}
 	
 	public static Room generateRoom(Tile[][] tiles, int x, int y, int width, int height) {
+		System.out.println("Generating room...");
 		if (x + width > tiles.length || y + height > tiles[0].length) { return null; }
 		for (int x1 = x; x1 < (x + width); x1++) {
 			for (int y1 = y; y1 < (y + height); y1++) {
@@ -38,88 +39,90 @@ public class DungeonGenerator {
 	}
 
 	public static boolean generateHallway(Tile[][] tiles, int x1, int y1, int x2, int y2) {
-			ArrayList<PathfindingTile> openList = new ArrayList<PathfindingTile>();
-			ArrayList<PathfindingTile> closedList = new ArrayList<PathfindingTile>();
-			
-			PathfindingTile curLookingTile = new PathfindingTile(null, x1, y1, 0, 0, 0);
-			openList.add(curLookingTile);
-			
-			int added = 0; // May not be needed?
-			
-			outerloop: // Loop label.
-			while (true) {
-				innerloop: // Loop label.
-				for (Direction dir : Direction.values()) { // Find adj tiles to starting point.
-					Vector vec = Misc.getLocFromDir(curLookingTile.getX(), curLookingTile.getY(), dir);
-					
-					if (vec.getX() == x2 && vec.getY() == y2) { closedList.add(new PathfindingTile(curLookingTile, x2, y2, 0, 0, 0)); break outerloop; }
-					
-					for (int i = 0; i < closedList.size(); i++) {
-						if (vec.getX() == closedList.get(i).getX() && vec.getY() == closedList.get(i).getY()) {
-							continue innerloop;
-						}
-					}
-					
-					for (int i = 0; i < openList.size(); i++) {
-						if (vec.getX() == openList.get(i).getX() && vec.getY() == openList.get(i).getY()) {
-							continue innerloop; // Possibly, might want to remove?
-						}
-					}
-					
-					try {
-						if (vec.getX() < 0 || vec.getX() > tiles.length || vec.getY() < 0 || vec.getY() > tiles[0].length || (tiles[vec.getX()][vec.getY()].isWall() && tiles[vec.getX()][vec.getY()].isReal())) { continue; }
-					} catch (IndexOutOfBoundsException ex) { }
+		System.out.println("Generating hallway...");
+		ArrayList<PathfindingTile> openList = new ArrayList<PathfindingTile>();
+		ArrayList<PathfindingTile> closedList = new ArrayList<PathfindingTile>();
 
-					//calculate f, g & h here.
-					double g = 10.0;
-					double h = Double.MAX_VALUE;
+		PathfindingTile curLookingTile = new PathfindingTile(null, x1, y1, 0, 0, 0);
+		openList.add(curLookingTile);
 
-					double xDistance = Math.abs(vec.getX() - x2); // Diagonol Shortcut Huerisitic
-					double yDistance = Math.abs(vec.getY() - y2);
-					if (xDistance > yDistance) {
-						h = 14.0 * yDistance + 10.0 * (xDistance-yDistance);
-					} else {
-						h = 14.0 * xDistance + 10.0 * (yDistance-xDistance);
-					}
+		int added = 0; // May not be needed?
 
-					openList.add(new PathfindingTile(curLookingTile, vec.getX(), vec.getY(), g + h, g, h));
-					added++;
-				}
-				if (added == 0) { closedList.clear(); return false; }
-				if (openList.isEmpty()) { closedList.clear(); return false; }
-				
-				openList.remove(curLookingTile); // Add starting tile to closed list.
-				closedList.add(curLookingTile);
-				
-				int lowest = 0;
-				for (int i = 0; i < openList.size(); i++) { // Find lowest cost tile. (Will pick last tile if some are the same.)
-					if (openList.get(i).getF() < openList.get(lowest).getF()) {
-						lowest = i;
+		outerloop: // Loop label.
+		while (true) {
+			innerloop: // Loop label.
+			for (Direction dir : Direction.values()) { // Find adj tiles to starting point.
+				Vector vec = Misc.getLocFromDir(curLookingTile.getX(), curLookingTile.getY(), dir);
+
+				if (vec.getX() == x2 && vec.getY() == y2) { closedList.add(new PathfindingTile(curLookingTile, x2, y2, 0, 0, 0)); break outerloop; }
+
+				for (int i = 0; i < closedList.size(); i++) {
+					if (vec.getX() == closedList.get(i).getX() && vec.getY() == closedList.get(i).getY()) {
+						continue innerloop;
 					}
 				}
-				
-				curLookingTile = openList.get(lowest); // Set new tile to starting point, remove from open, add to closed.
-				closedList.add(curLookingTile);
-				openList.remove(lowest);
-            }
-			
-			PathfindingTile tile = closedList.get(closedList.size() - 1); // Get last tile in path.
-			while (true) {
-				DungeonGenerator.placeTile(tiles, new Tile(TileDictionary.getFloorForTheme(), tile.getX(), tile.getY()));
-				for (Direction dir : Direction.values()) {
-					Vector vec = Misc.getLocFromDir(tile.getX(), tile.getY(), dir);
-					try {
-						Tile wall = tiles[vec.getX()][vec.getY()]; // Location of tobe wall, get tile there!
-					} catch (ArrayIndexOutOfBoundsException ex) { continue; }
-					wallsToBe.add(new Tile(TileDictionary.getWallForTheme(), vec.getX(), vec.getY()));
+
+				for (int i = 0; i < openList.size(); i++) {
+					if (vec.getX() == openList.get(i).getX() && vec.getY() == openList.get(i).getY()) {
+						continue innerloop; // Possibly, might want to remove?
+					}
 				}
-				if (tile.getParent() == null) { break; }
-				tile = tile.getParent(); // This causes us to iterate backwards until we reach the root tile!
+
+				try {
+					if (vec.getX() < 0 || vec.getX() > tiles.length || vec.getY() < 0 || vec.getY() > tiles[0].length || (tiles[vec.getX()][vec.getY()].isWall() && tiles[vec.getX()][vec.getY()].isReal())) { continue; }
+				} catch (IndexOutOfBoundsException ex) { }
+
+				//calculate f, g & h here.
+				double g = 10.0;
+				double h = Double.MAX_VALUE;
+
+				double xDistance = Math.abs(vec.getX() - x2); // Diagonol Shortcut Huerisitic
+				double yDistance = Math.abs(vec.getY() - y2);
+				if (xDistance > yDistance) {
+					h = 14.0 * yDistance + 10.0 * (xDistance-yDistance);
+				} else {
+					h = 14.0 * xDistance + 10.0 * (yDistance-xDistance);
+				}
+
+				openList.add(new PathfindingTile(curLookingTile, vec.getX(), vec.getY(), g + h, g, h));
+				added++;
 			}
-			return true;
+			if (added == 0) { closedList.clear(); return false; }
+			if (openList.isEmpty()) { closedList.clear(); return false; }
+
+			openList.remove(curLookingTile); // Add starting tile to closed list.
+			closedList.add(curLookingTile);
+
+			int lowest = 0;
+			for (int i = 0; i < openList.size(); i++) { // Find lowest cost tile. (Will pick last tile if some are the same.)
+				if (openList.get(i).getF() < openList.get(lowest).getF()) {
+					lowest = i;
+				}
+			}
+
+			curLookingTile = openList.get(lowest); // Set new tile to starting point, remove from open, add to closed.
+			closedList.add(curLookingTile);
+			openList.remove(lowest);
+        }
+
+		PathfindingTile tile = closedList.get(closedList.size() - 1); // Get last tile in path.
+		while (true) {
+			DungeonGenerator.placeTile(tiles, new Tile(TileDictionary.getFloorForTheme(), tile.getX(), tile.getY()));
+			for (Direction dir : Direction.values()) {
+				Vector vec = Misc.getLocFromDir(tile.getX(), tile.getY(), dir);
+				try {
+					Tile wall = tiles[vec.getX()][vec.getY()]; // Location of tobe wall, get tile there!
+				} catch (ArrayIndexOutOfBoundsException ex) { continue; }
+				wallsToBe.add(new Tile(TileDictionary.getWallForTheme(), vec.getX(), vec.getY()));
+			}
+			if (tile.getParent() == null) { break; }
+			tile = tile.getParent(); // This causes us to iterate backwards until we reach the root tile!
+		}
+		return true;
 	}
 	
 	public static void generateHallwayWalls(Tile[][] tiles) {
+		System.out.println("Generating hallway walls...");
 		for (Tile tile : wallsToBe) {
 			Tile wall = tiles[tile.getTileX()][tile.getTileY()];
 			if (wall.isReal()) { continue; }
@@ -128,6 +131,7 @@ public class DungeonGenerator {
 	}
 	
 	public static void generateRooms(Tile[][] tiles, ArrayList<Room> rooms) {
+		System.out.println("Generating rooms...");
 		for (int x = 0; x < tiles.length; x++) {
 			for (int y = 0; y < tiles.length; y++) {
 				if ((int) (Math.random() * 100) + 1 >= 95) {
@@ -146,6 +150,7 @@ public class DungeonGenerator {
 	}
 	
 	public static void generateHallways(Tile[][] tiles, ArrayList<Room> rooms, int startPoint) {
+		System.out.println("Generating hallways...");
 		if (startPoint > rooms.size() - 1) { return; }
 		int count = 0;
 		for (int i = startPoint; i < rooms.size(); i++) {
@@ -232,7 +237,12 @@ public class DungeonGenerator {
 	}
 
 	public static GameMap generateDungeon(int w, int h, MobDictionary mobDictionary) {
-		DungeonGenerator.initMobDictionary(mobDictionary);
+		if (DungeonGenerator.mobDictionary == null) {
+			DungeonGenerator.initMobDictionary(mobDictionary);
+		}
+
+		System.out.println("Generating dungeon...");
+
 		wallsToBe = new ArrayList<Tile>();
 		GameMap empty = new GameMap(w, h, TileDictionary.getDungeonLevel(), mobDictionary);
 		
@@ -246,13 +256,16 @@ public class DungeonGenerator {
 		ArrayList<Room> rooms = new ArrayList<Room>();
 		
 		generateRooms(tiles, rooms);
+		System.out.println("Generated rooms.");
 		generateHallways(tiles, rooms);
+		System.out.println("Generated hallways.");
 		generateHallwayWalls(tiles);
 		
 		placeItems(tiles, w, h, empty);
 		placeMobs(tiles, w, h, empty);
 		
 		placeEntityRandomly(tiles, Misc.DUNGEON_SIZE, Misc.DUNGEON_SIZE, new DownLadder()); // Places a ladder to next floor down.
+		System.out.println("Generated dungeon.");
 		
 		empty.setTiles(tiles);
 		return empty;

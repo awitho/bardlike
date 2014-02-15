@@ -6,6 +6,7 @@ import java.io.File;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
+import me.bloodarowman.bardlike.debug.DungeonExplorerState;
 import org.keplerproject.luajava.LuaState;
 import org.keplerproject.luajava.LuaStateFactory;
 import org.newdawn.slick.AppGameContainer;
@@ -33,7 +34,7 @@ public class Main extends StateBasedGame {
         Thread lua = new Thread(luaThread);
        // lua.start();
 
-		game = new AppGameContainer(new Main("bardLIKE"));
+		game = new AppGameContainer(new Main("bardLike"));
 		
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		int width = (int) screenSize.getWidth();
@@ -43,6 +44,7 @@ public class Main extends StateBasedGame {
 		scale = (width + height) / 110;
 		game.setDisplayMode(width, height, false);
 
+		game.setShowFPS(false);
 		game.setVSync(true);
 		game.setTargetFrameRate(60);
 		game.setMaximumLogicUpdateInterval(10);
@@ -54,12 +56,13 @@ public class Main extends StateBasedGame {
 	}
 
 	@Override
-	public void initStatesList(GameContainer arg0) throws SlickException {
+	public void initStatesList(GameContainer gc) throws SlickException {
 		this.addState(new MainMenuState());
 		this.addState(new ClassSelectState());
 		this.addState(new MainGameState());
 		this.addState(new HelpMenuState());
 		this.addState(new GameOverState());
+		this.addState(new DungeonExplorerState());
 	}
 
     static public class LuaStateRunnable implements Runnable {

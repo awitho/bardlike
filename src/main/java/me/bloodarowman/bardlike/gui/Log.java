@@ -10,9 +10,12 @@ import me.bloodarowman.bardlike.Main;
 import org.keplerproject.luajava.JavaFunction;
 import org.keplerproject.luajava.LuaException;
 import org.newdawn.slick.Color;
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
+import org.newdawn.slick.state.StateBasedGame;
+
 /**
  *
  * @author Alex
@@ -90,13 +93,9 @@ public class Log implements Menu {
 	public void clear() {
 		lines.clear();
 	}
-	
+
 	@Override
-	public void draw(Graphics g) {
-		draw(g, 0, 0);
-	}
-	
-	public void draw(Graphics g, int x, int y) {
+	public void draw(GameContainer container, StateBasedGame s, Graphics g) {
 		int begin = lines.size() - LOG_LENGTH;
 		if (begin < 0) {
 			begin = 0;
@@ -107,7 +106,7 @@ public class Log implements Menu {
 		int count = 0;
         int height = 0;
 		for(int i = begin; i < lines.size(); i++) {
-			lines.get(i).render(g, x + 2, y - (height += lines.get(i).getHeight()));// - g.getFont().getHeight(lines.get(i).getStr()));
+			lines.get(i).render(g, 5, container.getHeight() - 5 - (height += lines.get(i).getHeight()));// - g.getFont().getHeight(lines.get(i).getStr()));
 			count++;
 		}
 	}

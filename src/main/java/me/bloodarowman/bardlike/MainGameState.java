@@ -24,6 +24,8 @@ import org.newdawn.slick.state.StateBasedGame;
  * @author alex
  */
 public class MainGameState extends BasicGameState {
+	public static final int STATE_ID = 4;
+
     public static MainGameState current;
 
 	private GameMap curMap;
@@ -38,13 +40,12 @@ public class MainGameState extends BasicGameState {
 	public MobDictionary mobDictionary;
 
 	@Override
-	public void init(GameContainer container, StateBasedGame s) 
-			throws SlickException {
+	public void init(GameContainer container, StateBasedGame s) throws SlickException {
         current = this;
 
         Misc.fillMiscImages();
         try {
-            ItemDictionary.initItemDictionary(); // Needed as itemdicionary
+            ItemDictionary.initItemDictionary(); // Needed as item dictionary
         } catch (Exception ex) {
             Misc.logError(ex);
             System.exit(1);
@@ -60,30 +61,28 @@ public class MainGameState extends BasicGameState {
 	}
 	
 	@Override
-	public void render(GameContainer container, StateBasedGame s, Graphics g)
-			throws SlickException { // Part of BasicGameState
-		cam.translate(g, container);
+	public void render(GameContainer container, StateBasedGame s, Graphics g) throws SlickException { // Part of BasicGameState
+		g.pushTransform();
+		g.scale(Misc.SCALE, Misc.SCALE);
+
+		cam.translate(container, s, g, 1/Misc.SCALE);
 
 		g.setColor(Color.white); // Outline map with white.
-		g.drawRect(-1, -1, curMap.getScaledWidth() + 1,
-				curMap.getScaledHeight() + 1);
+		g.drawRect(-1, -1, curMap.getScaledWidth() + 1, curMap.getScaledHeight() + 1);
 
-		curMap.draw(g, player, cam);
-		
-		log.draw(g, -cam.getX(), (-cam.getY()) + container.getHeight());
-		hud.draw(g, (-cam.getX()) + container.getWidth(),
-				(-cam.getY()) + container.getHeight());
+		curMap.draw(container, s, g, new Vector(player.getTile().getTileX(), player.getTile().getTileY()), 1/Misc.SCALE);
+		g.popTransform();
+		log.draw(container, s, g);
+		hud.draw(container, s, g);
 		
 		//Overlay
-		
 		g.setFont(MainMenuState.font);
 		if (player.getTile() == null) { return; } // If the player doesn't exist drawing his stats will draw null.
-		inventory.draw(g, -cam.getX(), -cam.getY());
+		inventory.draw(container, s, g);
 	}
 
 	@Override
-	public void update(GameContainer container, StateBasedGame s, int delta)
-			throws SlickException { //Part of BasicGameState
+	public void update(GameContainer container, StateBasedGame s, int delta) throws SlickException { //Part of BasicGameState
 		if (container.getInput().isKeyPressed(Input.KEY_ESCAPE) && 
 				!inventory.isOpen()) {
 			s.enterState(1);
@@ -104,7 +103,7 @@ public class MainGameState extends BasicGameState {
 	@Override
 	public int getID() { // Part of BasicGameState, identifies what
 					//id this state is, so we can jump to it from other states.
-		return 4;
+		return STATE_ID;
 	}
 	
 	public void restart() {
@@ -121,8 +120,7 @@ public class MainGameState extends BasicGameState {
 	}
 	
 	public int genNewLevel() {
-		levels.add(DungeonGenerator.generateDungeon(Misc.DUNGEON_SIZE,
-				Misc.DUNGEON_SIZE, mobDictionary));
+		levels.add(DungeonGenerator.generateDungeon(Misc.DUNGEON_SIZE, Misc.DUNGEON_SIZE, mobDictionary));
 		return levels.size() - 1;
 	}
 

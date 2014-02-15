@@ -21,7 +21,8 @@ import org.newdawn.slick.ImageBuffer;
  * @version 1
  */
 public class Misc {
-	public static final int TARGET_SIZE = 64;
+	public static final float SCALE = 2.0f;
+	public static final int TARGET_SIZE = 32;
 	public static final int MAX_INVENTORY = 110;
 	public static final int DUNGEON_SIZE = 50;
 	private static File errorLog;

@@ -22,7 +22,7 @@ public class GameOverState extends BasicGameState {
 	}
 
 	@Override
- public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {}
+	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {}
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
